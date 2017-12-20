@@ -1,0 +1,936 @@
+;;emacs21.el -- emacs21 init setting elisp file
+;;$Id: emacs21.el,v 1.6 2002/10/20 06:51:39 sakito Exp $
+;;http://sakito.s2.xrea.com/
+;;mailto:sakito@s2.xrea.com
+;;ライセンスはGPLに従います。
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; 日本語の設定
+;;
+
+;; 初期位置
+(cd "~/")
+
+;; PATH設定
+;(add-to-list 'exec-path (expand-file-name "/usr/local/bin" "~/bin" "/sw/bin"))
+;(setq exec-path (cons "/usr/local/bin" exec-path))
+;(setq exec-path (cons "/sw/bin" exec-path))
+;(set exec-path '("/usr/local/bin" "/usr/bin" "/bin" "/sw/bin" "/sw/sbin"
+;        "/Users/sakito/bin" "/usr/local/sbin" "/usr/X11R6/bin" $PATH))
+(setq exec-path
+      (append
+       (list "/usr/local/bin" "/sw/bin" "/usr/bin") exec-path)
+      )
+
+(setenv "PATH"
+        (concat '"/usr/local/bin:/sw/bin:" (getenv "PATH"))
+        )
+
+(setenv "JAVA_HOME" "/Library/Java/Home")
+
+;(setenv "ANT_HOME" "/sw/lib/ant")
+
+;;(setenv "LC_ALL" "en")
+
+;;; Mule-UCS の設定
+;(require 'un-define) ; Unicode
+;(require 'jisx0213)  ; JIS X 0213
+
+;; 文字コード
+;(set-language-environment 'Japanese)
+(setq default-coding-systems 'utf-8)
+;(prefer-coding-system 'utf-8)
+;(set-keyboard-coding-system 'sjis-mac)
+;(set-terminal-coding-system 'euc-jp)
+;(setq file-name-coding-system 'utf-8)
+;(set-buffer-process-coding-system 'utf-8)
+;(set-clipboard-coding-system 'sjis-mac)
+;(setq network-coding-system-alist
+;      '(("nntp" . (junet-unix . junet-unix))
+;       (110 . (no-conversion . no-conversion))
+;       (25 . (no-conversion . no-conversion))
+;       ))
+
+;; フォントの設定
+;(create-fontset-from-fontset-spec
+; (concat
+;  "-*-fixed-medium-r-normal-*-16-*-*-*-*-*-fontset-monaco16,"
+;  "japanese-jisx0208:-apple-osaka-medium-r-normal--16-160-75-75-m-160-jisx0208.1983-sjis,"
+;  "katakana-jisx0201:apple-helvetica-medium-r-normal--14-140-75-75-m-140-mac-roman,"
+;  "ascii:-apple-monaco-medium-r-normal-*-14-*-*-*-*-*-mac-roman"))
+;(set-default-font "fontset-monaco16")
+;;;(when (/= window-system 'x)
+;(setq default-frame-alist (append '((font . "fontset-monaco16"))))
+;;;)
+
+;;解像度により上記が大きい場合は以下
+;(create-fontset-from-fontset-spec
+; (concat
+;  "-*-fixed-medium-r-normal-*-12-*-*-*-*-*-fontset-monaco12,"
+;  "japanese-jisx0208:-apple-osaka-medium-r-normal--14-140-*-m-140-jisx0208.1983-sjis,"
+;  "ascii:-apple-monaco-medium-r-normal-*-12-*-*-*-*-*-mac-roman"))
+;(set-default-font "fontset-monaco12")
+;(setq default-frame-alist (append '((font . "fontset-monaco12"))))
+
+
+;;以下は参考です、エラーになる物もあります
+;"japanese-jisx0201:,"  
+;(require 'bitmap)
+;(set-face-font 'default "-*-fixed-medium-r-normal-*-18-*")
+;(set-face-font 'default "-*-courier-medium-r-normal-*-18-*")
+;(set-face-font 'default "-*-monaco-medium-r-normal-*-14-*")
+;(if (fboundp 'new-fontset)
+;    (progn
+;      (create-fontset-from-fontset-spec
+;       "-*-fixed-medium-r-normal-*-18-*-*-*-*-*-fontset-mac,
+;        mac-roman-lower:-*-Monaco-*-*-*-*-14-*-*-*-*-*-mac-roman,
+;        mac-roman-upper:-*-Monaco-*-*-*-*-14-*-*-*-*-*-mac-roman,
+;        thai-tis620:-ETL-Fixed-*-*-*-*-16-*-*-*-*-*-tis620.2529-1,
+;        lao:-Misc-Fixed-*-*-*-*-16-*-*-*-*-*-MuleLao-1,
+;        vietnamese-viscii-lower:-ETL-Fixed-*-*-*-*-16-*-*-*-*-*-viscii1.1-1,
+;        vietnamese-viscii-upper:-ETL-Fixed-*-*-*-*-16-*-*-*-*-*-viscii1.1-1,
+;        chinese-big5-1:-*-Nice Taipei Mono-*-*-*-*-12-*-*-*-*-*-big5,
+;        chinese-big5-2:-*-Nice Taipei Mono-*-*-*-*-12-*-*-*-*-*-big5,
+;        chinese-gb2312:-*-Beijing-*-*-*-*-16-*-*-*-*-*-gb2312,
+;        japanese-jisx0208:-apple-osaka-medium-r-normal--18-180-75-75-m-180-jisx0208.1983-sjis,
+;        katakana-jisx0201:-*-*-*-*-*-*-16-*-*-*-*-*-JISX0201.1976-0,
+;        korean-ksc5601:-*-Seoul-*-*-*-*-16-*-*-*-*-*-ksc5601"
+;       t)))
+;(load "~/src/intlfonts-1.2/bdf_intn")
+;(load "~/src/intlfonts-1.2/bdf_intn24")
+
+;;; help key変更
+;; BackSpaceをC-hに変更
+;; sshする時の都合上
+;(global-set-key "\C-h" 'backward-delete-char)
+;;(define-key fence-mode-map "\C-h" 'fence-backward-delete-char)
+;;(define-key henkan-mode-map "\C-h" 'henkan-quit)
+;(define-key isearch-mode-map "\C-h" 'isearch-delete-char)
+;(global-set-key "\M-?" 'help-for-help)
+;;(define-key fence-mode-map "\M-?" 'fence-mode-help-command)
+
+;; to swap C-h and Backspace
+;(load-library "term/keyswap")
+
+
+
+
+;;:eshellの設定
+;; M-x eshell
+;; emacs21では標準なのでこの記述は不要
+;; @see http://www.gci-net.com/users/j/johnw/eshell_ja.html
+;;
+;(load "eshell-auto")
+;(add-hook 'emacs-lisp-mode-hook
+;          '(lambda()
+;             (setq indent-tabs-mode nil)
+;             ))
+
+;;; Shellの設定
+;; M-x shell
+;; @see http://home7.highway.ne.jp/dayan/tips/mac/bash.html
+;;
+;(setq shell-file-name "/usr/local/bin/bash")
+;(setq shell-file-name "/usr/local/bin/zsh")
+;(setenv "SHELL" shell-file-name)
+;(setq explicit-shell-file-name shell-file-name)
+;(setq explicit-bash-args '("-login" "-i"))
+;(setq shell-command-switch "-c")
+;(setq win32-quote-process-args t)
+
+;;: womanの設定
+;; M-x woman
+;; @see http://centaur.maths.qmw.ac.uk/Emacs/WoMan/
+;; @see http://homepage1.nifty.com/fin/soft/emacs/woman.html
+;;
+;; default ("/usr/man")
+;(setq woman-manpath '("/usr/local/man" "/usr/share/man" "/usr/local/share/man"
+;                      "/sw/man" "/usr/share/man/ja_JP.ujis"))
+
+;; 初回起動が遅いので cache 作成。
+;(setq woman-cache-filename (expand-file-name "~/etc/woman_cache"))
+
+;; 新しく frame は作らない。
+;(setq woman-use-own-frame nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; フレームと色の設定
+;;
+
+;;色の設定です変更してください
+;;コメントアウトしてるのはうまく効かないもの
+;(setq default-frame-alist
+;      (append (list '(foreground-color . "snow")
+;                    '(background-color . "black")
+;                    '(border-color . "black")
+;                    '(cursor-color . "orange")
+;                    '(mouse-color . "orange")
+;                    '(width . 100)
+;                    '(height . 38)
+;                    '(top . 20)
+;                    '(left . 100)
+;                    '(vertical-scroll-bars . nil)
+            ;;'(font . "fontset-mac")
+            ;;'(font . "fontset-sakito")
+;                    )
+;              default-frame-alist)
+;      )
+
+;; モードライン(下にあるやつ)の色設定
+;(set-face-foreground 'modeline "snow")
+;(set-face-background 'modeline "black")
+
+;; 色を付ける
+;; Highlighting on. modified 言語色設定
+;; hilit19カラフルになります。
+;(require 'hilit19)
+
+;; フォントロックの設定
+;; hilit19はemacs19用で、メンテナンスされてません。
+;; emacs2xではfont-lockを使うようにします。
+;(cond (
+;       (fboundp 'global-font-lock-mode)
+;       (global-font-lock-mode t)
+;       ;(setq font-lock-maximum-decoration t)
+;       (setq font-lock-support-mode 'jit-lock-mode)
+;       ))
+
+;; タブ文字、全角空白、文末の空白の色付け
+;; font-lockに対応したモードでしか動作しません
+;(defface my-face-b-1 '((t (:background "gray"))) nil)
+;(defface my-face-b-2 '((t (:foreground "red" :underline t))) nil)
+;(defface my-face-u-1 '((t (:foreground "SteelBlue" :underline t))) nil)
+;(defvar my-face-b-1 'my-face-b-1)
+;(defvar my-face-b-2 'my-face-b-2)
+;(defvar my-face-u-1 'my-face-u-1)
+
+;(defadvice font-lock-mode (before my-font-lock-mode ())
+;  (font-lock-add-keywords
+;   major-mode
+;   '(
+;     ("\t" 0 my-face-b-2 append)
+;     ("　" 0 my-face-b-1 append)
+;     ("[ \t]+$" 0 my-face-u-1 append)
+;     )))
+;(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+;(ad-activate 'font-lock-mode)
+
+;; リンク等の色表示
+;; 変えてみてください
+;(custom-set-variables)
+;(custom-set-faces
+;(font-lock-comment-face ((t (:italic t :foreground "DarkOliveGreen"))))
+; '(font-lock-comment-face ((t (:italic t :foreground "dark slate grey"))))
+; '(font-lock-string-face ((t (:foreground "Brown"))))
+; '(font-lock-keyword-face ((t (:bold t :foreground "Purple4"))))
+; '(font-lock-constant-face ((t (:bold t :foreground "IndianRed4"))))
+; '(font-lock-type-face ((t (:bold t :foreground "grey40"))))
+; '(font-lock-variable-name-face ((t (:bold t :foreground "Navy"))))
+; '(font-lock-builtin-face ((t (:bold t :foreground "Orchid4")))
+; )
+
+;; マーク領域を色付け
+;(setq transient-mark-mode t)
+;; リージョンの色
+;(set-face-foreground 'region "white")
+;(set-face-background 'region "dim gray")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; 編集設定
+;;
+
+;; TAB はスペース 4 個ぶんを基本
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+;; モードラインにライン数、カラム数表示
+(line-number-mode 1)
+(column-number-mode 1)
+
+;; shiftと移動でリージョン選択
+;(pc-selection-mode)
+
+;; 対応するカッコを色表示する
+(show-paren-mode 1)
+
+;;コマンドキーをMetaキーとして利用
+(setq mac-command-key-is-meta t)
+
+;;動的略語展開で大文字小文字を区別
+;(setq dabbrev-case-fold-search nil)
+
+;; 前回のカーソル位置を記憶
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/etc/places.txt")
+
+;;新規行を作成しない
+;;emacs21ではデフォルトで設定されています。
+(setq next-line-add-newlines nil)
+
+;;起動時のmessageを表示しない
+(setq inhibit-startup-message t)
+
+;; １行づつスクロールする
+(setq scroll-conservatively 1)
+
+;; C-x C-b でバッファリストを開く時に、ウィンドウを分割しない
+(global-set-key "\C-x\C-b" 'buffer-menu)
+
+; Emacs Lisp info filesの場所
+;(setq Info-default-directory-list
+; '("/usr/local/share/info" "~emacs/info"))
+(setq Info-default-directory-list
+      (cons (expand-file-name "/usr/local/share/info") Info-default-directory-list )
+      )
+
+;;; バックアップファイルの保存位置指定[2002/03/02]
+;; CVSで管理していても設定しておくと安全
+;; !path!to!file-name~ で保存される
+;;
+(setq backup-by-copying t)
+(setq backup-directory-alist
+      '(
+        ("^/etc/" . "/Users/sakito/tmp/etc")
+        ("." . "/Users/sakito/tmp/emacs")
+        ))
+
+;;emacs20 の時の設定
+;(fset 'make-backup-file-name
+;     '(lambda (file)
+;        (concat (expand-file-name "/Users/sakito/tmp/")
+;                (file-name-nondirectory file))))
+
+;;emacs20でバックアップをemacs21と似た挙動にする
+;(defadvice make-backup-file-name
+;  (around modify-file-name activate)
+;  (let ((backup-dir "/Users/sakito/tmp"))
+;   (setq backup-dir (expand-file-name backup-dir))
+;   (unless (file-exists-p backup-dir)
+;     (make-directory-internal backup-dir))
+;   (if (file-directory-p backup-dir)
+;       (let* ((file-path (expand-file-name file))
+;              (chars-alist '((?/　. (?#))
+;                             (?#　. (?# ?#))
+;                             (?:　. (?\;))
+;                             (?\; . (?\; ?\;))))
+;              (mapchars 
+;               (lambda (c) (or (cdr (assq c chars-alist)) (list c)))))
+;         (setq ad-return-value
+;               (concat backup-dir "/"
+;                       (mapconcat 'char-to-string
+;                                  (apply 'append
+;                                         (mapcar mapchars file-path)) ""))))
+;     ad-do-it)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; アプリケーションの設定
+;;
+
+;; Emacs-Lisp のPathを通しておく
+;(setq load-path
+;     (cons "/usr/local/share/emacs/21.1.30/site-lisp/emu" load-path))
+
+;; emacsclient
+(server-start)
+
+;;l; SKK の設定
+;; ddskkでは不要です
+;; @see http://openlab.ring.gr.jp/skk/index-j.html
+;;
+;(require 'skk-autoloads)
+;(global-set-key "\C-x\C-j" 'skk-mode)
+;(global-set-key "\C-xj" 'skk-auto-fill-mode)
+;(global-set-key "\C-xt" 'skk-tutorial)
+;(setq skk-large-jisyo "/usr/local/share/skk/SKK-JISYO.L")
+;(setq skk-number-style 0)
+;(setq date-ad 1)
+;(skk-mode)
+;; C-x C-fでファイルを開くとSKK
+;(add-hook 'find-file-hooks
+;          (lambda ()
+;            (skk-latin-mode 1)
+;            ))
+
+;;; Python-mode
+;; @see http://www.python.org/emacs/python-mode/
+;;
+(setq auto-mode-alist
+      (cons '("\\.py$" . python-mode) auto-mode-alist)
+      )
+(setq interpreter-mode-alist
+      (cons '("python" . python-mode)
+            interpreter-mode-alist)
+      )
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+(modify-coding-system-alist 'file "\\.py$" '(undecided . euc-jp-unix))
+;(modify-coding-system-alist 'file "\\.py$" 'euc-jp)
+(add-hook 'python-mode-hook
+          '(lambda()
+             (setq indent-tabs-mode nil)
+             ))
+(setq py-python-command "/usr/local/bin/python")
+
+;;; SmartDoc mode setting
+;; @see http://www.asahi-net.or.jp/~dp8t-asm/java/tools/SmartDoc/index_ja.html
+;;
+;(setq auto-mode-alist
+;     (append '(("\\.sdoc$" . sdoc-mode)) auto-mode-alist))
+;(setq sgml-quick-keys t)
+;(autoload 'sdoc-mode "sdoc-mode" nil t)
+;;(modify-coding-system-alist 'file "\\.sdoc$" '(undecided . utf-8))
+;(setq auto-mode-alist
+;     (append '(("\\.sdoc$" . sgml-mode)) auto-mode-alist))
+
+
+;;; ChangeLogメモ
+;; @see http://namazu.org/~satoru/unimag/1/
+;;
+(setq user-full-name "sakito")
+(setq user-mail-address "sakito@s2.xrea.com")
+(defun memo ()
+  (interactive)
+  (add-change-log-entry 
+   nil
+   (expand-file-name "~/etc/memo.txt")
+   )
+  (skk-latin-mode 1)
+  )
+
+(global-set-key "\C-cm" 'memo)
+
+(defun bookmark ()
+  (interactive)
+  (add-change-log-entry 
+   nil
+   (expand-file-name "~/etc/bookmark.txt")
+   )
+  (skk-latin-mode 1)
+  )
+
+(global-set-key "\C-cb" 'bookmark)
+
+;;; Wanderlust
+;; @see http://www.gohome.org/wl/index.ja.html
+;;
+;; SEMI を使うための設定 
+;(require 'mime-setup) ;; 通常は不要です
+(autoload 'wl "wl" "Wanderlust" t)
+(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
+; draft時にskk起動
+(add-hook 'wl-mail-setup-hook
+          (function
+           (lambda ()
+             (wl-draft-config-exec)
+             (skk-latin-mode 1)
+             )))
+
+;;; BBDB
+;; @see http://bbdb.sourceforge.net/
+;; @version 2.32
+;;
+;(require 'bbdb-wl)
+;(bbdb-wl-setup)
+;(setq bbdb-file "~/etc/bbdb")
+;; FLIM では quote された eword encoded word は decode されない。
+;; 強制的に decode したい場合には、次の設定を加えてください。
+;(setq gnus-bbdb/decode-field-body-function
+;      (function
+;       (lambda (field-body field-name)
+;         ;;(require 'eword-decode);; for Pterodactyl Gnus
+;         (eword-decode-string field-body)
+;         )))
+;; ポップアップ表示
+;(setq bbdb-use-pop-up t)
+;; 自動収集
+;(setq bbdb/mail-auto-create-p t)
+;(setq signature-use-bbdb t)
+;(setq bbdb-north-american-phone-numbers-p nil)
+;; サマリに bbdb の名前を表示 :-)。
+;(setq wl-summary-from-function 'bbdb-wl-from-func)
+;; X-Faceを表示する
+;(require 'highlight-headers)
+;; 自動的に ML フィールドを加える
+;(add-hook 'bbdb-notice-hook 'bbdb-auto-notes-hook)
+;; 追加収集ヘッダ
+;(setq bbdb-auto-notes-alist
+;      '(
+;        ("X-ML-Name" (".*$" ML 0))
+;        ("X-Mailer" (".*$" User-Agent 0))
+;        ("X-Newsreader" (".*$" User-Agent 0))
+;        ("User-Agent" (".*$" User-Agent 0))
+;        ))
+
+;;; w3m[2002/02/26]
+;; @see http://w3m.sourceforge.net/index.ja.html
+;; @see http://emacs-w3m.namazu.org/
+;; @version current stable
+;;
+(autoload 'w3m "w3m" "Interface for w3m on Emacs." t)
+(autoload 'w3m-find-file "w3m" "w3m interface function for local file." t)
+
+;; browse-url w3m
+(setq browse-url-browser-function 'w3m-browse-url)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+(global-set-key "\C-xm" 'browse-url-at-point)
+(setq browse-url-netscape-program "~/bin/open_navigator.sh")
+
+(autoload 'w3m-search "w3m-search" "Search QUERY using SEARCH-ENGINE." t)
+(setq w3m-search-default-engine "google-ja")
+(global-set-key "\C-cs" 'w3m-search)
+(setq w3m-mailto-url-function 'wl-draft)
+
+(autoload 'w3m-weather "w3m-weather" "Display weather report." t)
+(autoload 'w3m-antenna "w3m-antenna" "Report chenge of WEB sites." t)
+(setq w3m-use-form t)
+;(setq w3m-command "/usr/local/bin/w3m")
+(setq w3m-home-page "/Users/sakito/.w3m/NNbookmark.html")
+(setq w3m-display-inline-image nil)
+
+(setq mime-setup-enable-inline-html nil)
+(eval-after-load "mime-view"
+  '(progn
+     (autoload 'mime-w3m-preview-text/html "mime-w3m")
+     (ctree-set-calist-strictly
+      'mime-preview-condition
+      '(
+        (type . text)
+        (subtype . html)
+        (body . visible)
+        (body-presentation-method . mime-w3m-preview-text/html)
+        ))
+     (set-alist 'mime-view-type-subtype-score-alist
+                '(text . html) 3)
+     ))
+
+(setq w3m-image-viewer "~/bin/open_img.sh")
+
+;; sgml-modc完全移行
+;;; YaTeX & yahtml (野鳥、HTML屋)
+;; yatex-mode
+(setq auto-mode-alist
+      (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+
+;; yahtml-mode
+(setq auto-mode-alist
+      (cons (cons "\\.html$" 'yahtml-mode) auto-mode-alist))
+(autoload 'yahtml-mode "yahtml" "Yet Another HTML mode" t)
+
+(defvar YaTeX-dvi2-command-ext-alist
+ '(("xdvi" . ".dvi")
+   ("ghostview\\|vg" . ".ps")
+   ("acroread\\|pdf\\Preview\\|TeXShop" . ".pdf")))
+(setq  tex-command "/usr/local/bin/dotexshop"
+           dvi2-command "open -a /Applications/TeXShop/TeXShop.app")
+
+(setq YaTeX-kanji-code 1)
+(set-language-environment 'Japanese)
+(set-default-coding-systems 'utf-8-unix)
+(set-terminal-coding-system 'utf-8-unix)
+(set-keyboard-coding-system 'sjis-mac)
+(set-clipboard-coding-system 'sjis-mac)
+(setq-default buffer-file-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+(setq load-path (cons (expand-file-name "~/.emacs.d") load-path))
+(server-start)
+
+(setq c-tab-always-indent t)
+(setq default-tab-width 4)
+(setq indent-line-function 'indent-relative-maybe) ; 前と同じ行の幅にインデント
+
+(setq mac-allow-anti-aliasing nil)  ; mac 固有の設定
+(setq mac-option-modifier 'meta) ; mac 用の command キーバインド
+(mac-key-mode 1) ; MacKeyModeを使う
+
+(global-set-key "\C-x\C-i" 'indent-region) ; 選択範囲をインデント
+(global-set-key "\C-m" 'newline-and-indent) ; リターンで改行とインデント
+(global-set-key "\C-j" 'newline)  ; 改行
+
+(global-set-key "\C-cc" 'comment-region)    ; C-c c を範囲指定コメントに
+(global-set-key "\C-cu" 'uncomment-region)  ; C-c u を範囲指定コメント解除に
+
+(show-paren-mode t) ; 対応する括弧を光らせる。
+(transient-mark-mode t) ; 選択部分のハイライト
+
+(setq require-final-newline t)          ; always terminate last line in file
+(setq default-major-mode 'text-mode)    ; default mode is text mode
+
+(setq completion-ignore-case t) ; file名の補完で大文字小文字を区別しない
+(setq partial-completion-mode 1) ; 補完機能を使う
+
+;; スタートアップメッセージを非表示
+(setq inhibit-startup-message t)
+(if window-system (progn
+; ツールバーの非表示
+(tool-bar-mode nil)))
+
+;;; 時間を挿入する
+;; time-stamp.el [2002/02/24]
+;;
+;; 更新日を挿入する
+(defun time-stamp-date ()
+  "Retune the current time as a string in Date from."
+  (format-time-string "[%04Y/%02m/%02d]")
+  )
+
+(defun insert-date nil
+  "Insert Date."
+  (interactive)
+  (insert (time-stamp-date))
+  )
+
+;; insert-date Key
+(define-key global-map "\C-c\C-d" 'insert-date)
+
+;;; CVSインターフェース
+;; pcl-cvs
+;;
+;(add-hook 'cvs-mode-hook
+;          (lambda ()
+;            (collection-set-goal-column cvs-buffer-name 38)))
+
+;; log はどのコードで書くか決めて、固定にしておかないと危険です 
+;; (euc-japan でも sjis でも良いんけど)
+(modify-coding-system-alist 'process "cvs" '(undecided . euc-japan))
+
+;(eval-after-load "pcvs"
+;  '(progn
+;     ;; workaround a strange bug that only happens on my machine
+;     (load-file (locate-library "pcvs-util.el"))
+;     (setq cvs-update-flags nil)
+;     (cvs-flags-define cvs-update-flags (cvs-defaults '("-P")))))
+
+;;; 2ちゃんねる廃人への道
+;; navi2ch
+;; @see http://navi2ch.sourceforge.net/
+;; 実は設定がいいがけんです、、
+;;
+;(setq load-path
+;     (cons "/usr/local/share/emacs/21.3.50/site-lisp/navi2ch" load-path))
+;(require 'navi2ch)
+;(require 'navi2ch-localfile)
+;(setq navi2ch-list-bbstable-url "http://www.2ch.net/bbsmenu.html")
+;(setq navi2ch-list-bbstable-url "http://www6.ocn.ne.jp/~mirv/2chmenu.html")
+;(setq navi2ch-list-stay-list-window t)
+;(setq navi2ch-article-new-message-range '(1000 . 1))
+;(setq navi2ch-article-exist-message-range '(1 . 1000))
+;(require 'navi2ch-mona)
+;(add-hook 'navi2ch-article-arrange-message-hook
+;         'navi2ch-mona-arrange-message)
+;(setq navi2ch-mona-enable t)
+
+
+;;; emacs wiki
+;; @see http://www.gci-net.com/users/j/johnw/EmacsResources.html
+;; @see http://www.ops.dti.ne.jp/~cake-smd/wiki/EmacsWiki.html
+;;
+;(setq load-path
+;     (cons "/Users/sakito/bin/lisp/emacswiki" load-path))
+;; remember.el
+;(autoload 'remember "remember" nil t)
+;(autoload 'remember-region "remember" nil t)
+
+;(define-key global-map [f8] 'remember)
+;(define-key global-map [f9] 'remember-region)
+
+;; planner.el & emacs-wiki.el
+;(load "planner.el")
+;(setq emacs-wiki-maintainer "mailto:sakito@s2.xrea.com")
+;;(setq emacs-wiki-directories "~/var/Wiki")
+;;(setq planner-directory "~/Documents/Plans")
+;(setq emacs-wiki-meta-content "text/html;charset=iso-2022-jp")
+;(setq emacs-wiki-footer-date-format "%Y-%m-%d %T")
+;(setq emacs-wiki-publishing-directory "/Users/sakito/Sites/WebWiki")
+;(setq planner-publishing-markup
+;   (quote
+;    (["^#\\([A-C]\\)" 0 "- **\\1** "]
+;     ["^#\\([A-C][0-9]+\\)" 0 "- <a name=\"\\1\"/> **\\1** "]
+;     ["^\\.#\\([0-9]\\)" 0 "** <a name=\"\\1\" href=\"#\\1\">\\1:</a> "])))
+;;;;(remember-handler-functions (quote (remember-append-to-planner)))
+
+;;; 辞書引き
+;; sdicの設定
+;; @see http://namazu.org/~tsuchiya/sdic/index.html
+;;
+;(autoload 'sdic-describe-word "sdic"
+;    "英単語の意味を調べる" t nil)
+;(global-set-key "\C-cw" 'sdic-describe-word)
+;(autoload 'sdic-describe-word-at-point "sdic"
+;  "カーソルの位置の英単語の意味を調べる" t nil)
+;(global-set-key "\C-cW" 'sdic-describe-word-at-point)
+
+;; 検索結果ウィンドの幅の設定および動作設定
+;(setq sdic-window-height 10
+;      sdic-disable-select-window t)
+
+;; つかってるのはGene95とedictって辞書です
+;; make install 意外でインストールした場合のみ設定が必要です。
+;(setq sdic-eiwa-dictionary-list '((sdicf-client "~/etc/gene.sdic"))
+;      sdic-waei-dictionary-list '((sdicf-client "~/etc/jedict.sdic"
+;                                           (add-keys-to-headword t))))
+
+;;; IRCは時々連絡用に利用するぐらいです
+;; liece
+;; @see http://www.unixuser.org/~ueno/liece/index.html.ja
+;;
+;(setq liece-nickname "sakito")
+;(setq liece-intl-catalogue-directory "/usr/local/share/liece/")
+;(setq 
+; liece-window-style-directory   "/usr/local/share/liece/styles"
+; liece-icon-directory           "/usr/local/share/liece/icons"
+; )
+
+;(autoload 'liece "liece" nil t)
+;(setq liece-server "irc.tokyo.wide.ad.jp")
+
+;;;
+;; epo
+;; @see http://www.yatex.org/epo/
+;;
+;(autoload 'epo "epo" "Editing Process Organizer" t)
+;(setq epo-prefix-key "\C-t")
+;; epojava mode
+;(setq load-path
+;      (cons "/Users/sakito/bin/lisp/epojava" load-path)
+;      )
+;(require 'epoan)
+;(setq epo-sdoc-command-line "/usr/local/bin/sdoc")
+;; Zope の設定
+;(setq epo-Z-use-yahtml t) ;; html 表示の時、yahtml を使うか？
+;(setq epo-Z-default-account "sakito") ;; アカウント名
+;(setq epo-Z-default-host "http://www.python.jp/Zope/manage") ;; ホスト名
+;(setq epo-Z-default-port "8021") ;; FTP のポート番号(文字列です)
+;;; Meadow だと ftp のポート変更が効かないっぽい(1.14)ので、
+;;; Windows では start.bat に -f21 に書き足した方が良いでしょう
+;(setq epo-Z-http-port "80") ;; WEB のポート番号(文字列です)
+
+
+;(autoload 'epoxml-mode  "epoxml"  "Epo-xml mode" t)
+;(setq auto-mode-alist
+;      (cons (cons "\\.sdoc$" 'epoxml-mode) auto-mode-alist)
+;      )
+;(autoload 'epo-xml-enable "epo-xml" "Editing Process Organizer for XML" t)
+;(add-hook 'sgml-mode-hook  'epo-xml-enable)
+
+;; java
+;(setq auto-mode-alist
+;      (cons (cons "\\.\\(java\\|class\\)$" 'epojava-mode) auto-mode-alist))
+;(autoload 'epojava-mode "epojava" "Epo-java mode" t)
+
+;; CORBA/IDL
+;(setq auto-mode-alist (cons (cons "\\.idl$" 'epoidl-mode) auto-mode-alist))
+;(autoload 'epoidl-mode  "epocc"   "Epo-idl mode" t)
+
+;; CORBA/C mapping
+;(setq auto-mode-alist
+;      (cons (cons "\\.\\(ih\\|hh\\|ic\\)$" 'epocc-mode) auto-mode-alist))
+
+;; C/C++
+;(setq auto-mode-alist
+;      (cons (cons "\\.\\(C\\|cc\\|CC\\|cpp\\|cxx\\|h\\|H\\)$"
+;         'epocc-mode) auto-mode-alist))
+;(setq auto-mode-alist (cons (cons "\\.c$" 'epoc-mode) auto-mode-alist))
+;(autoload 'epoc-mode    "epocc"   "Epo-c mode" t)
+;(autoload 'epocc-mode   "epocc"   "Epo-cc mode" t)
+
+;;; XML入力用
+;; psgml
+;; @see ftp://ftp.lysator.liu.se/pub/sgml/
+;;--------------------------------------------------------------------
+;(autoload 'sgml-mode "psgml" "Major mode to edit SGML files." t)
+;(autoload 'xml-mode "psgml" "Major mode to edit XML files." t)
+;(setq auto-mode-alist
+;      (append (list (cons "\\.xml\\'" 'xml-mode))
+;              auto-mode-alist)
+;      )
+;(setq auto-mode-alist
+;      (append (list (cons "\\.html\\'" 'xml-mode))
+;              auto-mode-alist)
+;      )
+
+;(setq sgml-catalog-files '("CATALOG" "/Users/sakito/etc/psgml/CATALOG.txt"))
+;(setq sgml-ecat-files '("ECAT" "/Users/sakito/etc/psgml/ECAT.txt"))
+
+;(setq sgml-custom-dtd
+; '(
+;   ("XHTML 1.0 Strict"
+;    "<!DOCTYPE html
+;  PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
+;    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n")
+;   ("XHTML 1.0 Transitonal"
+;   "<!DOCTYPE html
+;  PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+;    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n")
+;   ("Ant 1.5 DTD"
+;   "<!DOCTYPE project
+;  PUBLIC \"-//ANT//DTD project//EN\"
+;    \"ant.dtd\">\n")
+;   ))
+
+;\"file://Users/sakito/psgml/ant.dtd\">\n")
+
+;(add-hook 'xml-mode-hook
+;          (function (lambda()
+;                      (make-face 'sgml-comment-face)
+;                      (make-face 'sgml-start-tag-face)
+;                      (make-face 'sgml-end-tag-face)
+;                      (make-face 'sgml-doctype-face)
+
+;                      (set-face-foreground 'sgml-comment-face "dark slate grey")
+;                      (set-face-foreground 'sgml-start-tag-face "SkyBlue1")
+;                      (set-face-foreground 'sgml-end-tag-face "SkyBlue1")
+;                      (set-face-foreground 'sgml-doctype-face "DodgerBlue3")
+;
+;                      (setq sgml-set-face t)
+;                      (setq sgml-markup-faces
+;                            '(
+;                              (comment   . sgml-comment-face)
+;                              (start-tag . sgml-start-tag-face)
+;                              (end-tag   . sgml-end-tag-face)
+;                              (doctype   . sgml-doctype-face)
+;                              )))))
+
+;;;; sql-mode
+;;
+;(autoload 'sql-mode "sql" "SQL Edit mode" t)
+;(setq sql-user "test")
+;(setq sql-user "testuser")
+;(setq sql-password "")
+;(setq sql-postgres-program "/usr/local/bin/psql")
+
+;;;; JDEE [2002/06/25]
+;; @see http://jdee.sunsite.dk/
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/jde/lisp"))
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/semantic"))
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/elib"))
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/eieio"))
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/speedbar"))
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/ecb-1.80"))
+;(require 'jde)
+;(setq jde-jdk-doc-url "file:///Users/sakito/doc/Java1.3.0/docs/ja/api/overview-summary.html")
+;(setq compilation-window-height 8)
+
+;(require 'jde-ant)
+;(setq jde-ant-enable-find t)
+;(setq jde-ant-home "/sw/lib/ant")
+;(setq jde-ant-program "/sw/bin/ant")
+;(setq jde-build-function (quote (jde-ant-build)))
+;(setq jde-ant-read-target t)
+;(setq jde-build-function (quote (jde-ant-build jde-ant-buildfile "")))
+;(setq jde-build-function (quote (jde-ant-build)))
+
+;(setq jde-jdk '("1.3.1"))
+;(setq jde-jdk-registry '(("1.3.1" . "/Library/Java/Home")))
+;(setq jde-compiler (list "javac" ""))
+
+;(setq jde-global-classpath '(
+;                             "/sw/share/java/junit/junit.jar"
+;                             "/sw/share/java/log4j/log4j-core.jar"
+;                             "/sw/share/java/log4j/log4j.jar"
+;                             "/sw/lib/xalan-j/xalan.jar"
+;                             "/sw/lib/xalan-j/xml-apis.jar"
+;                             "/sw/lib/xerces-j/xercesSamples.jar"
+;                             "/sw/lib/xerces-j/xerces.jar"
+;                             "/Users/sakito/bin/lisp/jde/java/lib"
+;                             "."
+;                             ))
+
+;; ECB : Emacs Code Browser
+;(require 'ecb)
+
+;(add-hook 'java-mode-hook
+;          '(lambda()
+;             (setenv "LC_ALL" "en")
+;             (setq indent-tabs-mode nil)
+;             (setq c-basic-offset 4)
+;             (setq c-set-style "java")
+;             ))
+
+;(setq c-default-style "k&r")
+;(add-hook 'c-mode-common-hook
+;         '(lambda ()
+;             (progn
+               ;(c-toggle-hungry-state 1)
+;               (setq c-basic-offset 4 indent-tabs-mode nil))))
+
+;;;; hns-mode
+;; @see http://www.nijino.com/ari/programs/hnf-mode/
+;; M-x hnsにより新規日記記述開始
+;(add-to-list 'load-path (expand-file-name "~/bin/lisp/"))
+;(autoload 'hnf "hnf-mode" nil t)
+;(autoload 'hnf-mode "hnf-mode" nil t)
+;(setq auto-mode-alist (cons '("\\.hnf$" . hnf-mode) auto-mode-alist))
+;(modify-coding-system-alist 'file "\\.hnf$" '(undecided . euc-jp))
+;(setq hnf-diary-year-directory-flag t)
+;; Calendarと連携
+;(autoload 'hnf-mark-diary-entries "hnf-mode" nil t)
+;(add-hook 'calendar-load-hook
+;          '(lambda ()
+;             (define-key calendar-mode-map "iD" 'hnf-insert-diary-entry)
+;             ))
+;(add-hook 'today-visible-calendar-hook 'hnf-mark-diary-entries)
+;(add-hook 'today-invisible-calendar-hook 'hnf-mark-diary-entries)
+;(setq hnf-diary-url "http://sakito.s2.xrea.com/diary/")
+;(setq hnf-cat '(
+;                ("Mac") ("Emacs") ("Book") ("Python") ("Java") ("Info") ("soli") ("PythonFaq") 
+;                ("h独り言") ("2ちゃんねる")
+;                ))
+
+;;; scheme-mode
+;;
+;(setq scheme-program-name "/usr/local/bin/gosh")
+;(autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
+
+;(defun my-scm-shell ()
+;  (interactive)
+;  (let ((win (selected-window))
+;        (tmpbuf " * temporary *"))
+;    (pop-to-buffer tmpbuf)
+;    (run-scheme scheme-program-name)
+;    (select-window win)
+;    ))
+
+;(defvar paren-face 'paren-face)
+;(make-face 'paren-face)
+;(set-face-background 'paren-face "black")
+;(set-face-foreground 'paren-face "gray50")
+
+;(add-hook 'scheme-mode-hook
+;          (function
+;            (lambda ()
+;              (define-key scheme-mode-map "\C-c!" 'my-scm-shell)
+;              (setq scheme-font-lock-keywords-2
+;                    (append '(("(\\|)" . paren-face))
+;                            scheme-font-lock-keywords-2))
+;              )))
+;
+;(setq cmuscheme-load-hook
+;      '(
+;        (lambda ()
+;          (define-key inferior-scheme-mode-map "\C-c\C-t" 'favorite-cmd)
+;          )))
+
+
+;;; debian-changelog-mode
+;; @see 
+;; C-c C-v  新規にエントリを追加する．まずはこれ．
+;; C-c C-a  コメントの追加．新たに*が追加される．
+;; C-c C-c  登録 and 保存．mail address と time が自動で追加される．
+;;
+;(autoload 'debian-changelog-mode "debian-changelog-mode"
+;  "Major mode for editing Debian-style change logs." t)
+;(setq auto-mode-alist
+;      (cons '("ChangeLog\\..*" . debian-change-log-mode) auto-mode-alist))
+
+;;; bookmarks
+;; @see info Emacs
+;; ファイル等にbookmarkを作成する標準のモード
+;; ブックマーク情報を保存するファイル名
+;(setq bookmark-default-file "~/etc/ebookm.txt")
+
+;;end emacs21.el

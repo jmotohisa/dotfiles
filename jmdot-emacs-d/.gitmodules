@@ -1,0 +1,3 @@
+[submodule "lisp/igor-mode"]
+	path = lisp/igor-mode
+	url = https://github.com/yamad/igor-mode.git
