@@ -1,6 +1,6 @@
 # mainly for osx
 export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
-alias semacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
+alias emacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
 
 # mainly for cygwin
 export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
