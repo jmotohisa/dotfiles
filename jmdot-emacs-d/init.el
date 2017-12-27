@@ -1248,7 +1248,7 @@
 ;; Geiser
 (if carbon-p
 	(progn
-	  (load-file "~/.emacs.d/elpa/geiser-20161202.1657/geiser.el")
+	  (load-file "~/.emacs.d/elpa/geiser-20171217.1353/geiser.el")
 	  (setq geiser-active-implementations '(guile sqw-libctl racket chicken))
 	  (setq geiser-sqw-binary "/usr/local/bin/sqw-libctl")
 	  (setq geisler-scheme-dir "/Users/motohisa/.emacs.d/private/geiser-sqw-libctl/scheme/")
