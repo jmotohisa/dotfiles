@@ -1,0 +1,134 @@
+{
+	libgc1 memcheck
+	Memcheck:Cond
+	obj:/opt/local/lib/libgc.*
+	obj:/opt/local/lib/libgc.*
+}
+{
+	libgc1 free
+	Memcheck:Free
+	obj:/opt/local/lib/libgc.*
+	obj:/opt/local/lib/libgc.*
+}
+{
+	libgc1 addr4
+	Memcheck:Addr4
+	obj:/opt/local/lib/libgc.*
+	obj:/opt/local/lib/libgc.*
+}
+{
+	libgc1 value4
+	Memcheck:Value4
+	obj:/opt/local/lib/libgc.*
+	obj:/opt/local/lib/libgc.*
+}
+{
+	libgc1 value8
+	Memcheck:Value8
+	obj:/opt/local/lib/libgc.*
+	obj:/opt/local/lib/libgc.*
+}
+{
+	libgc1 Addr8
+	Memcheck:Addr8
+	obj:/opt/local/lib/libgc.*
+	obj:/opt/local/lib/libgc.*
+}
+{
+   bcmp Cond
+   Memcheck:Cond
+   fun:bcmp
+   fun:_ZN16ImageLoaderMachO18validateFirstPagesEPK21linkedit_data_commandiPKhmxRKN11ImageLoader11LinkContextE
+   fun:_ZN26ImageLoaderMachOCompressed19instantiateFromFileEPKciPKhmyyRK4statjjPK21linkedit_data_commandPK23encryption_info_commandRKN11ImageLoader11LinkContextE
+   fun:_ZN16ImageLoaderMachO19instantiateFromFileEPKciPKhyyRK4statRKN11ImageLoader11LinkContextE
+   fun:_ZN4dyldL10loadPhase6EiRK4statPKcRKNS_11LoadContextE
+   fun:_ZN4dyldL10loadPhase5EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase4EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase3EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase1EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase0EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyld4loadEPKcRKNS_11LoadContextE
+   fun:_ZN4dyldL14libraryLocatorEPKcbS1_PKN11ImageLoader10RPathChainE
+}
+{
+   bcmp Value8
+   Memcheck:Value8
+   fun:bcmp
+   fun:_ZN16ImageLoaderMachO18validateFirstPagesEPK21linkedit_data_commandiPKhmxRKN11ImageLoader11LinkContextE
+   fun:_ZN26ImageLoaderMachOCompressed19instantiateFromFileEPKciPKhmyyRK4statjjPK21linkedit_data_commandPK23encryption_info_commandRKN11ImageLoader11LinkContextE
+   fun:_ZN16ImageLoaderMachO19instantiateFromFileEPKciPKhyyRK4statRKN11ImageLoader11LinkContextE
+   fun:_ZN4dyldL10loadPhase6EiRK4statPKcRKNS_11LoadContextE
+   fun:_ZN4dyldL10loadPhase5EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase4EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase3EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase1EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase0EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyld4loadEPKcRKNS_11LoadContextE
+   fun:_ZN4dyldL14libraryLocatorEPKcbS1_PKN11ImageLoader10RPathChainE
+}
+{
+   ZN16 Cond
+   Memcheck:Cond
+   fun:_ZN16ImageLoaderMachO18validateFirstPagesEPK21linkedit_data_commandiPKhmxRKN11ImageLoader11LinkContextE
+   fun:_ZN26ImageLoaderMachOCompressed19instantiateFromFileEPKciPKhmyyRK4statjjPK21linkedit_data_commandPK23encryption_info_commandRKN11ImageLoader11LinkContextE
+   fun:_ZN16ImageLoaderMachO19instantiateFromFileEPKciPKhyyRK4statRKN11ImageLoader11LinkContextE
+   fun:_ZN4dyldL10loadPhase6EiRK4statPKcRKNS_11LoadContextE
+   fun:_ZN4dyldL10loadPhase5EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase4EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase3EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase1EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyldL10loadPhase0EPKcS1_RKNS_11LoadContextEPNSt3__16vectorIS1_NS5_9allocatorIS1_EEEE
+   fun:_ZN4dyld4loadEPKcRKNS_11LoadContextE
+   fun:_ZN4dyldL14libraryLocatorEPKcbS1_PKN11ImageLoader10RPathChainE
+   fun:_ZN11ImageLoader22recursiveLoadLibrariesERKNS_11LinkContextEbRKNS_10RPathChainE
+}
+{
+   pthread_sigmask Param
+   Memcheck:Param
+   __pthread_sigmask(set)
+   fun:__pthread_sigmask
+   fun:pthread_sigmask
+   fun:GC_start_mark_threads_inner
+   fun:GC_init
+   fun:scm_storage_prehistory
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile_and_parent
+   fun:GC_call_with_stack_base
+   fun:scm_with_guile
+   fun:scm_boot_guile
+   fun:main
+}
+{
+   libunistring_freea Cond1
+   Memcheck:Cond
+   fun:libunistring_freea
+   fun:libunistring_mem_iconveha
+   fun:u8_conv_from_encoding
+   fun:u32_conv_from_encoding
+   fun:scm_from_stringn
+   fun:scm_from_locale_symbol
+   fun:scm_init_array_handle
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile_and_parent
+   fun:GC_call_with_stack_base
+   fun:scm_with_guile
+}
+{
+   libunistring_freea Cond2
+   Memcheck:Cond
+   fun:libunistring_freea
+   fun:libunistring_mem_iconveha
+   fun:u8_conv_to_encoding
+   fun:u32_conv_to_encoding
+   fun:scm_ungetc
+   fun:scm_read
+   fun:vm_regular_engine
+   fun:scm_c_vm_run
+   fun:scm_call_1
+   fun:vm_regular_engine
+   fun:scm_c_vm_run
+   fun:scm_call_3
+}
+
