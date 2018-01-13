@@ -1,4 +1,4 @@
-;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Fri Jun 16 17:36:55 JST 2017>
+;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Thu Jan 04 14:41:59 JST 2018>
 
 (setq user-full-name "Junichi Motohisa")
 (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -1228,7 +1228,7 @@
 (autoload 'freefem++-mode "freefem++-mode" nil t)
 (setq auto-mode-alist
       (cons '("\\.edp$" . freefem++-mode) auto-mode-alist))
-(setq freefempp-program "/usr/local/ff++/openmpi/3.49/bin/FreeFem++")
+(setq freefempp-program "/usr/local/ff++/openmpi-2.1/3.56/bin/FreeFem++")
 
 ;; ;; evernote mode 2014/11/26
 ;; (require 'evernote-mode)

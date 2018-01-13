@@ -14,6 +14,8 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 ## install ddskk:
 ## igor-mode
 # git clone https://github.com/yamad/igor-mode.git
+## FreeFem mode
+# git clone https://github.com/rrgalvan/freefem-mode.git
 
 ## for valgrind
 # ln -s `pwd`/.valgrindrc ~/.valgrindrc
