@@ -4,3 +4,5 @@ alias emacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
 
 # mainly for cygwin
 export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
+export TERM=xterm-color
+alias lv='TERM=CYGWIN /usr/bin/lv'
