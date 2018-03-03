@@ -1,4 +1,4 @@
-;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Thu Jan 04 14:41:59 JST 2018>
+;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Tue Feb 20 13:52:03 JST 2018>
 
 (setq user-full-name "Junichi Motohisa")
 (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -942,19 +942,40 @@
 ;;  )
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (lua-mode geiser)))
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
- '(spice-simulator-alist (quote (("Spice3" "spice3 -b" "" ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil (buffer-file-name)) ("Circuit: \\(.*\\)$" 1)) ("Hspice" "hspice" "" ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1 (buffer-file-name)) ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1)) ("Eldo" "eldo -i" "" ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1 (buffer-file-name)) ("Running \\(eldo\\).*$" 1)) ("Spectre" "spectre" "" ("\\s-*\"\\([^ 	
-]+\\)\" +\\([0-9]+\\):.*" 1 2) ("" 0)) ("ngspice" "ngspice" "" ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil (buffer-file-name)) ("Circuit: \\(.*\\)$" 1))))))
+ '(spice-simulator-alist
+   (quote
+	(("Spice3" "spice3 -b" ""
+	  ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+	   (buffer-file-name))
+	  ("Circuit: \\(.*\\)$" 1))
+	 ("Hspice" "hspice" ""
+	  ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
+	   (buffer-file-name))
+	  ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
+	 ("Eldo" "eldo -i" ""
+	  ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
+	   (buffer-file-name))
+	  ("Running \\(eldo\\).*$" 1))
+	 ("Spectre" "spectre" ""
+	  ("\\s-*\"\\([^ 	
+]+\\)\" +\\([0-9]+\\):.*" 1 2)
+	  ("" 0))
+	 ("ngspice" "ngspice" ""
+	  ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+	   (buffer-file-name))
+	  ("Circuit: \\(.*\\)$" 1))))))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 ;;
