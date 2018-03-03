@@ -1,4 +1,4 @@
-;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Tue Feb 20 13:52:03 JST 2018>
+;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Sun Mar 04 08:11:03 JST 2018>
 
 (setq user-full-name "Junichi Motohisa")
 (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -946,7 +946,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (lua-mode geiser)))
+ '(package-selected-packages (quote (markdown-mode lua-mode geiser)))
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
@@ -1369,6 +1369,10 @@
 (if carbon-p
 	(setq markdown-command "multimarkdown"))
 
+;; lua mode
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
 ; Load the LAML Emacs support.
 ; This fragment has been inserted by the LAML configuration program.
