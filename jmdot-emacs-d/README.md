@@ -2,9 +2,17 @@
 
 dotemacsd of JM.
 
-### What is this repository for? ###
+### Setup ###
 
-* Quick summary
+    $ cd ~/.emacs.d
+    $ mkdir local-lisp
+    $ mkdir site-start.d
+
+Install skk.
+** Cygwin
+    $ make what-where EMACS=/usr/bin/emacs
+	$ make install EMACS=/usr/bin/emacs
+    
 * Version
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
