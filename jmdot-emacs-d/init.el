@@ -1,4 +1,4 @@
-;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Sun Mar 04 08:11:03 JST 2018>
+;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Wed Dec 05 21:01:19 JST 2018>
 
 (setq user-full-name "Junichi Motohisa")
 (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -1382,3 +1382,21 @@
 
 ; End of LAML Emacs configuration.
 
+;; ;; autolisp mode
+;; ;; http://xarch.tu-graz.ac.at/autocad/lsp_tools/ntemacs/autolisp.el
+;; ;; https://www.emacswiki.org/emacs/AutoLispMode
+;; (autoload 'autolisp-mode "autolisp" "AutoLISP" t)
+;; (add-to-list 'auto-mode-alist '("\\.lsp$" . autolisp-mode))
+
+;; arudino-mode
+;; https://github.com/bookest/arduino-mode
+;; ----------------------------------------------------------------------------
+;; arduino-mode
+;; ----------------------------------------------------------------------------
+; arduino-mode.elへのパス
+(add-to-list 'load-path "~/.emacs.d/lisp/arduino-mode")
+; arduino-modeのセット
+(autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
+; 拡張子の関連付け
+(setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
+;; ----------------------------------------------------------------------------

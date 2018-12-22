@@ -1,17 +1,22 @@
 \RequirePackage[l2tabu, orthodox]{nag}
-\documentclass[11pt,uplatex]{jsarticle}
+\documentclass[11pt,uplatex,a4paper]{jsarticle}
 %% file: fem2dp-2.tex
 %% author: Junichi Motohisa
 %% created: 2017-11-21 18:32:34
-%% last saved : Time-stamp: <Fri Dec 08 12:22:00 JST 2017>
+%% last saved : Time-stamp: <Wed Dec 12 22:25:06 JST 2018>
 % \usepackage[dvipdfmx]{graphicx}
 \usepackage{multicol}
+\usepackage{cite}
 %\usepackage{mathptmx}
 %\usepackage{color}
 \usepackage{lscape}
 % \usepackage{dcolumn}
 \usepackage{moreverb}
-\usepackage[a4paper,margin=1in]{geometry}
+% \usepackage[a4paper,margin=1in]{geometry}
+\usepackage[driver=dvipdfm,truedimen]{geometry}
+% \geometry{left=30truemm,right=25truemm,top=25truemm,bottom=25truemm}
+\geometry{margin=1truein}
+% \usepackage[a4paper,margin=1in]{geometry}
 
 %% taken from https://github.com/ryseto/emacs_and_tex/blob/master/template.tex
 %% begin
@@ -20,8 +25,10 @@
 \usepackage[protrusion=true,expansion=true]{microtype}
 \usepackage{siunitx}
 \usepackage{xcolor}
- \usepackage[pdftex]{graphicx}
+\usepackage[pdftex]{graphicx}
 %\usepackage[pdftex,bookmarks,colorlinks]{hyperref}
+% \usepackage[dvipdfmx]{hyperref}
+% \usepackage{pxjahyper}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -33,6 +40,7 @@
 \usepackage{enumitem}
 \usepackage{cleveref}
 \usepackage[numbers]{natbib}
+
 % \bibliographystyle{abbrvnat}
 \setlist{itemsep=-3pt}
 %% end
@@ -70,6 +78,9 @@
 \def\sgn{\mathrm{sgn}_{n,p}}
 \def\Tr{{\mathrm{Tr}\, }}
 
+\def\micon{\mathrm{\mu m}}
+\def\nm{\mathrm{nm}}
+
 \begin{document}
 
 \title{Title}
@@ -81,8 +92,9 @@
 
 \appendix
 
-\begin{thebibliography}{99}
-\end{thebibliography}
+ \begin{thebibliography}{99}
+     
+ \end{thebibliography}
 %% \bibliography{/Users/motohisa/Dropbox/Papers/rse}
 
 \end{document}
