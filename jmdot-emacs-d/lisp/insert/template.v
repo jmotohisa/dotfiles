@@ -1,12 +1,12 @@
 //--------------------------------------------------------------------------------
-//  %file% - Time-stamp: <Sat Dec 22 12:29:55 JST 2018>
+//  %file% - Time-stamp: <Sat Dec 22 13:40:25 JST 2018>
 //
 //   Copyright (c) %year%  %id% (%name%)  <%mail%>
 //
 //  $Id: %file% %date% %id% $
 // Create Date: %date%
 // Design Name:
-// Module Name: %file%
+// Module Name: %file-without-ext%
 // Project Name: 
 // Target Devices:
 // Tool versions:

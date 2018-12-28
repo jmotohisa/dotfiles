@@ -1,4 +1,4 @@
-;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Wed Dec 05 21:01:19 JST 2018>
+;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Fri Dec 28 17:39:05 JST 2018>
 
 (setq user-full-name "Junichi Motohisa")
 (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -1313,6 +1313,7 @@
                ("\\.h$"   . ["template.h" my-template])
 			   ("\\.tex$" . ["template.tex" my-template])
 			   ("\\.html$" . ["template.html" my-template])
+			   ("\\.v$" . ["template.v" my-template])
 ;;			   ("\\.ipf$" . ["template.ipf" my-template])
                ) auto-insert-alist))
 (require 'cl)
@@ -1400,3 +1401,27 @@
 ; 拡張子の関連付け
 (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
 ;; ----------------------------------------------------------------------------
+
+;; gmsh mode
+;; ----------------------------------------------------------------------------
+;; arduino-mode
+;; ----------------------------------------------------------------------------
+; 拡張子の関連付け
+
+(autoload 'gmsh-mode "gmsh.el" "Gmsh editing mode." t)
+(setq auto-mode-alist (cons '("\\.\\(geo\\|pro\\)$" . gmsh-mode) auto-mode-alist))
+
+;; Python-mode
+(add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8.el")
+(require 'py-autopep8)
+(add-hook 'python-mode-hook
+'(lambda ()
+(define-key python-mode-map "\C-cF" 'py-autopep8)
+(define-key python-mode-map "\C-cf" 'py-autopep8-region)  
+(setq indent-tabs-mode nil)
+(setq indent-level 4)
+(setq python-indent 4)
+(setq tab-width 4)))
+		 
+;; 保存時にバッファ全体を自動整形する
+(add-hook 'before-save-hook 'py-autopep8-before-save)
