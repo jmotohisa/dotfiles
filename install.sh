@@ -26,6 +26,8 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 # git clone https://github.com/yamad/igor-mode.git
 ## FreeFem mode
 # git clone https://github.com/rrgalvan/freefem-mode.git
+## py-autopep8
+# git clone https://github.com/paetzke/py-autopep8.el.git
 
 ## for valgrind
 # ln -s `pwd`/.valgrindrc ~/.valgrindrc
