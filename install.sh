@@ -14,7 +14,13 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 ## install ddskk:
 # wget 
 # cd ddskk-XX.X; cd dic; wget http://openlab.ring.gr.jp/skk/skk/dic/SKK-JISYO.L
-# 
+# export EMACS=/path/to/emacs
+# echo '(setq SKK_DATADIR "~/.emacs.d/share/skk")' >> SKK-CFG
+# echo '(setq SKK_INFODIR "~/.emacs.d/info")' >> SKK-CFG
+# echo '(setq SKK_LISPDIR "~/.emacs.d/lisp/skk")' >> SKK-CFG
+# echo '(setq SKK_SET_JISYO t)' >> SKK-CFG
+# make  install LISPDIR=~/.emacs.d/lisp VERSION_SPECIFIC_LISPDIR=~/.emacs.d/lisp INFODIR=~/.emacs.d/info
+#
 ## igor-mode
 # cd ~/.emacs.d/lisp
 # git clone https://github.com/yamad/igor-mode.git
