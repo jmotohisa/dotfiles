@@ -132,3 +132,107 @@
    fun:scm_call_3
 }
 
+{
+   fun:GC_push_all_eager Cond
+   Memcheck:Cond
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_init
+   fun:scm_storage_prehistory
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile
+   fun:GC_call_with_stack_base
+}
+
+{
+   libunistring_freea Cond
+   Memcheck:Cond
+   fun:libunistring_freea
+   fun:libunistring_mem_iconveha
+   fun:u32_conv_from_encoding
+   fun:scm_from_stringn
+   fun:scm_init_random
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile
+   fun:GC_call_with_stack_base
+   fun:scm_i_with_guile
+   fun:scm_with_guile
+   fun:scm_boot_guile
+   fun:main
+}
+
+{
+   GC_mark_and_push_stack Value8
+   Memcheck:Value8
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+
+{
+   GC_mark_and_push_stack Cond
+   Memcheck:Cond
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+
+{
+   fun:GC_push_contents_hdr Value8
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+
+{
+   fun:GC_find_header Value8
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}

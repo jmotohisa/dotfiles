@@ -31,5 +31,6 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 
 ## for valgrind
 # ln -s `pwd`/.valgrindrc ~/.valgrindrc
+# mkdir -p $(HOME)/local/share/valgrind
 # ln -s `pwd`/valgrind/jm.sup ~/local/share/valgrind/jm.sup
 
