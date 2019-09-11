@@ -1,41 +1,41 @@
 {
-	libgc1 memcheck
+	<libgc1 memcheck>
 	Memcheck:Cond
 	obj:/opt/local/lib/libgc.*
 	obj:/opt/local/lib/libgc.*
 }
 {
-	libgc1 free
+	<libgc1 free>
 	Memcheck:Free
 	obj:/opt/local/lib/libgc.*
 	obj:/opt/local/lib/libgc.*
 }
 {
-	libgc1 addr4
+	<libgc1 addr4>
 	Memcheck:Addr4
 	obj:/opt/local/lib/libgc.*
 	obj:/opt/local/lib/libgc.*
 }
 {
-	libgc1 value4
+	<libgc1 value4>
 	Memcheck:Value4
 	obj:/opt/local/lib/libgc.*
 	obj:/opt/local/lib/libgc.*
 }
 {
-	libgc1 value8
+	<libgc1 value8>
 	Memcheck:Value8
 	obj:/opt/local/lib/libgc.*
 	obj:/opt/local/lib/libgc.*
 }
 {
-	libgc1 Addr8
+	<libgc1 Addr8>
 	Memcheck:Addr8
 	obj:/opt/local/lib/libgc.*
 	obj:/opt/local/lib/libgc.*
 }
 {
-   bcmp Cond
+   <bcmp Cond>
    Memcheck:Cond
    fun:bcmp
    fun:_ZN16ImageLoaderMachO18validateFirstPagesEPK21linkedit_data_commandiPKhmxRKN11ImageLoader11LinkContextE
@@ -51,7 +51,7 @@
    fun:_ZN4dyldL14libraryLocatorEPKcbS1_PKN11ImageLoader10RPathChainE
 }
 {
-   bcmp Value8
+   <bcmp Value8>
    Memcheck:Value8
    fun:bcmp
    fun:_ZN16ImageLoaderMachO18validateFirstPagesEPK21linkedit_data_commandiPKhmxRKN11ImageLoader11LinkContextE
@@ -67,7 +67,7 @@
    fun:_ZN4dyldL14libraryLocatorEPKcbS1_PKN11ImageLoader10RPathChainE
 }
 {
-   ZN16 Cond
+   <ZN16 Cond>
    Memcheck:Cond
    fun:_ZN16ImageLoaderMachO18validateFirstPagesEPK21linkedit_data_commandiPKhmxRKN11ImageLoader11LinkContextE
    fun:_ZN26ImageLoaderMachOCompressed19instantiateFromFileEPKciPKhmyyRK4statjjPK21linkedit_data_commandPK23encryption_info_commandRKN11ImageLoader11LinkContextE
@@ -83,7 +83,7 @@
    fun:_ZN11ImageLoader22recursiveLoadLibrariesERKNS_11LinkContextEbRKNS_10RPathChainE
 }
 {
-   pthread_sigmask Param
+   <pthread_sigmask Param>
    Memcheck:Param
    __pthread_sigmask(set)
    fun:__pthread_sigmask
@@ -100,7 +100,7 @@
    fun:main
 }
 {
-   libunistring_freea Cond1
+   <libunistring_freea Cond1>
    Memcheck:Cond
    fun:libunistring_freea
    fun:libunistring_mem_iconveha
@@ -116,7 +116,7 @@
    fun:scm_with_guile
 }
 {
-   libunistring_freea Cond2
+   <libunistring_freea Cond2>
    Memcheck:Cond
    fun:libunistring_freea
    fun:libunistring_mem_iconveha
@@ -132,50 +132,2959 @@
    fun:scm_call_3
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Param
-   __pthread_sigmask(set)
-   fun:__pthread_sigmask
-   fun:pthread_sigmask
-   fun:GC_start_mark_threads_inner
+   <GC_mark_and_push_stack Cond>
+   Memcheck:Cond
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <fun:GC_push_contents_hdr Value8>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <fun:GC_find_header Value8>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <fun:GC_push_all_eager Cond>
+   Memcheck:Cond
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
    fun:GC_init
    fun:scm_storage_prehistory
    fun:scm_i_init_guile
    fun:scm_i_init_thread_for_guile
    fun:with_guile
    fun:GC_call_with_stack_base
+   fun:scm_i_with_guile
    fun:scm_with_guile
-   fun:scm_boot_guile
-   fun:main
 }
 {
    <insert_a_suppression_name_here>
-   Memcheck:Addr4
-   fun:_pthread_body
-   fun:_pthread_start
-   fun:thread_start
+   Memcheck:Cond
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
 }
 {
    <insert_a_suppression_name_here>
-   Memcheck:Param
-   __pthread_sigmask(set)
-   fun:__pthread_sigmask
-   fun:pthread_sigmask
-   fun:GC_start_mark_threads_inner
+   Memcheck:Value8
+   fun:AO_char_store
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
    fun:GC_init
    fun:scm_storage_prehistory
    fun:scm_i_init_guile
    fun:scm_i_init_thread_for_guile
    fun:with_guile
    fun:GC_call_with_stack_base
-   fun:scm_with_guile
-   fun:scm_boot_guile
-   fun:main
 }
 {
    <insert_a_suppression_name_here>
-   Memcheck:Addr4
-   fun:_pthread_body
-   fun:_pthread_start
-   fun:thread_start
+   Memcheck:Cond
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_init
+   fun:scm_storage_prehistory
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile
+   fun:GC_call_with_stack_base
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_help_marker
+   fun:GC_mark_thread
+   fun:start_thread
+   fun:clone
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:AO_char_store
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_normal
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_add_to_black_list_normal
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_source_properties_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_source_properties_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_source_properties_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_cell
+   fun:scm_inline_cons
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_cell
+   fun:scm_inline_cons
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_cell
+   fun:scm_inline_cons
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_promote_black_lists
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:make_stringbuf
+   fun:scm_i_make_string
+   fun:scm_from_latin1_stringn
+   fun:scm_number_to_string
+   fun:vm_regular_engine
+   fun:scm_call_n
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_source_properties_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_source_properties_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_source_properties_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_help_marker
+   fun:GC_mark_thread
+   fun:start_thread
+   fun:clone
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_help_marker
+   fun:GC_mark_thread
+   fun:start_thread
+   fun:clone
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_help_marker
+   fun:GC_mark_thread
+   fun:start_thread
+   fun:clone
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_words
+   fun:scm_i_alloc_struct
+   fun:scm_c_make_structv
+   fun:scm_make_struct_no_tail
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_words
+   fun:scm_i_alloc_struct
+   fun:scm_c_make_structv
+   fun:scm_make_struct_no_tail
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_words
+   fun:scm_i_alloc_struct
+   fun:scm_c_make_structv
+   fun:scm_make_struct_no_tail
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:GC_malloc_explicitly_typed
+   fun:allocate_entry
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:GC_malloc_explicitly_typed
+   fun:allocate_entry
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:GC_malloc_explicitly_typed
+   fun:allocate_entry
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:GC_malloc_explicitly_typed
+   fun:allocate_entry
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:GC_malloc_explicitly_typed
+   fun:allocate_entry
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_promote_black_lists
+   fun:GC_try_to_collect_inner
+   fun:GC_grow_table
+   fun:GC_register_disappearing_link_inner
+   fun:resize_set
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:load_thunk_from_memory
+   fun:vm_regular_engine
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:scm_words
+   fun:scm_c_make_vector
+   fun:scm_i_rehash
+   fun:scm_hash_fn_create_handle_x
+   fun:scm_hash_fn_set_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:scm_words
+   fun:scm_c_make_vector
+   fun:scm_i_rehash
+   fun:scm_hash_fn_create_handle_x
+   fun:scm_hash_fn_set_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:register_disappearing_links
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:scm_set_procedure_property_x
+   fun:vm_regular_engine
+   fun:scm_call_n
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_promote_black_lists
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:AO_char_store
+   fun:GC_push_contents_hdr
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_add_to_black_list_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_push_all_stacks
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:GC_malloc_kind
+   fun:scm_cell
+   fun:scm_cons
+   fun:scm_hash_fn_create_handle_x
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:thread_mark
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_words
+   fun:vm_regular_engine
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+   fun:weak_table_put_x
+   fun:scm_c_weak_table_put_x
+   fun:maybe_annotate_source
+   fun:scm_read_sexp
+   fun:read_inner_expression
+   fun:scm_read_sexp
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_promote_black_lists
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_cell
+   fun:scm_inline_cons
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_cell
+   fun:scm_inline_cons
+   fun:vm_regular_engine
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_from
+   fun:GC_do_local_mark
+   fun:GC_mark_local
+   fun:GC_do_parallel_mark
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc_many
+   fun:scm_inline_gc_alloc
+   fun:scm_inline_gc_malloc
+   fun:scm_inline_gc_malloc_words
+   fun:scm_inline_cell
+   fun:scm_inline_cons
+   fun:vm_regular_engine
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:scm_words
+   fun:scm_c_make_vector
+   fun:capture_flat_env
+   fun:memoize
+   fun:memoize_exps
+   fun:memoize
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:scm_words
+   fun:scm_c_make_vector
+   fun:capture_flat_env
+   fun:memoize
+   fun:memoize_exps
+   fun:memoize
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:scm_words
+   fun:scm_c_make_vector
+   fun:capture_flat_env
+   fun:memoize
+   fun:memoize_exps
+   fun:memoize
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_promote_black_lists
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_set
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:vm_regular_engine
+   fun:scm_call_n
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:scm_read_mixed_case_symbol
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:scm_read_mixed_case_symbol
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:scm_read_mixed_case_symbol
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:scm_read_mixed_case_symbol
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_is_black_listed
+   fun:GC_allochblk_nth
+   fun:GC_allochblk
+   fun:GC_new_hblk
+   fun:GC_allocobj
+   fun:GC_generic_malloc_inner
+   fun:GC_register_disappearing_link_inner
+   fun:weak_set_add_x
+   fun:scm_c_weak_set_add_x
+   fun:scm_i_str2symbol
+   fun:scm_read_mixed_case_symbol
+   fun:read_inner_expression
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_base
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value8
+   fun:GC_find_header
+   fun:GC_mark_and_push_stack
+   fun:GC_push_all_eager
+   fun:GC_with_callee_saves_pushed
+   fun:GC_push_roots
+   fun:GC_mark_some
+   fun:GC_stopped_mark
+   fun:GC_try_to_collect_inner
+   fun:GC_collect_or_expand
+   fun:GC_alloc_large
+   fun:GC_generic_malloc
+   fun:GC_malloc_kind_global
+   fun:resize_table
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_XlcCreateLC
+   fun:_XlcDefaultLoader
+   fun:_XOpenLC
+   fun:_XlcCurrentLC
+   fun:_XkbGetCharset
+   fun:XkbTranslateKeySym
+   fun:XLookupString
+   obj:/usr/lib64/plplot5.11.1/drivers/xwin.so
+   fun:plD_wait_xw
+   fun:plP_wait
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_XlcResolveLocaleName
+   obj:/usr/lib64/libX11.so.6.3.0
+   obj:/usr/lib64/libX11.so.6.3.0
+   fun:_XlcCreateLC
+   fun:_XlcDefaultLoader
+   fun:_XOpenLC
+   fun:_XlcCurrentLC
+   fun:_XkbGetCharset
+   fun:XkbTranslateKeySym
+   fun:XLookupString
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:do_realloc
+   fun:scm_realloc
+   fun:scm_to_stringn
+   fun:material_type_base_input
+   fun:material_type_compound_input
+   fun:material_type_input
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:do_realloc
+   fun:scm_realloc
+   fun:scm_to_stringn
+   fun:material_type_base_input
+   fun:material_type_compound_input
+   fun:material_type_input
+   fun:layer_type_input
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:do_realloc
+   fun:scm_realloc
+   fun:scm_to_stringn
+   fun:material_type_base_input
+   fun:material_type_compound_input
+   fun:material_type_input
+   fun:layer_type_input
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:read_input_vars
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_primitive_eval
+   fun:scm_primitive_load
+   fun:vm_regular_engine
+   fun:scm_call_n
+   fun:scm_call_1
+   fun:main_entry
+   fun:invoke_main_func
+   fun:c_body
+>>>>>>> 7db9e9fc118a3d4a7130bc399d998359ef50a060
 }
