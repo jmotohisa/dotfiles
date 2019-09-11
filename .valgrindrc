@@ -1,1 +1,1 @@
---suppressions=$(HOME)/local/share/valgrind/jm.sup
+--suppressions=/home/motohisa/local/share/valgrind/jm.sup
