@@ -131,4 +131,51 @@
    fun:scm_c_vm_run
    fun:scm_call_3
 }
-
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   __pthread_sigmask(set)
+   fun:__pthread_sigmask
+   fun:pthread_sigmask
+   fun:GC_start_mark_threads_inner
+   fun:GC_init
+   fun:scm_storage_prehistory
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile
+   fun:GC_call_with_stack_base
+   fun:scm_with_guile
+   fun:scm_boot_guile
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr4
+   fun:_pthread_body
+   fun:_pthread_start
+   fun:thread_start
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   __pthread_sigmask(set)
+   fun:__pthread_sigmask
+   fun:pthread_sigmask
+   fun:GC_start_mark_threads_inner
+   fun:GC_init
+   fun:scm_storage_prehistory
+   fun:scm_i_init_guile
+   fun:scm_i_init_thread_for_guile
+   fun:with_guile
+   fun:GC_call_with_stack_base
+   fun:scm_with_guile
+   fun:scm_boot_guile
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr4
+   fun:_pthread_body
+   fun:_pthread_start
+   fun:thread_start
+}

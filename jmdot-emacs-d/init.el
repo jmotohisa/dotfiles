@@ -1,4 +1,4 @@
-;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Fri Dec 28 17:39:05 JST 2018>
+;; ~/.emacs.d/init.el of J. Motohisa - last saved: Time-stamp: <Wed Jul 03 22:08:53 JST 2019>
 
 (setq user-full-name "Junichi Motohisa")
 (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -1314,6 +1314,7 @@
 			   ("\\.tex$" . ["template.tex" my-template])
 			   ("\\.html$" . ["template.html" my-template])
 			   ("\\.v$" . ["template.v" my-template])
+			   ("\\.py$" . ["template.py" my-template])
 ;;			   ("\\.ipf$" . ["template.ipf" my-template])
                ) auto-insert-alist))
 (require 'cl)
