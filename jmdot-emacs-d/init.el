@@ -1411,16 +1411,19 @@
 (setq auto-mode-alist (cons '("\\.\\(geo\\|pro\\)$" . gmsh-mode) auto-mode-alist))
 
 ;; Python-mode
-;;(add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8.el")
-;;(require 'py-autopep8)
-;;(add-hook 'python-mode-hook
-;;'(lambda ()
-;;(define-key python-mode-map "\C-cF" 'py-autopep8)
-;;(define-key python-mode-map "\C-cf" 'py-autopep8-region)  
-;;(setq indent-tabs-mode nil)
-;;(setq indent-level 4)
-;;(setq python-indent 4)
-;;(setq tab-width 4)))
-		 
-;; 保存時にバッファ全体を自動整形する
-;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+(if darwin-p
+    (progn
+	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8.el")
+	  (require 'py-autopep8)
+	  (add-hook 'python-mode-hook
+				'(lambda ()
+				   (define-key python-mode-map "\C-cF" 'py-autopep8)
+				   (define-key python-mode-map "\C-cf" 'py-autopep8-region)  
+				   (setq indent-tabs-mode nil)
+				   (setq indent-level 4)
+				   (setq python-indent 4)
+				   (setq tab-width 4)))
+	  
+;;保存時にバッファ全体を自動整形する
+	  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+	  ))
