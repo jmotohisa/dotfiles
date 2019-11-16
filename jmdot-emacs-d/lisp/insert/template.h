@@ -1,5 +1,5 @@
 /*
- *  %file% - last saved: Time-stamp: <Sat Nov 26 19:40:12 JST 2016>
+ *  %file% - last saved: Time-stamp: <Wed Jul 03 22:07:23 JST 2019>
  *
  *   Copyright (c) %year%  %id% (%name%)  <%mail%>
  *
@@ -38,6 +38,10 @@
 #ifndef %include-guard%
 #define %include-guard%
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef	GLOBAL_VALUE_DEFINE
 #define	GLOBAL
 #else
@@ -48,4 +52,9 @@
 
 #undef GLOBAL_VALUE_DEFINE
 #undef GLOBAL
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif  // %include-guard%

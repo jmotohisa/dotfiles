@@ -1,0 +1,6 @@
+[submodule "jmdot-emacs-d/lisp/arduino-mode"]
+	path = jmdot-emacs-d/lisp/arduino-mode
+	url = https://github.com/bookest/arduino-mode.git
+[submodule "jmdot-emacs-d/lisp/py-autopep8.el"]
+	path = jmdot-emacs-d/lisp/py-autopep8.el
+	url = https://github.com/fujimisakari/py-autopep8.el.git

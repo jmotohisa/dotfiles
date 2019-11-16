@@ -1,2 +1,4 @@
 *~
 dotzshd/.zshrc.local
+*.log
+*.aux
