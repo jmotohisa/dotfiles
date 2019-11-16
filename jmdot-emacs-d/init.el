@@ -37,7 +37,7 @@
       (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
       (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
       (package-initialize))
-)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; path
@@ -493,296 +493,297 @@
 ;;
 ;; YaTeX
 ;;
-(if darwin-p (progn
-;;(setq mac-command-key-is-meta nil)
-(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
-(setq auto-mode-alist
-      (append '(("\\.tex$" . yatex-mode)
-                ("\\.ltx$" . yatex-mode)
-                ("\\.cls$" . yatex-mode)
-                ("\\.sty$" . yatex-mode)
-                ("\\.clo$" . yatex-mode)
-                ("\\.bbl$" . yatex-mode)) auto-mode-alist))
-(setq YaTeX-inhibit-prefix-letter t)
-(setq YaTeX-kanji-code nil)
-(setq YaTeX-latex-message-code 'utf-8)
-(setq YaTeX-use-LaTeX2e t)
-(setq YaTeX-use-AMS-LaTeX t)
-(setq YaTeX-dvi2-command-ext-alist
-      '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
-(setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
-;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
-;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
-;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
-;(setq tex-command "/opt/local/bin/luajitlatex -synctex=1")
-;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
-;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
-;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/platex-ng %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex %O -synctex=1 %S/' -e '$bibtex=q/bibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/makeindex %O -o %D %S/' -norc -gg -pdf")
-;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/luajitlatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-(setq bibtex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-(setq makeindex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-;;(setq dvi2-command "/usr/bin/open -a Skim")
-(setq dvi2-command "/Users/motohisa/bin/skim_reload2.sh")
-;;(setq dvi2-command "/usr/bin/open -a Preview")
-;(setq dvi2-command "/usr/bin/open -a TeXShop")
-;(setq dvi2-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
-;(setq dvi2-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
-;;(setq tex-pdfview-command "/usr/bin/open -a Skim")
-(setq tex-pdfview-command "/Users/motohisa/bin/skim_reload2.sh")
-;(setq tex-pdfview-command "/usr/bin/open -a Preview")
-;(setq tex-pdfview-command "/usr/bin/open -a TeXShop")
-;(setq tex-pdfview-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
-;(setq tex-pdfview-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
-(setq dviprint-command-format "/usr/bin/open -a \"Adobe Acrobat Reader DC\" `echo %s | gsed -e \"s/\\.[^.]*$/\\.pdf/\"`")
-
-(add-hook 'yatex-mode-hook
-          '(lambda ()
-             (auto-fill-mode -1)))
-
-;;
-;; RefTeX with YaTeX
-;;
-;(add-hook 'yatex-mode-hook 'turn-on-reftex)
-(add-hook 'yatex-mode-hook
-          '(lambda ()
-             (reftex-mode 1)
-             (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
-             (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
-
-;; taken from https://github.com/ryseto/emacs_and_tex/blob/master/my_yatex.el
+(if darwin-p
+	(progn
+	  ;;(setq mac-command-key-is-meta nil)
+	  (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+	  (setq auto-mode-alist
+			(append '(("\\.tex$" . yatex-mode)
+					  ("\\.ltx$" . yatex-mode)
+					  ("\\.cls$" . yatex-mode)
+					  ("\\.sty$" . yatex-mode)
+					  ("\\.clo$" . yatex-mode)
+					  ("\\.bbl$" . yatex-mode)) auto-mode-alist))
+	  (setq YaTeX-inhibit-prefix-letter t)
+	  (setq YaTeX-kanji-code nil)
+	  (setq YaTeX-latex-message-code 'utf-8)
+	  (setq YaTeX-use-LaTeX2e t)
+	  (setq YaTeX-use-AMS-LaTeX t)
+	  (setq YaTeX-dvi2-command-ext-alist
+			'(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
+	  (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+										;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
+										;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
+										;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
+										;(setq tex-command "/opt/local/bin/luajitlatex -synctex=1")
+										;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/platex-ng %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex %O -synctex=1 %S/' -e '$bibtex=q/bibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/makeindex %O -o %D %S/' -norc -gg -pdf")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/luajitlatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+	  (setq bibtex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+	  (setq makeindex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+	  ;;(setq dvi2-command "/usr/bin/open -a Skim")
+	  (setq dvi2-command "/Users/motohisa/bin/skim_reload2.sh")
+	  ;;(setq dvi2-command "/usr/bin/open -a Preview")
+										;(setq dvi2-command "/usr/bin/open -a TeXShop")
+										;(setq dvi2-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
+										;(setq dvi2-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
+	  ;;(setq tex-pdfview-command "/usr/bin/open -a Skim")
+	  (setq tex-pdfview-command "/Users/motohisa/bin/skim_reload2.sh")
+										;(setq tex-pdfview-command "/usr/bin/open -a Preview")
+										;(setq tex-pdfview-command "/usr/bin/open -a TeXShop")
+										;(setq tex-pdfview-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
+										;(setq tex-pdfview-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
+	  (setq dviprint-command-format "/usr/bin/open -a \"Adobe Acrobat Reader DC\" `echo %s | gsed -e \"s/\\.[^.]*$/\\.pdf/\"`")
+	  
+	  (add-hook 'yatex-mode-hook
+				'(lambda ()
+				   (auto-fill-mode -1)))
+	  
+	  ;;
+	  ;; RefTeX with YaTeX
+	  ;;
+										;(add-hook 'yatex-mode-hook 'turn-on-reftex)
+	  (add-hook 'yatex-mode-hook
+				'(lambda ()
+				   (reftex-mode 1)
+				   (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
+				   (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
+	  
+	  ;; taken from https://github.com/ryseto/emacs_and_tex/blob/master/my_yatex.el
 ;;; インデント (YaTeXのインデントを使わない）
 ;;; http://www.hit.ac.jp/~wachi/misc/latexindent.html
-(autoload 'latex-indent-command "~/Dropbox/emacs/latex-indent"
-  "Indent current line accroding to LaTeX block structure.")
-(autoload 'latex-indent-region-command "~/Dropbox/emacs/latex-indent"
-  "Indent each line in the region according to LaTeX block structure.")
-
+	  (autoload 'latex-indent-command "~/Dropbox/emacs/latex-indent"
+		"Indent current line accroding to LaTeX block structure.")
+	  (autoload 'latex-indent-region-command "~/Dropbox/emacs/latex-indent"
+		"Indent each line in the region according to LaTeX block structure.")
+	  
 ;;;; Skim PDF カーソル位置表示
 ;;; Emacs から Skim へ
 ;;; この機能を使うためには、
 ;;; pdflatex/platex にオプション -synctex=1 が必要
 ;;;
 ;;; Thanks to Tsuchiya-san's corrections (yatex ML [yatex:04810,04811])
-(defun skim-forward-search ()
-  (interactive)
-  (process-kill-without-query
-   (start-process  
-    "displayline"
-    nil
-    "/Applications/Skim.app/Contents/SharedSupport/displayline"
-    (number-to-string (save-restriction
-                        (widen)
-                        (count-lines (point-min) (point))))
-    (expand-file-name
-     (concat (file-name-sans-extension (or YaTeX-parent-file
-                                           (save-excursion
-                                             (YaTeX-visit-main t)
-                                             buffer-file-name)))
-             ".pdf"))
-    buffer-file-name)))
-
+	  (defun skim-forward-search ()
+		(interactive)
+		(process-kill-without-query
+		 (start-process  
+		  "displayline"
+		  nil
+		  "/Applications/Skim.app/Contents/SharedSupport/displayline"
+		  (number-to-string (save-restriction
+							  (widen)
+							  (count-lines (point-min) (point))))
+		  (expand-file-name
+		   (concat (file-name-sans-extension (or YaTeX-parent-file
+												 (save-excursion
+												   (YaTeX-visit-main t)
+												   buffer-file-name)))
+				   ".pdf"))
+		  buffer-file-name)))
+	  
 ;;;; Preview.app で開く
-(defun MyTeX-open-PreviewApp ()
-  (interactive)
-  (let* ((mtf)
-         (pf)
-         (cmd "open -a Preview.app"))
-    (setq mtf YaTeX-parent-file)
-    (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
-    (process-kill-without-query
-     (start-process-shell-command "Open Preview.app" nil cmd pf))))
-
-(defun MyTeX-open-SkimApp ()
-  (interactive)
-  (let* ((mtf)
-         (pf)
-         (cmd "open -a Skim.app"))
-    (setq mtf YaTeX-parent-file)
-    (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
-    (process-kill-without-query
-     (start-process-shell-command "Open Skim.app" nil cmd pf))))
-
+	  (defun MyTeX-open-PreviewApp ()
+		(interactive)
+		(let* ((mtf)
+			   (pf)
+			   (cmd "open -a Preview.app"))
+		  (setq mtf YaTeX-parent-file)
+		  (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
+		  (process-kill-without-query
+		   (start-process-shell-command "Open Preview.app" nil cmd pf))))
+	  
+	  (defun MyTeX-open-SkimApp ()
+		(interactive)
+		(let* ((mtf)
+			   (pf)
+			   (cmd "open -a Skim.app"))
+		  (setq mtf YaTeX-parent-file)
+		  (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
+		  (process-kill-without-query
+		   (start-process-shell-command "Open Skim.app" nil cmd pf))))
+	  
 ;;; YaTeX用キーバインドの設定
-(add-hook 'yatex-mode-hook
-          '(lambda ()
-             (turn-off-auto-fill) ; 勝手に改行しない
-			 ;; (define-key YaTeX-mode-map [?\s-t] 
-			 ;;   (lambda ()
-			 ;; 	 (interactive)
-			 ;; 	 (YaTeX-typeset-menu nil ?j)))
-			 ;; (define-key YaTeX-mode-map [?\s-b] 
-			 ;;   (lambda ()
-			 ;; 	 (interactive)
-			 ;; 	 (YaTeX-typeset-menu nil ?j)))
-			 ;; (define-key YaTeX-mode-map [?\s-P]
-			 ;;   (lambda (arg)
-			 ;; 	 (interactive "P")
-			 ;; 	 (let ((current-prefix-arg (not arg)))
-			 ;; 	   (YaTeX-typeset-menu 'dummy ?p))))
-			 ;; (define-key YaTeX-mode-map [?\s-B] 
-			 ;;   (lambda ()
-			 ;; 	 (interactive)
-			 ;; 	 (YaTeX-typeset-menu nil ?b)))
-			 ;; (define-key YaTeX-mode-map [?\s-I] 
-			 ;;   (lambda ()
-			 ;; 	 (interactive)
-			 ;; 	 (YaTeX-typeset-menu nil ?i)))
-;;			 (define-key YaTeX-mode-map [?\s-J] 'MyTeX-open-item-BibDesk)
-             (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)
-;;             (define-key YaTeX-mode-map "\t" 'latex-indent-command)
-;;             (define-key YaTeX-mode-map (kbd "C-c TAB") 'latex-indent-region-command)
-;;             (define-key YaTeX-mode-map [?\s-_] 'MyTeX-insert-subscript_rm)
-;;             (define-key YaTeX-mode-map [?\C-\s-J] 'YaTeX-goto-corresponding-*)
-;;             (define-key YaTeX-mode-map (kbd "C-c d") 'MyTeX-latexmk-cleanup)
-;;             (define-key YaTeX-mode-map [?\s-H] 'YaTeX-display-hierarchy)
-;;             (define-key YaTeX-mode-map [?\s-1] 'YaTeX-visit-main)
-;;             (define-key YaTeX-mode-map [?\s-2] 'MyTeX-switch-to-previousbuffer)
-;;             (define-key YaTeX-mode-map [?\M-\s-B] 'MyTool-open-bibdesk)
-;;             (define-key YaTeX-mode-map [?\s-ı] 'MyTool-open-bibdesk)
-;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
-;;             (define-key YaTeX-mode-map (kbd "s-") 'MyTeX-open-SkimApp)
-;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
-            (define-key YaTeX-mode-map [?\s-∏] 'MyTeX-open-PreviewApp)
-            (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-PreviewApp)
-;;            (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-SkimApp)
-;;             (define-key YaTeX-mode-map [?\s-\)] 'MyTeX-speech-region)
-;;             (define-key YaTeX-mode-map [?\s-C] 'MyTeX-open-article)
-             ))
+	  (add-hook 'yatex-mode-hook
+				'(lambda ()
+				   (turn-off-auto-fill) ; 勝手に改行しない
+				   ;; (define-key YaTeX-mode-map [?\s-t] 
+				   ;;   (lambda ()
+				   ;; 	 (interactive)
+				   ;; 	 (YaTeX-typeset-menu nil ?j)))
+				   ;; (define-key YaTeX-mode-map [?\s-b] 
+				   ;;   (lambda ()
+				   ;; 	 (interactive)
+				   ;; 	 (YaTeX-typeset-menu nil ?j)))
+				   ;; (define-key YaTeX-mode-map [?\s-P]
+				   ;;   (lambda (arg)
+				   ;; 	 (interactive "P")
+				   ;; 	 (let ((current-prefix-arg (not arg)))
+				   ;; 	   (YaTeX-typeset-menu 'dummy ?p))))
+				   ;; (define-key YaTeX-mode-map [?\s-B] 
+				   ;;   (lambda ()
+				   ;; 	 (interactive)
+				   ;; 	 (YaTeX-typeset-menu nil ?b)))
+				   ;; (define-key YaTeX-mode-map [?\s-I] 
+				   ;;   (lambda ()
+				   ;; 	 (interactive)
+				   ;; 	 (YaTeX-typeset-menu nil ?i)))
+				   ;;			 (define-key YaTeX-mode-map [?\s-J] 'MyTeX-open-item-BibDesk)
+				   (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)
+				   ;;             (define-key YaTeX-mode-map "\t" 'latex-indent-command)
+				   ;;             (define-key YaTeX-mode-map (kbd "C-c TAB") 'latex-indent-region-command)
+				   ;;             (define-key YaTeX-mode-map [?\s-_] 'MyTeX-insert-subscript_rm)
+				   ;;             (define-key YaTeX-mode-map [?\C-\s-J] 'YaTeX-goto-corresponding-*)
+				   ;;             (define-key YaTeX-mode-map (kbd "C-c d") 'MyTeX-latexmk-cleanup)
+				   ;;             (define-key YaTeX-mode-map [?\s-H] 'YaTeX-display-hierarchy)
+				   ;;             (define-key YaTeX-mode-map [?\s-1] 'YaTeX-visit-main)
+				   ;;             (define-key YaTeX-mode-map [?\s-2] 'MyTeX-switch-to-previousbuffer)
+				   ;;             (define-key YaTeX-mode-map [?\M-\s-B] 'MyTool-open-bibdesk)
+				   ;;             (define-key YaTeX-mode-map [?\s-ı] 'MyTool-open-bibdesk)
+				   ;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
+				   ;;             (define-key YaTeX-mode-map (kbd "s-") 'MyTeX-open-SkimApp)
+				   ;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
+				   (define-key YaTeX-mode-map [?\s-∏] 'MyTeX-open-PreviewApp)
+				   (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-PreviewApp)
+				   ;;            (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-SkimApp)
+				   ;;             (define-key YaTeX-mode-map [?\s-\)] 'MyTeX-speech-region)
+				   ;;             (define-key YaTeX-mode-map [?\s-C] 'MyTeX-open-article)
+				   ))
 
-;; taken from http://macwiki.osdn.jp/wiki/index.php/CarbonEmacsAndYatex
-;; SKKで「かなモード」のときに「$」を入力すると自動的に「アスキーモード」に切り替える
-;;　http://www.math.s.chiba-u.ac.jp/~matsu/emacs/emacs21/yatex.html
-(add-hook 'skk-mode-hook
-         (lambda ()
-           (if (eq major-mode 'yatex-mode)
-               (progn
-                 (define-key skk-j-mode-map "¥¥" 'self-insert-command)
-                 (define-key skk-j-mode-map "$" 'YaTeX-insert-dollar)
-                 ))
-           ))
+	  ;; taken from http://macwiki.osdn.jp/wiki/index.php/CarbonEmacsAndYatex
+	  ;; SKKで「かなモード」のときに「$」を入力すると自動的に「アスキーモード」に切り替える
+	  ;;　http://www.math.s.chiba-u.ac.jp/~matsu/emacs/emacs21/yatex.html
+	  (add-hook 'skk-mode-hook
+				(lambda ()
+				  (if (eq major-mode 'yatex-mode)
+					  (progn
+						(define-key skk-j-mode-map "¥¥" 'self-insert-command)
+						(define-key skk-j-mode-map "$" 'YaTeX-insert-dollar)
+						))
+				  ))
+	  
+	  ;; ;; previous setting of yatex
+	  ;; ;; 13/01/04
+	  ;; ;; YaTeX
+	  ;; ;; taken from http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?YaTeX
+	  
+	  ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/yatex")
+	  ;; (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+	  ;; (setq auto-mode-alist
+	  ;;       (append '(("\\.tex$" . yatex-mode)
+	  ;;                 ("\\.ltx$" . yatex-mode)
+	  ;;                 ("\\.cls$" . yatex-mode)
+	  ;;                 ("\\.sty$" . yatex-mode)
+	  ;;                 ("\\.clo$" . yatex-mode)
+	  ;;                 ("\\.bbl$" . yatex-mode)) auto-mode-alist))
+	  ;; (setq YaTeX-inhibit-prefix-letter t)
+	  ;; (setq YaTeX-kanji-code nil)
+	  ;; (setq YaTeX-use-LaTeX2e t)
+	  ;; (setq YaTeX-use-AMS-LaTeX t)
+	  ;; (setq YaTeX-dvipdf-command "/opt/local/bin/dvipdfmx")
+	  ;; (setq YaTeX-dvi2-command-ext-alist
+	  ;;       '(("[agx]dvi\\|PictPrinter" . ".dvi")
+	  ;;         ("gv" . ".ps")
+	  ;;         ("Preview\\|TeXShop\\|TeXworks\\|Skim\\|mupdf\\|xpdf\\|Adobe" . ".pdf")))
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -g > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex -synctex=1/' -e '$bibtex=q/bibtex/' -e '$makeindex=q/makeindex/' -norc -gg -pdf")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -pdf")
+	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -xelatex")
+	  ;; ;(setq tex-command "/opt/local/bin/platex -synctex=1")
+	  ;; ;(setq tex-command "/usr/local/bin/pdfplatex")
+	  ;; ;(setq tex-command "/opt/local/bin/pdfplatex2")
+	  ;; ;(setq tex-command "/opt/local/bin/uplatex -synctex=1")
+	  ;; ;(setq tex-command "/opt/local/bin/pdfuplatex")
+	  ;; ;(setq tex-command "/opt/local/bin/pdfuplatex2")
+	  ;; ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
+	  ;; ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
+	  ;; ;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
+	  ;; (setq bibtex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/upbibtex")
+	  ;;                            ((string-match "platex" tex-command) "/opt/local/bin/pbibtex")
+	  ;;                            ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/bibtexu")
+	  ;;                            (t "/opt/local/bin/bibtex")))
+	  ;; (setq makeindex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/mendex")
+	  ;;                               ((string-match "platex" tex-command) "/opt/local/bin/mendex")
+	  ;;                               ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/texindy")
+	  ;;                               (t "/opt/local/bin/makeindex")))
+	  ;; ;(setq dvi2-command (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a Preview")
+	  ;; ;                        (t "/usr/bin/open -a PictPrinter")))
+	  ;; (setq dviprint-command-format (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a \"Adobe Reader\" %s")
+	  ;;                                     (t "/usr/bin/open -a \"Adobe Reader\" `echo %s | sed -e \"s/\\.[^.]*$/\\.pdf/\"`")))
+	  
+	  ;; ;(setq tex-command "/usr/local/bin/dotexshop")
+	  ;; ;;(setq dvi2-command "open -a /Applications/TeXShop.app")
+	  ;; (setq dvi2-command "/usr/bin/open -a /Applications/Skim.app")
+	  
+	  ;; (defun skim-forward-search ()
+	  ;;   (interactive)
+	  ;;   (let* ((ctf (buffer-name))
+	  ;;          (mtf)
+	  ;;          (pf)
+	  ;;          (ln (format "%d" (line-number-at-pos)))
+	  ;;          (cmd "/Applications/Skim.app/Contents/SharedSupport/displayline")
+	  ;;          (args))
+	  ;;     (if (YaTeX-main-file-p)
+	  ;;         (setq mtf (buffer-name))
+	  ;;       (progn
+	  ;;         (if (equal YaTeX-parent-file nil)
+	  ;;             (save-excursion
+	  ;;               (YaTeX-visit-main t)))
+	  ;;         (setq mtf YaTeX-parent-file)))
+	  ;;     (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
+	  ;;     (setq args (concat ln " " pf " " ctf))
+	  ;;     (message (concat cmd " " args))
+	  ;;     (process-kill-without-query
+	  ;;      (start-process-shell-command "displayline" nil cmd args))))
 
-;; ;; previous setting of yatex
-;; ;; 13/01/04
-;; ;; YaTeX
-;; ;; taken from http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?YaTeX
+	  ;; (add-hook 'yatex-mode-hook
+	  ;;           '(lambda ()
+	  ;;              (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)))
 
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/yatex")
-;; (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
-;; (setq auto-mode-alist
-;;       (append '(("\\.tex$" . yatex-mode)
-;;                 ("\\.ltx$" . yatex-mode)
-;;                 ("\\.cls$" . yatex-mode)
-;;                 ("\\.sty$" . yatex-mode)
-;;                 ("\\.clo$" . yatex-mode)
-;;                 ("\\.bbl$" . yatex-mode)) auto-mode-alist))
-;; (setq YaTeX-inhibit-prefix-letter t)
-;; (setq YaTeX-kanji-code nil)
-;; (setq YaTeX-use-LaTeX2e t)
-;; (setq YaTeX-use-AMS-LaTeX t)
-;; (setq YaTeX-dvipdf-command "/opt/local/bin/dvipdfmx")
-;; (setq YaTeX-dvi2-command-ext-alist
-;;       '(("[agx]dvi\\|PictPrinter" . ".dvi")
-;;         ("gv" . ".ps")
-;;         ("Preview\\|TeXShop\\|TeXworks\\|Skim\\|mupdf\\|xpdf\\|Adobe" . ".pdf")))
-;; ;(setq tex-command "/opt/local/bin/latexmk")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -g > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex -synctex=1/' -e '$bibtex=q/bibtex/' -e '$makeindex=q/makeindex/' -norc -gg -pdf")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -pdf")
-;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -xelatex")
-;; ;(setq tex-command "/opt/local/bin/platex -synctex=1")
-;; ;(setq tex-command "/usr/local/bin/pdfplatex")
-;; ;(setq tex-command "/opt/local/bin/pdfplatex2")
-;; ;(setq tex-command "/opt/local/bin/uplatex -synctex=1")
-;; ;(setq tex-command "/opt/local/bin/pdfuplatex")
-;; ;(setq tex-command "/opt/local/bin/pdfuplatex2")
-;; ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
-;; ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
-;; ;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
-;; (setq bibtex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/upbibtex")
-;;                            ((string-match "platex" tex-command) "/opt/local/bin/pbibtex")
-;;                            ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/bibtexu")
-;;                            (t "/opt/local/bin/bibtex")))
-;; (setq makeindex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/mendex")
-;;                               ((string-match "platex" tex-command) "/opt/local/bin/mendex")
-;;                               ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/texindy")
-;;                               (t "/opt/local/bin/makeindex")))
-;; ;(setq dvi2-command (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a Preview")
-;; ;                        (t "/usr/bin/open -a PictPrinter")))
-;; (setq dviprint-command-format (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a \"Adobe Reader\" %s")
-;;                                     (t "/usr/bin/open -a \"Adobe Reader\" `echo %s | sed -e \"s/\\.[^.]*$/\\.pdf/\"`")))
-									
-;; ;(setq tex-command "/usr/local/bin/dotexshop")
-;; ;;(setq dvi2-command "open -a /Applications/TeXShop.app")
-;; (setq dvi2-command "/usr/bin/open -a /Applications/Skim.app")
+	  ;; (add-hook 'yatex-mode-hook
+	  ;;           '(lambda ()
+	  ;;              (auto-fill-mode -1)))
 
-;; (defun skim-forward-search ()
-;;   (interactive)
-;;   (let* ((ctf (buffer-name))
-;;          (mtf)
-;;          (pf)
-;;          (ln (format "%d" (line-number-at-pos)))
-;;          (cmd "/Applications/Skim.app/Contents/SharedSupport/displayline")
-;;          (args))
-;;     (if (YaTeX-main-file-p)
-;;         (setq mtf (buffer-name))
-;;       (progn
-;;         (if (equal YaTeX-parent-file nil)
-;;             (save-excursion
-;;               (YaTeX-visit-main t)))
-;;         (setq mtf YaTeX-parent-file)))
-;;     (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
-;;     (setq args (concat ln " " pf " " ctf))
-;;     (message (concat cmd " " args))
-;;     (process-kill-without-query
-;;      (start-process-shell-command "displayline" nil cmd args))))
+	  ;; ;;
+	  ;; ;; RefTeX with YaTeX
+	  ;; ;;
+	  ;; ;(add-hook 'yatex-mode-hook 'turn-on-reftex)
+	  ;; (add-hook 'yatex-mode-hook
+	  ;;           '(lambda ()
+	  ;;              (reftex-mode 1)
+	  ;;              (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
+	  ;;              (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
 
-;; (add-hook 'yatex-mode-hook
-;;           '(lambda ()
-;;              (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)))
+	  ;;
+	  ;; was a reminder of rihobook-emacs.d-init.el
+	  ;;
 
-;; (add-hook 'yatex-mode-hook
-;;           '(lambda ()
-;;              (auto-fill-mode -1)))
+	  ;; 自動改行を無効
+										;(add-hook 'yatex-mode-hook'(lambda ()(setq auto-fill-function nil)))
+										;(add-hook 'skk-mode-hook
+										;         (lambda ()
+										;           (if (eq major-mode 'yatex-mode)
+										;               (progn
+										;                 (define-key skk-j-mode-map “¥¥“ 'self-insert-command)
+										;                 (define-key skk-j-mode-map “$“ 'YaTeX-insert-dollar)
+										;                 ))
+										;           ))
+	  ;;
+	  ;; End: a reminder of rihobook-emacs.el
+	  ;;
 
-;; ;;
-;; ;; RefTeX with YaTeX
-;; ;;
-;; ;(add-hook 'yatex-mode-hook 'turn-on-reftex)
-;; (add-hook 'yatex-mode-hook
-;;           '(lambda ()
-;;              (reftex-mode 1)
-;;              (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
-;;              (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
-
-;;
-;; was a reminder of rihobook-emacs.d-init.el
-;;
-
-;; 自動改行を無効
-;(add-hook 'yatex-mode-hook'(lambda ()(setq auto-fill-function nil)))
-;(add-hook 'skk-mode-hook
-;         (lambda ()
-;           (if (eq major-mode 'yatex-mode)
-;               (progn
-;                 (define-key skk-j-mode-map “¥¥“ 'self-insert-command)
-;                 (define-key skk-j-mode-map “$“ 'YaTeX-insert-dollar)
-;                 ))
-;           ))
-;;
-;; End: a reminder of rihobook-emacs.el
-;;
-
-;; ;; 13/01/14
-;; ;; YaTeX end
-;; ;;
-))
+	  ;; ;; 13/01/14
+	  ;; ;; YaTeX end
+	  ;; ;;
+	  )) ;; end of if darwin-p
 
 ;; ;; flymake
 ;; ;; ;; flymake (for C)
@@ -1264,7 +1265,9 @@
 ;; ;;(setq exec-path (cons "/opt/local/bin" exec-path))
 ;; (autoload 'imaxima "imaxima" "Image support for Maxima." t)
 
+;; ----------------------------------------------------------------------------
 ;; Geiser
+;; ----------------------------------------------------------------------------
 (if carbon-p
 	(progn
 	  (load-file "~/.emacs.d/elpa/geiser-20171217.1353/geiser.el")
@@ -1273,7 +1276,9 @@
 	  (setq geisler-scheme-dir "/Users/motohisa/.emacs.d/private/geiser-sqw-libctl/scheme/")
 	  ))
 
+;; ----------------------------------------------------------------------------
 ;; FreeFEM++
+;; ----------------------------------------------------------------------------
 (if carbon-p
 	(progn
 ;;	  (load-file "~/.emacs.d/lisp/freefem-mode/freefem++-mode.el")
@@ -1369,7 +1374,9 @@
 (if carbon-p
 	(setq markdown-command "multimarkdown"))
 
+;; ----------------------------------------------------------------------------
 ;; lua mode
+;; ----------------------------------------------------------------------------
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
@@ -1401,16 +1408,17 @@
 (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
 ;; ----------------------------------------------------------------------------
 
-;; gmsh mode
 ;; ----------------------------------------------------------------------------
-;; arduino-mode
+;; gmsh mode
 ;; ----------------------------------------------------------------------------
 ; 拡張子の関連付け
 
 (autoload 'gmsh-mode "gmsh.el" "Gmsh editing mode." t)
 (setq auto-mode-alist (cons '("\\.\\(geo\\|pro\\)$" . gmsh-mode) auto-mode-alist))
 
+;; ----------------------------------------------------------------------------
 ;; Python-mode
+;; ----------------------------------------------------------------------------
 (if darwin-p
     (progn
 	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8.el")
