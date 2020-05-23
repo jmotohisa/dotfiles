@@ -1,3 +1,5 @@
 *~
 dotzshd/.zshrc.local
 dotzshd/.zshrc_miniconda3
+*.log
+*.aux
