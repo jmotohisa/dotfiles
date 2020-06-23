@@ -10,7 +10,8 @@
 	  emacs24-p (string-match "^24" emacs-version)
 	  emacs24.3-p (string-match "^24\.3" emacs-version)
 	  emacs24.4-p (string-match "^24\.4" emacs-version)
-	  emacs24.5-p (string-match "^24\.5" emacs-version))
+	  emacs24.5-p (string-match "^24\.5" emacs-version)
+	  emacs26.3-p (string-match "^26\.3" emacs-version))
 
 ;; system-type predicates
 (setq darwin-p  (eq system-type 'darwin)
@@ -950,26 +951,26 @@
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
    (quote
-	(("Spice3" "spice3 -b" ""
-	  ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
-	   (buffer-file-name))
-	  ("Circuit: \\(.*\\)$" 1))
-	 ("Hspice" "hspice" ""
-	  ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
-	   (buffer-file-name))
-	  ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
-	 ("Eldo" "eldo -i" ""
-	  ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
-	   (buffer-file-name))
-	  ("Running \\(eldo\\).*$" 1))
-	 ("Spectre" "spectre" ""
-	  ("\\s-*\"\\([^ 	
+    (("Spice3" "spice3 -b" ""
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
+      ("Circuit: \\(.*\\)$" 1))
+     ("Hspice" "hspice" ""
+      ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
+       (buffer-file-name))
+      ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
+     ("Eldo" "eldo -i" ""
+      ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
+       (buffer-file-name))
+      ("Running \\(eldo\\).*$" 1))
+     ("Spectre" "spectre" ""
+      ("\\s-*\"\\([^ 	
 ]+\\)\" +\\([0-9]+\\):.*" 1 2)
-	  ("" 0))
-	 ("ngspice" "ngspice" ""
-	  ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
-	   (buffer-file-name))
-	  ("Circuit: \\(.*\\)$" 1))))))
+      ("" 0))
+     ("ngspice" "ngspice" ""
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
+      ("Circuit: \\(.*\\)$" 1))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1110,10 +1111,11 @@
 ;; igor mode 12/04/27
 ;;
 (if darwin-p
+    (if (not emacs26.3-p)
 	(progn
 	  (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
 	  (require 'igor-mode))
-  )
+  ))
 
 ;; reftex mode 12/07/03;; commented in on 13/01/04 ;; see above yatex mode
 ;(add-hook 'yatex-mode-hook 'turn-on-reftex) ; with YaTeX mode
