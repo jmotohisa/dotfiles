@@ -1313,7 +1313,7 @@
 ;; 各ファイルによってテンプレートを切り替える
 (setq auto-insert-alist
       (nconc '(
-;;               ("\\.cpp$" . ["template.cpp" my-template])
+              ("\\.cpp$" . ["template.cpp" my-template])
                ("\\.c$" . ["template.c" my-template])
                ("\\.h$"   . ["template.h" my-template])
 			   ("\\.tex$" . ["template.tex" my-template])
