@@ -10,3 +10,6 @@
 [submodule "jmdot-emacs-d/lisp/igor-mode"]
 	path = jmdot-emacs-d/lisp/igor-mode
 	url = https://github.com/yamad/igor-mode.git
+[submodule "jmdot-emacs-d/lisp/yatex"]
+	path = jmdot-emacs-d/lisp/yatex
+	url = https://github.com/emacsmirror/yatex.git
