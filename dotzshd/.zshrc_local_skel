@@ -1,3 +1,12 @@
+# solarize
+#
+# git clone https://github.com/mavnn/mintty-colors-solarized.git
+
+# font: ricty diminished
+#
+# git clone https://github.com/edihbrandon/RictyDiminished.git
+
+
 # mainly for osx
 export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 alias emacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
