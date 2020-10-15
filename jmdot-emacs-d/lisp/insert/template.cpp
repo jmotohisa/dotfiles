@@ -1,5 +1,5 @@
 /*
- *  %file% - last saved: Time-stamp: <Wed Jul 03 22:07:23 JST 2019>
+ *  %file% - Time-stamp: <Fri Mar 27 14:02:47 JST 2020>
  *
  *   Copyright (c) %year%  %id% (%name%)  <%mail%>
  *
@@ -33,28 +33,21 @@
   @file %file% 
   @brief 
   @author J. Motohisa
+  @date
 */
 
-#ifndef %include-guard%
-#define %include-guard%
+#include <stdio.h>
+#include <stdlib.h>
+#include <complex.h>
+#include <tgmath.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define GLOBAL_VALUE_DEFINE
+#include "%file-without-ext%.h"
 
-#ifdef	GLOBAL_VALUE_DEFINE
-#define	GLOBAL
-#else
-#define	GLOBAL extern
-#endif
-
-
-
-#undef GLOBAL_VALUE_DEFINE
-#undef GLOBAL
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif  // %include-guard%
+/*!
+  @brief
+  @param[in]
+  @param[out]
+  @param[in,out]
+  @return
+*/

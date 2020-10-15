@@ -1,0 +1,15 @@
+[submodule "jmdot-emacs-d/lisp/arduino-mode"]
+	path = jmdot-emacs-d/lisp/arduino-mode
+	url = https://github.com/bookest/arduino-mode.git
+[submodule "jmdot-emacs-d/lisp/py-autopep8.el"]
+	path = jmdot-emacs-d/lisp/py-autopep8.el
+	url = https://github.com/fujimisakari/py-autopep8.el.git
+[submodule "jmdot-emacs-d/lisp/freefem-mode"]
+	path = jmdot-emacs-d/lisp/freefem-mode
+	url = https://github.com/rrgalvan/freefem-mode.git
+[submodule "jmdot-emacs-d/lisp/igor-mode"]
+	path = jmdot-emacs-d/lisp/igor-mode
+	url = https://github.com/yamad/igor-mode.git
+[submodule "jmdot-emacs-d/lisp/yatex"]
+	path = jmdot-emacs-d/lisp/yatex
+	url = https://github.com/emacsmirror/yatex.git
