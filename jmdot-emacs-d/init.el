@@ -1423,7 +1423,7 @@
 ;; ----------------------------------------------------------------------------
 (if darwin-p
     (progn
-	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8.el")
+	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8/py-autopep8.el")
 	  (require 'py-autopep8)
 	  (add-hook 'python-mode-hook
 				'(lambda ()
