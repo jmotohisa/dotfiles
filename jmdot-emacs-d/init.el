@@ -40,6 +40,10 @@
       (package-initialize))
   )
 
+;; added on 2020/11/06, https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; path
 ;;;; based on http://sakito.jp/emacs/emacsshell.html#path
@@ -1437,3 +1441,14 @@
 ;;保存時にバッファ全体を自動整形する
 	  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 	  ))
+
+;; ----------------------------------------------------------------------------
+;; clowi mode
+;; ----------------------------------------------------------------------------
+(if darwin-p
+    (progn
+      (require 'crowi)
+      (setq crowi-access-token "5K53Tge/L/hkjdO0rUW4mD2Kq6lS6UWl4Zf2ZzQyoM4=") ; User setting -> API settings
+      (setq crowi-user "motohisa") ;default (getenv "USER")
+      (setq crowi-uri "http://hydrogen.rciqe.hokudai.ac.jp:3000") ;default http://localhost:3000
+      ))

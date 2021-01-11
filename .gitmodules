@@ -13,3 +13,6 @@
 [submodule "jmdot-emacs-d/lisp/yatex"]
 	path = jmdot-emacs-d/lisp/yatex
 	url = https://www.yatex.org/gitbucket/git/yuuji/yatex.git
+[submodule "jmdot-emacs-d/lisp/emacs-crowi"]
+	path = jmdot-emacs-d/lisp/emacs-crowi
+	url = https://github.com/hirocarma/emacs-crowi
