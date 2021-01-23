@@ -41,6 +41,10 @@
       (package-initialize))
   )
 
+;; added on 2020/11/06, https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; path
 ;;;; based on http://sakito.jp/emacs/emacsshell.html#path
@@ -883,10 +887,11 @@
 (require 'switch-window)
 
 ;; gdb:
-;; for darwin, use ggdb instead of gdb
+;; for darwin, use ggdb/gdb-apple instead of gdb
 (if darwin-p
 	(progn
-	  (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
+	  ;; (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
+	  (setq gud-gdb-command-name "/opt/local/bin/gdb-apple -i=mi"))
   (if (window-system)
 	  (progn
 ;;; 有用なバッファを開くモード
@@ -1425,7 +1430,7 @@
 ;; ----------------------------------------------------------------------------
 (if darwin-p
     (progn
-	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8.el")
+	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8/py-autopep8.el")
 	  (require 'py-autopep8)
 	  (add-hook 'python-mode-hook
 				'(lambda ()
@@ -1439,3 +1444,22 @@
 ;;保存時にバッファ全体を自動整形する
 	  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 	  ))
+
+;; ----------------------------------------------------------------------------
+;; clowi mode
+;; ----------------------------------------------------------------------------
+(if darwin-p
+    (progn
+      (require 'crowi)
+      (setq crowi-access-token "5K53Tge/L/hkjdO0rUW4mD2Kq6lS6UWl4Zf2ZzQyoM4=") ; User setting -> API settings
+      (setq crowi-user "motohisa") ;default (getenv "USER")
+      (setq crowi-uri "http://hydrogen.rciqe.hokudai.ac.jp:3000") ;default http://localhost:3000
+      ))
+
+;; ----------------------------------------------------------------------------
+;; vivado mode
+;; ----------------------------------------------------------------------------
+(autoload 'vivado-mode "gmsh.el" "Vivado editing mode." t)
+(setq auto-mode-alist
+      (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
+

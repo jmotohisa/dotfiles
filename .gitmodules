@@ -1,9 +1,9 @@
 [submodule "jmdot-emacs-d/lisp/arduino-mode"]
 	path = jmdot-emacs-d/lisp/arduino-mode
 	url = https://github.com/bookest/arduino-mode.git
-[submodule "jmdot-emacs-d/lisp/py-autopep8.el"]
-	path = jmdot-emacs-d/lisp/py-autopep8.el
-	url = https://github.com/fujimisakari/py-autopep8.el.git
+[submodule "jmdot-emacs-d/lisp/py-autopep8"]
+	path = jmdot-emacs-d/lisp/py-autopep8
+	url = https://github.com/paetzke/py-autopep8.el.git
 [submodule "jmdot-emacs-d/lisp/freefem-mode"]
 	path = jmdot-emacs-d/lisp/freefem-mode
 	url = https://github.com/rrgalvan/freefem-mode.git
@@ -12,4 +12,10 @@
 	url = https://github.com/yamad/igor-mode.git
 [submodule "jmdot-emacs-d/lisp/yatex"]
 	path = jmdot-emacs-d/lisp/yatex
-	url = https://github.com/emacsmirror/yatex.git
+	url = https://www.yatex.org/gitbucket/git/yuuji/yatex.git
+[submodule "jmdot-emacs-d/lisp/emacs-crowi"]
+	path = jmdot-emacs-d/lisp/emacs-crowi
+	url = https://github.com/hirocarma/emacs-crowi
+[submodule "jmdot-emacs-d/lisp/vivado_mode"]
+	path = jmdot-emacs-d/lisp/vivado_mode
+	url = https://github.com/ashtonchase/vivado_mode.git
