@@ -886,10 +886,11 @@
 (require 'switch-window)
 
 ;; gdb:
-;; for darwin, use ggdb instead of gdb
+;; for darwin, use ggdb/gdb-apple instead of gdb
 (if darwin-p
 	(progn
-	  (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
+	  ;; (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
+	  (setq gud-gdb-command-name "/opt/local/bin/gdb-apple -i=mi"))
   (if (window-system)
 	  (progn
 ;;; 有用なバッファを開くモード
@@ -1452,3 +1453,11 @@
       (setq crowi-user "motohisa") ;default (getenv "USER")
       (setq crowi-uri "http://hydrogen.rciqe.hokudai.ac.jp:3000") ;default http://localhost:3000
       ))
+
+;; ----------------------------------------------------------------------------
+;; vivado mode
+;; ----------------------------------------------------------------------------
+(autoload 'vivado-mode "gmsh.el" "Vivado editing mode." t)
+(setq auto-mode-alist
+      (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
+
