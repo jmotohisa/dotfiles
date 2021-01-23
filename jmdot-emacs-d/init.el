@@ -11,7 +11,8 @@
 	  emacs24.3-p (string-match "^24\.3" emacs-version)
 	  emacs24.4-p (string-match "^24\.4" emacs-version)
 	  emacs24.5-p (string-match "^24\.5" emacs-version)
-	  emacs26.3-p (string-match "^26\.3" emacs-version))
+	  emacs26.3-p (string-match "^26\.3" emacs-version)
+	  emacs27.1-p (string-match "^26\.1" emacs-version))
 
 ;; system-type predicates
 (setq darwin-p  (eq system-type 'darwin)
@@ -1322,6 +1323,7 @@
 			   ("\\.py$" . ["template.py" my-template])
 ;;			   ("\\.ipf$" . ["template.ipf" my-template])
                ) auto-insert-alist))
+(setq byte-compile-warnings '(cl-functions))
 (require 'cl)
 
 ;; ここが腕の見せ所: テンプレート内の置換変数/関数の定義
