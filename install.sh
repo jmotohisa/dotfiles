@@ -3,6 +3,8 @@
 ln -s "`pwd`"/.tmux.conf ~/.tmux.conf
 ln -s "`pwd`"/dotzshd ~/.zsh.d
 ln -s "`pwd`"/jmdot-emacs-d ~/.emacs.d
+ln -s "`pwd`"/dotvim ~/.vim
+ln -s "`pwd`"/dotvimrc ~/.vimrc
 echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 
 ## local setting

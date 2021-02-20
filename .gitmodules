@@ -19,3 +19,6 @@
 [submodule "jmdot-emacs-d/lisp/vivado_mode"]
 	path = jmdot-emacs-d/lisp/vivado_mode
 	url = https://github.com/ashtonchase/vivado_mode.git
+[submodule "dotvim/bundle/vim-xdc-syntax"]
+	path = dotvim/bundle/vim-xdc-syntax
+	url = https://github.com/amal-khailtash/vim-xdc-syntax.git
