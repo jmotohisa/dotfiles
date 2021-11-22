@@ -1,0 +1,13 @@
+# solarize
+#
+# git clone https://github.com/mavnn/mintty-colors-solarized.git
+
+# font: ricty diminished
+#
+# git clone https://github.com/edihbrandon/RictyDiminished.git
+
+# mainly for cygwin
+#export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
+export TERM=xterm-color
+alias lv='TERM=CYGWIN /usr/bin/lv'
+# source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized-master/sol.dark
