@@ -1117,11 +1117,12 @@
 ;; igor mode 12/04/27
 ;;
 (if darwin-p
-    (if (not emacs26.3-p)
+    ;; (if (not emacs26.3-p)
 	(progn
 	  (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
 	  (require 'igor-mode))
-  ))
+  ;; )
+)
 
 ;; reftex mode 12/07/03;; commented in on 13/01/04 ;; see above yatex mode
 ;(add-hook 'yatex-mode-hook 'turn-on-reftex) ; with YaTeX mode
@@ -1451,9 +1452,9 @@
 (if darwin-p
     (progn
       (require 'crowi)
-      (setq crowi-access-token "5K53Tge/L/hkjdO0rUW4mD2Kq6lS6UWl4Zf2ZzQyoM4=") ; User setting -> API settings
+      (setq crowi-access-token "eE9o2KaI5tfteh28HgD6QBuS4SQTblZ3IHZzigFheac=") ; User setting -> API settings
       (setq crowi-user "motohisa") ;default (getenv "USER")
-      (setq crowi-uri "http://hydrogen.rciqe.hokudai.ac.jp:3000") ;default http://localhost:3000
+      (setq crowi-uri "http://lsilab-vt.ist.hokudai.ac.jp:3000") ;default http://localhost:3000
       ))
 
 ;; ----------------------------------------------------------------------------
