@@ -1,3 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/Users/motohisa/Documents/circuit/SpiceModels/.git'
+let g:netrw_dirhist_2='/Users/motohisa/working/h5utils/.git'
 let g:netrw_dirhist_1='/Users/motohisa/Dropbox/mdnote/Pukiwiki2md/internal/attach_mod/attach'
