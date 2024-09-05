@@ -4,3 +4,6 @@ dotzshd/.zshrc_miniconda3
 *.log
 *.aux
 jmdot-emacs-d/url
+jmdot-emacs-d/lisp/py-autopep8.el
+dotzshd/.zsh_sessions
+dotvim/.netrwhist

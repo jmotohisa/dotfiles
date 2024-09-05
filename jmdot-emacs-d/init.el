@@ -1449,13 +1449,13 @@
 ;; ----------------------------------------------------------------------------
 ;; clowi mode
 ;; ----------------------------------------------------------------------------
-(if darwin-p
-    (progn
-      (require 'crowi)
-      (setq crowi-access-token "eE9o2KaI5tfteh28HgD6QBuS4SQTblZ3IHZzigFheac=") ; User setting -> API settings
-      (setq crowi-user "motohisa") ;default (getenv "USER")
-      (setq crowi-uri "http://lsilab-vt.ist.hokudai.ac.jp:3000") ;default http://localhost:3000
-      ))
+;; (if darwin-p
+;;     (progn
+;;       (require 'crowi)
+;;       (setq crowi-access-token "eE9o2KaI5tfteh28HgD6QBuS4SQTblZ3IHZzigFheac=") ; User setting -> API settings
+;;       (setq crowi-user "motohisa") ;default (getenv "USER")
+;;       (setq crowi-uri "http://lsilab-vt.ist.hokudai.ac.jp:3000") ;default http://localhost:3000
+;;       ))
 
 ;; ----------------------------------------------------------------------------
 ;; vivado mode
