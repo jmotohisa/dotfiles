@@ -16,6 +16,7 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 ## install ddskk:
 # wget http://www.ring.gr.jp/archives/elisp/skk/maintrunk/ddskk-16.2.tar.gz
 # cd ddskk-XX.X; cd dic; wget http://openlab.ring.gr.jp/skk/skk/dic/SKK-JISYO.L
+# cd ../
 # export EMACS=/path/to/emacs
 # echo '(setq SKK_DATADIR "~/.emacs.d/share/skk")' >> SKK-CFG
 # echo '(setq SKK_INFODIR "~/.emacs.d/info")' >> SKK-CFG
