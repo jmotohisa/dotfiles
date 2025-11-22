@@ -135,13 +135,13 @@
       meadow-p  (featurep 'meadow)
       windows-p (or cygwin-p nt-p meadow-p))
 
-(if darwin-p
-    (progn
-      (require 'package)
-      (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-      (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-      (package-initialize))
-  )
+;; (if darwin-p
+;;     (progn
+;;       (require 'package)
+;;       (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;       (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;       (package-initialize))
+;;   )
 
 ;; added on 2020/11/06, https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
 (when (string= system-type "darwin")       
@@ -243,8 +243,7 @@
 	  ))
 
 ;; color theme
-;;(load "color-theme.el")
-(load "color-theme-solarized.el")
+(load "color-theme-sanityinc-solarized.el")
 (if (window-system)
 	(progn 
 	  (color-theme-solarized-dark) ;; solarized
@@ -496,10 +495,10 @@
 ;;
 ;; skk
 ;;
-(require 'skk-autoload)
+;;(require 'skk-autoloads)
 (global-set-key "\C-x\C-j" 'skk-mode)
-(global-set-key "\C-xj" 'skk-auto-fill-mode)
-(global-set-key "\C-xt" 'skk-tutorial)
+;;(global-set-key (kbd "\C-xj") 'skk-auto-fill-mode)
+;;(global-set-key "\C-xt" 'skk-tutorial)
 
 ;; C-j の機能を別のキーに割り当て
 (global-set-key (kbd "C-m") 'newline-and-indent)
@@ -512,28 +511,31 @@
 
 ;; Specify dictionary location
 (if darwin-p
-	(progn
-	  (setq skk-large-jisyo "/Users/motohisa/Library/Application Support/AquaSKK/SKK-JISYO.L")
-	  (setq skk-extra-jisyo-file-list
-			(list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
-	  ;; Specify tutorial location
-	  (setq skk-tut-file "/Users/motohisa/.emacs.d/share/skk/SKK.tut"))
-  (if cygwin-p
-	  (progn
-		(setq skk-large-jisyo "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
-		;; (setq skk-extra-jisyo-file-list
-		;; 	  (list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
-		;; Specify tutorial location
-		(setq skk-tut-file "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK.tut"))
-	(progn
-	  (setq skk-large-jisyo "/home/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
-	  ;; (setq skk-extra-jisyo-file-list
-	  ;; 		(list '("//motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
-	  ;; Specify tutorial location
-	  (setq skk-tut-file "/home/motohisa/.emacs.d/share/skk/SKK.tut"))
+    (progn
+      (setq skk-large-jisyo "/Users/motohisa/Library/Application Support/AquaSKK/SKK-JISYO.L")
+      (setq skk-extra-jisyo-file-list
+	    (list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
+      ;; Specify tutorial location
+;;      (setq skk-tut-file "/Users/motohisa/.emacs.d/share/skk/SKK.tut")
+      )
   )
-)	
-	  
+(if cygwin-p
+    (progn
+      (setq skk-large-jisyo "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
+      ;; (setq skk-extra-jisyo-file-list
+      ;; 	  (list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
+      ;; Specify tutorial location
+      ;;	(setq skk-tut-file "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK.tut")
+      )
+  ;;    (progn
+  ;;      (setq skk-large-jisyo "/home/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
+  ;; (setq skk-extra-jisyo-file-list
+  ;; 		(list '("//motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
+  ;; Specify tutorial location
+  ;;      (setq skk-tut-file "/home/motohisa/.emacs.d/share/skk/SKK.tut"))
+  ;;    )
+  )	
+
 ;; 変換の学習
 (require 'skk-study)
 
@@ -1055,8 +1057,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(flycheck-elsa flycheck-package geiser lua-mode markdown-mode
-                   spice-mode yatex))
+   '(color-theme-sanityinc-solarized ddskk flycheck-elsa flycheck-package
+                                     geiser lua-mode markdown-mode
+                                     multi-term py-autopep8 spice-mode
+                                     switch-window verilog-mode w3m
+                                     yatex))
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
@@ -1561,7 +1566,7 @@
 ;; ----------------------------------------------------------------------------
 ;; vivado mode
 ;; ----------------------------------------------------------------------------
-;; (autoload 'vivado-mode "gmsh.el" "Vivado editing mode." t)
-;; (setq auto-mode-alist
-;;       (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
+(autoload 'vivado-mode "gmsh.el" "Vivado editing mode." t)
+(setq auto-mode-alist
+      (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
 

@@ -12,53 +12,58 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 ## edit dotzshd/.zshrc_local
 
 ## for emacs
-## install leaf:
-## Put the following code (<leaf-install-code> to </leaf-install-code>) to the top of init.el
-### begin ###
-# ;; <leaf-install-code>
-# (eval-and-compile
-#   (customize-set-variable
-#    'package-archives '(("org" . "https://orgmode.org/elpa/")
-#                        ("melpa" . "https://melpa.org/packages/")
-#                        ("gnu" . "https://elpa.gnu.org/packages/")))
-#   (package-initialize)
-#   (unless (package-installed-p 'leaf)
-#     (package-refresh-contents)
-#     (package-install 'leaf))
-
-#   (leaf leaf-keywords
-#     :ensure t
-#     :init
-#     ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
-#     (leaf hydra :ensure t)
-#     (leaf el-get :ensure t)
-#     (leaf blackout :ensure t)
-
-#     :config
-#     ;; initialize leaf-keywords.el
-#     (leaf-keywords-init)))
-# ;; </leaf-install-code>
-### end ###
-
 # cd ~/.emacs.d; mkdir lisp; mkdir site-start.d; mkdir local-lisp
-## install ddskk:
-# wget http://www.ring.gr.jp/archives/elisp/skk/maintrunk/ddskk-16.2.tar.gz
-# cd ddskk-XX.X; cd dic; wget http://openlab.ring.gr.jp/skk/skk/dic/SKK-JISYO.L
-# cd ../
-# export EMACS=/path/to/emacs
-# echo '(setq SKK_DATADIR "~/.emacs.d/share/skk")' >> SKK-CFG
-# echo '(setq SKK_INFODIR "~/.emacs.d/info")' >> SKK-CFG
-# echo '(setq SKK_LISPDIR "~/.emacs.d/lisp/skk")' >> SKK-CFG
-# echo '(setq SKK_SET_JISYO t)' >> SKK-CFG
-# make  install LISPDIR=~/.emacs.d/lisp VERSION_SPECIFIC_LISPDIR=~/.emacs.d/lisp INFODIR=~/.emacs.d/info
+# install following from package
+# color-theme-sanityinc-solarized
+# ddskk-20241227.2223/
+# geiser
+# multi-term
+# py-autopep8
+# spice-mode
+# switch-window
+# verilog-mode
+# w3m-20250503.2349/
+# yatex-20250224.1034/
+# ddskk
+
+# To remove deprecated warning:
+# $ cd ~/.emacs.d/elpa/el-get-XXXXXXXX.XXX;sed -i -e s/\'autoload\)/\'loaddefs-gen\)/g *.el
+
+# ansi-color-for-comint-mode-on
+# latex-indent-command
+# latex-indent-region-command
+# vhdl
+# octave
+# applesciprt
+# imaxima
+# lua
+# arduino-mode
+# gmsh
+
+# ## install ddskk:
+# # wget http://www.ring.gr.jp/archives/elisp/skk/maintrunk/ddskk-16.2.tar.gz
+# # cd ddskk-XX.X; cd dic; wget http://openlab.ring.gr.jp/skk/skk/dic/SKK-JISYO.L
+# # cd ../
+# # export EMACS=/path/to/emacs
+# # echo '(setq SKK_DATADIR "~/.emacs.d/share/skk")' >> SKK-CFG
+# # echo '(setq SKK_INFODIR "~/.emacs.d/info")' >> SKK-CFG
+# # echo '(setq SKK_LISPDIR "~/.emacs.d/lisp/skk")' >> SKK-CFG
+# # echo '(setq SKK_SET_JISYO t)' >> SKK-CFG
+# # make  install LISPDIR=~/.emacs.d/lisp VERSION_SPECIFIC_LISPDIR=~/.emacs.d/lisp INFODIR=~/.emacs.d/info
 #
 ## igor-mode
 # cd ~/.emacs.d/lisp
 # git clone https://github.com/yamad/igor-mode.git
 ## FreeFem mode
 # git clone https://github.com/rrgalvan/freefem-mode.git
-## py-autopep8
-# git clone https://github.com/paetzke/py-autopep8.el.git
+
+## py-autopep8: install from  package
+### git clone https://github.com/paetzke/py-autopep8.el.git
+## multiterm: install from package
+## verilog-mode install from package
+
+## how can I install ?
+
 
 ## for valgrind
 # ln -s `pwd`/.valgrindrc ~/.valgrindrc

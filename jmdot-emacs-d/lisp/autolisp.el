@@ -106,7 +106,7 @@
 ;;{{{ init
 
 (require 'lisp-mode)
-(require 'cl)                           ; for subst
+(require 'cl-lib)                           ; for subst
 (require 'font-lock)
 
 (defconst autolisp-mode-version (substring "$Revision: 0.5 $" 11 15))
@@ -815,7 +815,7 @@ For detailed instructions see `http://xarch.tu-graz.ac.at/autocad/docs/make-menu
 	   (progn
              (message "no toolbar definition found")
 	     (throw 'Abort nil)))
-	 (require 'cl)
+	 (require 'cl-lib)
 	 (while (re-search-forward bitmap-regex nil t)
            (setq bitmap16 (match-string 2))
            (setq bitmap32 (match-string 3))
