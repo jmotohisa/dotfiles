@@ -5,5 +5,14 @@ dotzshd/.zshrc_miniconda3
 *.aux
 jmdot-emacs-d/url
 jmdot-emacs-d/lisp/py-autopep8.el
+
 dotzshd/.zsh_sessions
 dotvim/.netrwhist
+
+dotzshd/.iterm2/
+dotzshd/.iterm2_shell_integration.zsh
+
+jmdot-emacs-d/el-get/
+jmdot-emacs-d/network-security.data
+jmdot-emacs-d/transient/
+

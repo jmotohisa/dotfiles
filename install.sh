@@ -12,6 +12,34 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 ## edit dotzshd/.zshrc_local
 
 ## for emacs
+## install leaf:
+## Put the following code (<leaf-install-code> to </leaf-install-code>) to the top of init.el
+### begin ###
+# ;; <leaf-install-code>
+# (eval-and-compile
+#   (customize-set-variable
+#    'package-archives '(("org" . "https://orgmode.org/elpa/")
+#                        ("melpa" . "https://melpa.org/packages/")
+#                        ("gnu" . "https://elpa.gnu.org/packages/")))
+#   (package-initialize)
+#   (unless (package-installed-p 'leaf)
+#     (package-refresh-contents)
+#     (package-install 'leaf))
+
+#   (leaf leaf-keywords
+#     :ensure t
+#     :init
+#     ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+#     (leaf hydra :ensure t)
+#     (leaf el-get :ensure t)
+#     (leaf blackout :ensure t)
+
+#     :config
+#     ;; initialize leaf-keywords.el
+#     (leaf-keywords-init)))
+# ;; </leaf-install-code>
+### end ###
+
 # cd ~/.emacs.d; mkdir lisp; mkdir site-start.d; mkdir local-lisp
 ## install ddskk:
 # wget http://www.ring.gr.jp/archives/elisp/skk/maintrunk/ddskk-16.2.tar.gz
