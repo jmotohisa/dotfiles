@@ -1,4 +1,9 @@
-;; init.el --- My init.el  -*- lexical-binding: t; -*-
+;;; init.el ---                                      -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2025  Junichi Motohisa
+
+;; Author: Junichi Motohisa <motohisa@ist.hokudai.ac.jp>
+;; Keywords:
 
 ;;; Commentary:
 
@@ -114,7 +119,7 @@
       emacs24.4-p (string-match "^24\.4" emacs-version)
       emacs24.5-p (string-match "^24\.5" emacs-version)
       emacs26.3-p (string-match "^26\.3" emacs-version)
-      emacs27.1-p (string-match "^26\.1" emacs-version))
+      emacs27.1-p (string-match "^27\.1" emacs-version))
 
 ;; system-type predicates
 (setq darwin-p  (eq system-type 'darwin)
@@ -246,7 +251,7 @@
 (load "color-theme-sanityinc-solarized.el")
 (if (window-system)
 	(progn 
-	  (color-theme-solarized-dark) ;; solarized
+;;	  (color-theme-sanityinc-solarized-dark) ;; solarized
 	  (defun light-theme ()
 		(interactive)
 		(load-theme 'solarized-light t))
@@ -497,7 +502,7 @@
 ;;
 ;;(require 'skk-autoloads)
 (global-set-key "\C-x\C-j" 'skk-mode)
-;;(global-set-key (kbd "\C-xj") 'skk-auto-fill-mode)
+(global-set-key (kbd "\C-xj") 'skk-auto-fill-mode)
 ;;(global-set-key "\C-xt" 'skk-tutorial)
 
 ;; C-j の機能を別のキーに割り当て
@@ -1056,12 +1061,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(color-theme-sanityinc-solarized ddskk flycheck-elsa flycheck-package
-                                     geiser lua-mode markdown-mode
-                                     multi-term py-autopep8 spice-mode
-                                     switch-window verilog-mode w3m
-                                     yatex))
+ '(custom-enabled-themes '(sanityinc-solarized-dark))
+ '(custom-safe-themes
+   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
+     default))
+ '(package-selected-packages '(el-get flycheck-elsa flycheck-package))
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
