@@ -178,6 +178,7 @@ fi
 #         ;;
 #     linux*)
 #         #Linux用の設定
+#         alias ls='ls --color'
 #         ;;
 # esac
  
