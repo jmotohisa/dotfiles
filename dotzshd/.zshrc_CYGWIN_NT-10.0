@@ -6,3 +6,6 @@ export CHERE_INVOKING=1
 source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized/sol.dark
 
 alias lv='TERM=cygwin /usr/bin/lv'
+
+alias pbcopy='putclip'
+alias pbpaste='getclip'

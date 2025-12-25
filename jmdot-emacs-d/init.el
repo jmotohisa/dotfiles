@@ -107,7 +107,7 @@
 
 ;; (setq user-full-name "Junichi Motohisa")
 ;; (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
-;; (setq user-id-string "jmotohisa")
+(setq user-id-string "jmotohisa")
 
 ;; taken from http://d.hatena.ne.jp/tomoya/20090807/1249601308
 (defun x->bool (elt) (not (not elt)))
