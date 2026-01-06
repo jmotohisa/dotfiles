@@ -32,6 +32,7 @@
 (leaf leaf-tree :ensure t)
 (leaf leaf-convert :ensure t)
 (leaf transient-dwim
+  :emacs>= 28.1
   :ensure t
   :bind (("M-=" . transient-dwim-dispatch)))
 
@@ -57,7 +58,7 @@
 ;; Nest package configurations
 (leaf flycheck
   :doc "On-the-fly syntax checking"
-  :emacs>= 24.3
+  :emacs>= 28.1
   :ensure t
   :bind (("M-n" . flycheck-next-error)
          ("M-p" . flycheck-previous-error))
@@ -87,6 +88,7 @@
            )
   :config
   (leaf editorconfig
+    :emacs>= 28.1
     :ensure t
     )
   (leaf s
@@ -104,6 +106,42 @@
     (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
   )
 ;; ...
+
+(leaf color-theme-sanityinc-solarized
+  :ensure t)
+
+(leaf multi-term
+  :ensure t)
+
+(leaf switch-window
+  :ensure t)
+
+(leaf doxymacs
+  :ensure t
+  :emacs>= 28.1
+  :config
+  ;; ----------------------------------------------------------------------------
+;; doxymacs mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;;custom c-mode hook for doxymacs
+(defun doxy-custom-c-mode-hook ()
+ (doxymacs-mode 1)
+ (setq doxymacs-doxygen-style "Qt")
+ (setq doxymacs-command-character "@"))
+(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
+
+;; somehow, (default) keybord mapping does not work
+(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
+(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
+(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
+(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
+(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
+(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
+(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
+(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
+(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
+)
 
 ;; (setq user-full-name "Junichi Motohisa")
 ;; (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -1071,7 +1109,7 @@
    '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
      default))
  '(package-selected-packages
-   '(arduino-mode doxymacs el-get flycheck-elsa flycheck-package geiser
+   '(arduino-mode el-get flycheck-elsa flycheck-package geiser
                   geiser-guile highlight-doxygen py-autopep8
                   python-coverage python-docstring python-mode))
  '(spice-show-describe-mode nil)
@@ -1498,9 +1536,23 @@
 
 (setq time-stamp-format "%3a %3b %02d %02H:%02M:%02S %Z %:y")
 
+;; ----------------------------------------------------------------------------
+;; Markdown mode
+;; ----------------------------------------------------------------------------
+(leaf markdown-mode
+ :ensure t
+ :emacs>= 28.1
+ :mode ("\\.md\\'" . gfm-mode)
+ :config
+ (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+ (setopt markdown-fontify-code-blocks-natively t)
+ (setopt markdown-header-scaling t)
+ (setopt markdown-indent-on-enter 'indent-and-new-item)
+;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
 ;; markdown ; multimarkdown
-(if carbon-p
+ (if carbon-p
 	(setq markdown-command "multimarkdown"))
+)
 
 ;; ----------------------------------------------------------------------------
 ;; lua mode
@@ -1582,42 +1634,6 @@
 (setq auto-mode-alist
       (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
 
-;; ----------------------------------------------------------------------------
-;; doxymacs mode
-;; ----------------------------------------------------------------------------
-(require 'doxymacs)
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
-;;custom c-mode hook for doxymacs
-(defun doxy-custom-c-mode-hook ()
- (doxymacs-mode 1)
- (setq doxymacs-doxygen-style "Qt")
- (setq doxymacs-command-character "@"))
-(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
-
-;; somehow, (default) keybord mapping does not work
-(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
-(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
-(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
-(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
-(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
-(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
-(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
-(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
-(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
-
-
-;; ----------------------------------------------------------------------------
-;; Markdown mode
-;; ----------------------------------------------------------------------------
-(leaf markdown-mode :ensure t
- :mode ("\\.md\\'" . gfm-mode)
- :config
- (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
- (setopt markdown-fontify-code-blocks-natively t)
- (setopt markdown-header-scaling t)
- (setopt markdown-indent-on-enter 'indent-and-new-item)
-;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
-)
 
 ;; ----------------------------------------------------------------------------
 ;; C-mode
