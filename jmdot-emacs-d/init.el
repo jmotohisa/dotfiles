@@ -152,6 +152,11 @@
 (when (string= system-type "darwin")       
   (setq dired-use-ls-dired nil))
 
+(setq auto-mode-alist (append '(("\\.c" . c-mode)
+				("\\.h" . c-mode)
+				("\\.py" .  python-mode))
+			      auto-mode-alist))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; path
 ;;;; based on http://sakito.jp/emacs/emacsshell.html#path
@@ -188,13 +193,13 @@
 			  (concat "/usr/local/bin:/opt/local/bin:/Users/motohisa/bin:" (getenv "PATH"))))
   (progn
 	  (add-to-list 'exec-path "/home/motohisa/bin")
-	  (setenv "PATH"
-			  (concat "/usr/local/bin:/home/motohisa/bin:" (getenv "PATH"))))
-  )
-(setenv "PATH"
+	    (setenv "PATH"
+	    		  (concat "/usr/local/bin:/home/motohisa/bin:" (getenv "PATH"))))
+  )                       
+(setenv "PATH"            
 	(concat "/usr/local/bin:/opt/local/bin:/Users/motohisa/bin:" (getenv "PATH")))
-
-;; 引数を load-path へ追加
+        
+;; 引数 を load-path へ追加
 ;; normal-top-level-add-subdirs-to-load-path はディレクトリ中で
 ;; [A-Za-z] で開始する物だけ追加する。
 ;; 追加したくない物は . や _ を先頭に付与しておけばロードしない
@@ -204,15 +209,15 @@
     (dolist (path paths paths)
       (let ((default-directory
               (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
+               (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
             (normal-top-level-add-subdirs-to-load-path))))))
-
+            
 (add-to-load-path "lisp" ;; 
                   "local-lisp";; 変更したり、自作の Emacs Lisp
                   "private"
-				  "site-start.d" ;; 初期設定ファイル
-				  )
+	          "site-start.d" ;; 初期設定ファイル
+		  )
 
 (setenv "MANPATH" (concat "/usr/local/man:/usr/share/man:/Developer/usr/share/man:/opt/local/share/man" (getenv "MANPATH")))
 
@@ -220,9 +225,9 @@
 ;; start emacsclient server
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (if window-system
-	(progn 
-	  (require 'server)
-	  (unless (server-running-p) (server-start))))
+  (progn
+    (require 'server)
+    (unless (server-running-p) (server-start))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Japanese setting
@@ -486,12 +491,12 @@
 (add-to-list 'term-unbind-key-list '"M-x")
 
 (add-hook 'term-mode-hook
-		  '(lambda ()
-			 ;; C-h を term 内文字削除にする
-			 (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
-			 ;; C-y を term 内ペーストにする
-			 (define-key term-raw-map (kbd "C-y") 'term-paste)
-			 ))
+	  '(lambda ()
+		 ;; C-h を term 内文字削除にする
+		 (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
+		 ;; C-y を term 内ペーストにする
+		 (define-key term-raw-map (kbd "C-y") 'term-paste)
+		 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; various modes
@@ -542,7 +547,7 @@
   )	
 
 ;; 変換の学習
-(require 'skk-study)
+;; (require 'skk-study)
 
 ;; ;;; skk-list-chars 非表示: taken from http://garin.jp/doc/unix/skk_skk_list_chars
 ;; (defun skk-list-chars (&optional arg)
@@ -1065,7 +1070,10 @@
  '(custom-safe-themes
    '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
      default))
- '(package-selected-packages '(el-get flycheck-elsa flycheck-package))
+ '(package-selected-packages
+   '(arduino-mode doxymacs el-get flycheck-elsa flycheck-package geiser
+                  geiser-guile highlight-doxygen py-autopep8
+                  python-coverage python-docstring python-mode))
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
@@ -1574,3 +1582,51 @@
 (setq auto-mode-alist
       (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
 
+;; ----------------------------------------------------------------------------
+;; doxymacs mode
+;; ----------------------------------------------------------------------------
+(require 'doxymacs)
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;;custom c-mode hook for doxymacs
+(defun doxy-custom-c-mode-hook ()
+ (doxymacs-mode 1)
+ (setq doxymacs-doxygen-style "Qt")
+ (setq doxymacs-command-character "@"))
+(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
+
+;; somehow, (default) keybord mapping does not work
+(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
+(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
+(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
+(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
+(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
+(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
+(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
+(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
+(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
+
+
+;; ----------------------------------------------------------------------------
+;; Markdown mode
+;; ----------------------------------------------------------------------------
+(leaf markdown-mode :ensure t
+ :mode ("\\.md\\'" . gfm-mode)
+ :config
+ (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+ (setopt markdown-fontify-code-blocks-natively t)
+ (setopt markdown-header-scaling t)
+ (setopt markdown-indent-on-enter 'indent-and-new-item)
+;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
+)
+
+;; ----------------------------------------------------------------------------
+;; C-mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook
+         (lambda ()
+           (c-set-style "bsd")                            ;;; (a)
+           (setq c-basic-offset 2)                        ;;; (b)
+           ;; 演算式が複数行にまたがるときのオフセット
+           (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
+           ;; 行末のスペースやタブに色づけして警告する。
+           (setq show-trailing-whitespace t)))            ;;; (d)
