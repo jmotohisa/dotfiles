@@ -8,8 +8,31 @@
 
 
 # mainly for osx
+# mainly for osx
+if [ -x /usr/libexec/path_helper ]; then
+    PATH=''
+    eval `/usr/libexec/path_helper -s`
+fi
 export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
-alias emacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
+alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
+# export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
+# alias emacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/motohisa/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/motohisa/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/motohisa/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/motohisa/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
 # mainly for cygwin
 export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH

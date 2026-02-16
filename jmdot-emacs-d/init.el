@@ -1,5 +1,150 @@
-(setq user-full-name "Junichi Motohisa")
-(setq user-mail-address "motohisa@ist.hokudai.ac.jp")
+;;; init.el ---                                      -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2025  Junichi Motohisa
+
+;; Author: Junichi Motohisa <motohisa@ist.hokudai.ac.jp>
+;; Keywords:
+
+;;; Commentary:
+
+;; <leaf-install-code>
+(eval-and-compile
+  (customize-set-variable
+   'package-archives '(("org" . "https://orgmode.org/elpa/")
+                       ("melpa" . "https://melpa.org/packages/")
+                       ("gnu" . "https://elpa.gnu.org/packages/")))
+  (package-initialize)
+  (unless (package-installed-p 'leaf)
+    (package-refresh-contents)
+    (package-install 'leaf))
+  (leaf leaf-keywords
+   :ensure t
+    :init
+    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+    (leaf hydra :ensure t)
+    (leaf el-get :ensure t)
+    (leaf blackout :ensure t)
+    :config
+    ;; initialize leaf-keywords.el
+   (leaf-keywords-init)))
+;; </leaf-install-code>
+
+(leaf leaf-tree :ensure t)
+(leaf leaf-convert :ensure t)
+(leaf transient-dwim
+  :emacs>= 28.1
+  :ensure t
+  :bind (("M-=" . transient-dwim-dispatch)))
+
+;; You can also configure builtin package via leaf!
+(leaf cus-start
+  :doc "define customization properties of builtins"
+  :tag "builtin" "internal"
+  :custom ((user-full-name . "Junichi Motohisa")
+           (user-mail-address . "motohisa@ist.hokudai.ac.jp")
+           (user-login-name . "jmotohisa")
+           (truncate-lines . t)
+           (menu-bar-mode . t)
+           (tool-bar-mode . nil)
+           (scroll-bar-mode . nil)
+           (indent-tabs-mode . nil)))
+
+(leaf autorevert
+  :doc "revert buffers when files on disk change"
+  :tag "builtin"
+  :custom ((auto-revert-interval . 0.1))
+  :global-minor-mode global-auto-revert-mode)
+
+;; Nest package configurations
+(leaf flycheck
+  :doc "On-the-fly syntax checking"
+  :emacs>= 28.1
+  :ensure t
+  :bind (("M-n" . flycheck-next-error)
+         ("M-p" . flycheck-previous-error))
+  :custom ((flycheck-emacs-lisp-initialize-packages . t))
+  :hook (emacs-lisp-mode-hook lisp-interaction-mode-hook)
+  :config
+  (leaf flycheck-package
+    :doc "A Flycheck checker for elisp package authors"
+    :ensure t
+    :config
+    (flycheck-package-setup))
+
+  (leaf flycheck-elsa
+    :doc "Flycheck for Elsa."
+    :emacs>= 25
+    :ensure t
+    :config
+    (flycheck-elsa-setup))
+
+  ;; ...
+  )
+
+(leaf copilot
+  :el-get (copilot
+           :type github
+           :pkgname "zerolfx/copilot.el"
+           )
+  :config
+  (leaf editorconfig
+    :emacs>= 28.1
+    :ensure t
+    )
+  (leaf s
+    :ensure t
+    )
+  (leaf dash
+    :ensure t
+    )
+  (defun my/copilot-tab ()
+    (interactive)
+    (or (copilot-accept-completion)
+        (indent-for-tab-command)))
+
+  (with-eval-after-load 'copilot
+    (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
+  )
+;; ...
+
+(leaf color-theme-sanityinc-solarized
+  :ensure t)
+
+(leaf multi-term
+  :ensure t)
+
+(leaf switch-window
+  :ensure t)
+
+(leaf doxymacs
+  :ensure t
+  :emacs>= 28.1
+  :config
+  ;; ----------------------------------------------------------------------------
+;; doxymacs mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;;custom c-mode hook for doxymacs
+(defun doxy-custom-c-mode-hook ()
+ (doxymacs-mode 1)
+ (setq doxymacs-doxygen-style "Qt")
+ (setq doxymacs-command-character "@"))
+(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
+
+;; somehow, (default) keybord mapping does not work
+(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
+(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
+(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
+(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
+(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
+(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
+(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
+(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
+(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
+)
+
+;; (setq user-full-name "Junichi Motohisa")
+;; (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
 (setq user-id-string "jmotohisa")
 
 ;; taken from http://d.hatena.ne.jp/tomoya/20090807/1249601308
@@ -7,11 +152,12 @@
 
 ;; emacs-version predicates
 (setq emacs23-p (string-match "^23" emacs-version)
-	  emacs24-p (string-match "^24" emacs-version)
-	  emacs24.3-p (string-match "^24\.3" emacs-version)
-	  emacs24.4-p (string-match "^24\.4" emacs-version)
-	  emacs24.5-p (string-match "^24\.5" emacs-version)
-	  emacs26.3-p (string-match "^26\.3" emacs-version))
+      emacs24-p (string-match "^24" emacs-version)
+      emacs24.3-p (string-match "^24\.3" emacs-version)
+      emacs24.4-p (string-match "^24\.4" emacs-version)
+      emacs24.5-p (string-match "^24\.5" emacs-version)
+      emacs26.3-p (string-match "^26\.3" emacs-version)
+      emacs27.1-p (string-match "^27\.1" emacs-version))
 
 ;; system-type predicates
 (setq darwin-p  (eq system-type 'darwin)
@@ -32,13 +178,22 @@
       meadow-p  (featurep 'meadow)
       windows-p (or cygwin-p nt-p meadow-p))
 
-(if darwin-p
-    (progn
-      (require 'package)
-      (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-      (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-      (package-initialize))
-  )
+;; (if darwin-p
+;;     (progn
+;;       (require 'package)
+;;       (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;;       (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;       (package-initialize))
+;;   )
+
+;; added on 2020/11/06, https://stackoverflow.com/questions/25125200/emacs-error-ls-does-not-support-dired
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
+
+(setq auto-mode-alist (append '(("\\.c" . c-mode)
+				("\\.h" . c-mode)
+				("\\.py" .  python-mode))
+			      auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; path
@@ -76,13 +231,13 @@
 			  (concat "/usr/local/bin:/opt/local/bin:/Users/motohisa/bin:" (getenv "PATH"))))
   (progn
 	  (add-to-list 'exec-path "/home/motohisa/bin")
-	  (setenv "PATH"
-			  (concat "/usr/local/bin:/home/motohisa/bin:" (getenv "PATH"))))
-  )
-(setenv "PATH"
+	    (setenv "PATH"
+	    		  (concat "/usr/local/bin:/home/motohisa/bin:" (getenv "PATH"))))
+  )                       
+(setenv "PATH"            
 	(concat "/usr/local/bin:/opt/local/bin:/Users/motohisa/bin:" (getenv "PATH")))
-
-;; 引数を load-path へ追加
+        
+;; 引数 を load-path へ追加
 ;; normal-top-level-add-subdirs-to-load-path はディレクトリ中で
 ;; [A-Za-z] で開始する物だけ追加する。
 ;; 追加したくない物は . や _ を先頭に付与しておけばロードしない
@@ -92,15 +247,15 @@
     (dolist (path paths paths)
       (let ((default-directory
               (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
+               (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
             (normal-top-level-add-subdirs-to-load-path))))))
-
+            
 (add-to-load-path "lisp" ;; 
                   "local-lisp";; 変更したり、自作の Emacs Lisp
                   "private"
-				  "site-start.d" ;; 初期設定ファイル
-				  )
+	          "site-start.d" ;; 初期設定ファイル
+		  )
 
 (setenv "MANPATH" (concat "/usr/local/man:/usr/share/man:/Developer/usr/share/man:/opt/local/share/man" (getenv "MANPATH")))
 
@@ -108,9 +263,9 @@
 ;; start emacsclient server
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (if window-system
-	(progn 
-	  (require 'server)
-	  (unless (server-running-p) (server-start))))
+  (progn
+    (require 'server)
+    (unless (server-running-p) (server-start))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Japanese setting
@@ -136,11 +291,10 @@
 	  ))
 
 ;; color theme
-;;(load "color-theme.el")
-(load "color-theme-solarized.el")
+(load "color-theme-sanityinc-solarized.el")
 (if (window-system)
 	(progn 
-	  (color-theme-solarized-dark) ;; solarized
+;;	  (color-theme-sanityinc-solarized-dark) ;; solarized
 	  (defun light-theme ()
 		(interactive)
 		(load-theme 'solarized-light t))
@@ -375,12 +529,12 @@
 (add-to-list 'term-unbind-key-list '"M-x")
 
 (add-hook 'term-mode-hook
-		  '(lambda ()
-			 ;; C-h を term 内文字削除にする
-			 (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
-			 ;; C-y を term 内ペーストにする
-			 (define-key term-raw-map (kbd "C-y") 'term-paste)
-			 ))
+	  '(lambda ()
+		 ;; C-h を term 内文字削除にする
+		 (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
+		 ;; C-y を term 内ペーストにする
+		 (define-key term-raw-map (kbd "C-y") 'term-paste)
+		 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; various modes
@@ -389,10 +543,10 @@
 ;;
 ;; skk
 ;;
-(require 'skk-autoloads)
+;;(require 'skk-autoloads)
 (global-set-key "\C-x\C-j" 'skk-mode)
-(global-set-key "\C-xj" 'skk-auto-fill-mode)
-(global-set-key "\C-xt" 'skk-tutorial)
+(global-set-key (kbd "\C-xj") 'skk-auto-fill-mode)
+;;(global-set-key "\C-xt" 'skk-tutorial)
 
 ;; C-j の機能を別のキーに割り当て
 (global-set-key (kbd "C-m") 'newline-and-indent)
@@ -405,30 +559,33 @@
 
 ;; Specify dictionary location
 (if darwin-p
-	(progn
-	  (setq skk-large-jisyo "/Users/motohisa/Library/Application Support/AquaSKK/SKK-JISYO.L")
-	  (setq skk-extra-jisyo-file-list
-			(list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
-	  ;; Specify tutorial location
-	  (setq skk-tut-file "/Users/motohisa/.emacs.d/share/skk/SKK.tut"))
-  (if cygwin-p
-	  (progn
-		(setq skk-large-jisyo "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
-		;; (setq skk-extra-jisyo-file-list
-		;; 	  (list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
-		;; Specify tutorial location
-		(setq skk-tut-file "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK.tut"))
-	(progn
-	  (setq skk-large-jisyo "/home/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
-	  ;; (setq skk-extra-jisyo-file-list
-	  ;; 		(list '("//motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
-	  ;; Specify tutorial location
-	  (setq skk-tut-file "/home/motohisa/.emacs.d/share/skk/SKK.tut"))
+    (progn
+      (setq skk-large-jisyo "/Users/motohisa/Library/Application Support/AquaSKK/SKK-JISYO.L")
+      (setq skk-extra-jisyo-file-list
+	    (list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
+      ;; Specify tutorial location
+;;      (setq skk-tut-file "/Users/motohisa/.emacs.d/share/skk/SKK.tut")
+      )
   )
-)	
-	  
+(if cygwin-p
+    (progn
+      (setq skk-large-jisyo "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
+      ;; (setq skk-extra-jisyo-file-list
+      ;; 	  (list '("/Users/motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
+      ;; Specify tutorial location
+      ;;	(setq skk-tut-file "/cygdrive/c/Users/motohisa/.emacs.d/share/skk/SKK.tut")
+      )
+  ;;    (progn
+  ;;      (setq skk-large-jisyo "/home/motohisa/.emacs.d/share/skk/SKK-JISYO.L")
+  ;; (setq skk-extra-jisyo-file-list
+  ;; 		(list '("//motohisa/Library/Application Support/AquaSKK/npiiii.l.euc")))
+  ;; Specify tutorial location
+  ;;      (setq skk-tut-file "/home/motohisa/.emacs.d/share/skk/SKK.tut"))
+  ;;    )
+  )	
+
 ;; 変換の学習
-(require 'skk-study)
+;; (require 'skk-study)
 
 ;; ;;; skk-list-chars 非表示: taken from http://garin.jp/doc/unix/skk_skk_list_chars
 ;; (defun skk-list-chars (&optional arg)
@@ -495,296 +652,296 @@
 ;; YaTeX
 ;;
 (if darwin-p
-	(progn
-	  ;;(setq mac-command-key-is-meta nil)
-	  (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
-	  (setq auto-mode-alist
-			(append '(("\\.tex$" . yatex-mode)
-					  ("\\.ltx$" . yatex-mode)
-					  ("\\.cls$" . yatex-mode)
-					  ("\\.sty$" . yatex-mode)
-					  ("\\.clo$" . yatex-mode)
-					  ("\\.bbl$" . yatex-mode)) auto-mode-alist))
-	  (setq YaTeX-inhibit-prefix-letter t)
-	  (setq YaTeX-kanji-code nil)
-	  (setq YaTeX-latex-message-code 'utf-8)
-	  (setq YaTeX-use-LaTeX2e t)
-	  (setq YaTeX-use-AMS-LaTeX t)
-	  (setq YaTeX-dvi2-command-ext-alist
-			'(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
-	  (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
-										;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
-										;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
-										;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
-										;(setq tex-command "/opt/local/bin/luajitlatex -synctex=1")
-										;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/platex-ng %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex %O -synctex=1 %S/' -e '$bibtex=q/bibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/makeindex %O -o %D %S/' -norc -gg -pdf")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/luajitlatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-										;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
-	  (setq bibtex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-	  (setq makeindex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-	  ;;(setq dvi2-command "/usr/bin/open -a Skim")
-	  (setq dvi2-command "/Users/motohisa/bin/skim_reload2.sh")
-	  ;;(setq dvi2-command "/usr/bin/open -a Preview")
-										;(setq dvi2-command "/usr/bin/open -a TeXShop")
-										;(setq dvi2-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
-										;(setq dvi2-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
-	  ;;(setq tex-pdfview-command "/usr/bin/open -a Skim")
-	  (setq tex-pdfview-command "/Users/motohisa/bin/skim_reload2.sh")
-										;(setq tex-pdfview-command "/usr/bin/open -a Preview")
-										;(setq tex-pdfview-command "/usr/bin/open -a TeXShop")
-										;(setq tex-pdfview-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
-										;(setq tex-pdfview-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
-	  (setq dviprint-command-format "/usr/bin/open -a \"Adobe Acrobat Reader DC\" `echo %s | gsed -e \"s/\\.[^.]*$/\\.pdf/\"`")
-	  
-	  (add-hook 'yatex-mode-hook
-				'(lambda ()
-				   (auto-fill-mode -1)))
-	  
-	  ;;
-	  ;; RefTeX with YaTeX
-	  ;;
-										;(add-hook 'yatex-mode-hook 'turn-on-reftex)
-	  (add-hook 'yatex-mode-hook
-				'(lambda ()
-				   (reftex-mode 1)
-				   (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
-				   (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
-	  
-	  ;; taken from https://github.com/ryseto/emacs_and_tex/blob/master/my_yatex.el
+    (progn
+      ;;(setq mac-command-key-is-meta nil)
+      (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+      (setq auto-mode-alist
+	    (append '(("\\.tex$" . yatex-mode)
+		      ("\\.ltx$" . yatex-mode)
+		      ("\\.cls$" . yatex-mode)
+		      ("\\.sty$" . yatex-mode)
+		      ("\\.clo$" . yatex-mode)
+		      ("\\.bbl$" . yatex-mode)) auto-mode-alist))
+      (setq YaTeX-inhibit-prefix-letter t)
+      (setq YaTeX-kanji-code nil)
+      (setq YaTeX-latex-message-code 'utf-8)
+      (setq YaTeX-use-LaTeX2e t)
+      (setq YaTeX-use-AMS-LaTeX t)
+      (setq YaTeX-dvi2-command-ext-alist
+	    '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
+      (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+                                        ;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
+                                        ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
+                                        ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
+                                        ;(setq tex-command "/opt/local/bin/luajitlatex -synctex=1")
+                                        ;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/platex-ng %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex %O -synctex=1 %S/' -e '$bibtex=q/bibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/makeindex %O -o %D %S/' -norc -gg -pdf")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/luajitlatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+                                        ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -norc -gg -pdf")
+      (setq bibtex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+      (setq makeindex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex %O -synctex=1 %S/' -e '$bibtex=q/upbibtex %O %B/' -e '$biber=q/biber %O --bblencoding=utf8 -u -U --output_safechars %B/' -e '$makeindex=q/upmendex %O -o %D %S/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+      ;;(setq dvi2-command "/usr/bin/open -a Skim")
+      (setq dvi2-command "/Users/motohisa/bin/skim_reload2.sh")
+      ;;(setq dvi2-command "/usr/bin/open -a Preview")
+                                        ;(setq dvi2-command "/usr/bin/open -a TeXShop")
+                                        ;(setq dvi2-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
+                                        ;(setq dvi2-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
+      ;;(setq tex-pdfview-command "/usr/bin/open -a Skim")
+      (setq tex-pdfview-command "/Users/motohisa/bin/skim_reload2.sh")
+                                        ;(setq tex-pdfview-command "/usr/bin/open -a Preview")
+                                        ;(setq tex-pdfview-command "/usr/bin/open -a TeXShop")
+                                        ;(setq tex-pdfview-command "/Applications/TeXworks.app/Contents/MacOS/TeXworks")
+                                        ;(setq tex-pdfview-command "/Applications/texstudio.app/Contents/MacOS/texstudio --pdf-viewer-only")
+      (setq dviprint-command-format "/usr/bin/open -a \"Adobe Acrobat Reader DC\" `echo %s | gsed -e \"s/\\.[^.]*$/\\.pdf/\"`")
+      
+      (add-hook 'yatex-mode-hook
+		'(lambda ()
+		   (auto-fill-mode -1)))
+      
+      ;;
+      ;; RefTeX with YaTeX
+      ;;
+                                        ;(add-hook 'yatex-mode-hook 'turn-on-reftex)
+      (add-hook 'yatex-mode-hook
+		'(lambda ()
+		   (reftex-mode 1)
+		   (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
+		   (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
+      
+      ;; taken from https://github.com/ryseto/emacs_and_tex/blob/master/my_yatex.el
 ;;; インデント (YaTeXのインデントを使わない）
 ;;; http://www.hit.ac.jp/~wachi/misc/latexindent.html
-	  (autoload 'latex-indent-command "~/Dropbox/emacs/latex-indent"
-		"Indent current line accroding to LaTeX block structure.")
-	  (autoload 'latex-indent-region-command "~/Dropbox/emacs/latex-indent"
-		"Indent each line in the region according to LaTeX block structure.")
-	  
+      (autoload 'latex-indent-command "~/Dropbox/emacs/latex-indent"
+	"Indent current line accroding to LaTeX block structure.")
+      (autoload 'latex-indent-region-command "~/Dropbox/emacs/latex-indent"
+	"Indent each line in the region according to LaTeX block structure.")
+      
 ;;;; Skim PDF カーソル位置表示
 ;;; Emacs から Skim へ
 ;;; この機能を使うためには、
 ;;; pdflatex/platex にオプション -synctex=1 が必要
 ;;;
 ;;; Thanks to Tsuchiya-san's corrections (yatex ML [yatex:04810,04811])
-	  (defun skim-forward-search ()
-		(interactive)
-		(process-kill-without-query
-		 (start-process  
-		  "displayline"
-		  nil
-		  "/Applications/Skim.app/Contents/SharedSupport/displayline"
-		  (number-to-string (save-restriction
-							  (widen)
-							  (count-lines (point-min) (point))))
-		  (expand-file-name
-		   (concat (file-name-sans-extension (or YaTeX-parent-file
-												 (save-excursion
-												   (YaTeX-visit-main t)
-												   buffer-file-name)))
-				   ".pdf"))
-		  buffer-file-name)))
-	  
+      (defun skim-forward-search ()
+	(interactive)
+	(process-kill-without-query
+	 (start-process  
+	  "displayline"
+	  nil
+	  "/Applications/Skim.app/Contents/SharedSupport/displayline"
+	  (number-to-string (save-restriction
+			      (widen)
+			      (count-lines (point-min) (point))))
+	  (expand-file-name
+	   (concat (file-name-sans-extension (or YaTeX-parent-file
+						 (save-excursion
+						   (YaTeX-visit-main t)
+						   buffer-file-name)))
+		   ".pdf"))
+	  buffer-file-name)))
+      
 ;;;; Preview.app で開く
-	  (defun MyTeX-open-PreviewApp ()
-		(interactive)
-		(let* ((mtf)
-			   (pf)
-			   (cmd "open -a Preview.app"))
-		  (setq mtf YaTeX-parent-file)
-		  (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
-		  (process-kill-without-query
-		   (start-process-shell-command "Open Preview.app" nil cmd pf))))
-	  
-	  (defun MyTeX-open-SkimApp ()
-		(interactive)
-		(let* ((mtf)
-			   (pf)
-			   (cmd "open -a Skim.app"))
-		  (setq mtf YaTeX-parent-file)
-		  (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
-		  (process-kill-without-query
-		   (start-process-shell-command "Open Skim.app" nil cmd pf))))
-	  
+      (defun MyTeX-open-PreviewApp ()
+	(interactive)
+	(let* ((mtf)
+	       (pf)
+	       (cmd "open -a Preview.app"))
+	  (setq mtf YaTeX-parent-file)
+	  (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
+	  (process-kill-without-query
+	   (start-process-shell-command "Open Preview.app" nil cmd pf))))
+      
+      (defun MyTeX-open-SkimApp ()
+	(interactive)
+	(let* ((mtf)
+	       (pf)
+	       (cmd "open -a Skim.app"))
+	  (setq mtf YaTeX-parent-file)
+	  (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
+	  (process-kill-without-query
+	   (start-process-shell-command "Open Skim.app" nil cmd pf))))
+      
 ;;; YaTeX用キーバインドの設定
-	  (add-hook 'yatex-mode-hook
-				'(lambda ()
-				   (turn-off-auto-fill) ; 勝手に改行しない
-				   ;; (define-key YaTeX-mode-map [?\s-t] 
-				   ;;   (lambda ()
-				   ;; 	 (interactive)
-				   ;; 	 (YaTeX-typeset-menu nil ?j)))
-				   ;; (define-key YaTeX-mode-map [?\s-b] 
-				   ;;   (lambda ()
-				   ;; 	 (interactive)
-				   ;; 	 (YaTeX-typeset-menu nil ?j)))
-				   ;; (define-key YaTeX-mode-map [?\s-P]
-				   ;;   (lambda (arg)
-				   ;; 	 (interactive "P")
-				   ;; 	 (let ((current-prefix-arg (not arg)))
-				   ;; 	   (YaTeX-typeset-menu 'dummy ?p))))
-				   ;; (define-key YaTeX-mode-map [?\s-B] 
-				   ;;   (lambda ()
-				   ;; 	 (interactive)
-				   ;; 	 (YaTeX-typeset-menu nil ?b)))
-				   ;; (define-key YaTeX-mode-map [?\s-I] 
-				   ;;   (lambda ()
-				   ;; 	 (interactive)
-				   ;; 	 (YaTeX-typeset-menu nil ?i)))
-				   ;;			 (define-key YaTeX-mode-map [?\s-J] 'MyTeX-open-item-BibDesk)
-				   (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)
-				   ;;             (define-key YaTeX-mode-map "\t" 'latex-indent-command)
-				   ;;             (define-key YaTeX-mode-map (kbd "C-c TAB") 'latex-indent-region-command)
-				   ;;             (define-key YaTeX-mode-map [?\s-_] 'MyTeX-insert-subscript_rm)
-				   ;;             (define-key YaTeX-mode-map [?\C-\s-J] 'YaTeX-goto-corresponding-*)
-				   ;;             (define-key YaTeX-mode-map (kbd "C-c d") 'MyTeX-latexmk-cleanup)
-				   ;;             (define-key YaTeX-mode-map [?\s-H] 'YaTeX-display-hierarchy)
-				   ;;             (define-key YaTeX-mode-map [?\s-1] 'YaTeX-visit-main)
-				   ;;             (define-key YaTeX-mode-map [?\s-2] 'MyTeX-switch-to-previousbuffer)
-				   ;;             (define-key YaTeX-mode-map [?\M-\s-B] 'MyTool-open-bibdesk)
-				   ;;             (define-key YaTeX-mode-map [?\s-ı] 'MyTool-open-bibdesk)
-				   ;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
-				   ;;             (define-key YaTeX-mode-map (kbd "s-") 'MyTeX-open-SkimApp)
-				   ;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
-				   (define-key YaTeX-mode-map [?\s-∏] 'MyTeX-open-PreviewApp)
-				   (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-PreviewApp)
-				   ;;            (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-SkimApp)
-				   ;;             (define-key YaTeX-mode-map [?\s-\)] 'MyTeX-speech-region)
-				   ;;             (define-key YaTeX-mode-map [?\s-C] 'MyTeX-open-article)
-				   ))
-
-	  ;; taken from http://macwiki.osdn.jp/wiki/index.php/CarbonEmacsAndYatex
-	  ;; SKKで「かなモード」のときに「$」を入力すると自動的に「アスキーモード」に切り替える
-	  ;;　http://www.math.s.chiba-u.ac.jp/~matsu/emacs/emacs21/yatex.html
-	  (add-hook 'skk-mode-hook
-				(lambda ()
-				  (if (eq major-mode 'yatex-mode)
-					  (progn
-						(define-key skk-j-mode-map "¥¥" 'self-insert-command)
-						(define-key skk-j-mode-map "$" 'YaTeX-insert-dollar)
-						))
-				  ))
-	  
-	  ;; ;; previous setting of yatex
-	  ;; ;; 13/01/04
-	  ;; ;; YaTeX
-	  ;; ;; taken from http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?YaTeX
-	  
-	  ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/yatex")
-	  ;; (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
-	  ;; (setq auto-mode-alist
-	  ;;       (append '(("\\.tex$" . yatex-mode)
-	  ;;                 ("\\.ltx$" . yatex-mode)
-	  ;;                 ("\\.cls$" . yatex-mode)
-	  ;;                 ("\\.sty$" . yatex-mode)
-	  ;;                 ("\\.clo$" . yatex-mode)
-	  ;;                 ("\\.bbl$" . yatex-mode)) auto-mode-alist))
-	  ;; (setq YaTeX-inhibit-prefix-letter t)
-	  ;; (setq YaTeX-kanji-code nil)
-	  ;; (setq YaTeX-use-LaTeX2e t)
-	  ;; (setq YaTeX-use-AMS-LaTeX t)
-	  ;; (setq YaTeX-dvipdf-command "/opt/local/bin/dvipdfmx")
-	  ;; (setq YaTeX-dvi2-command-ext-alist
-	  ;;       '(("[agx]dvi\\|PictPrinter" . ".dvi")
-	  ;;         ("gv" . ".ps")
-	  ;;         ("Preview\\|TeXShop\\|TeXworks\\|Skim\\|mupdf\\|xpdf\\|Adobe" . ".pdf")))
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -g > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex -synctex=1/' -e '$bibtex=q/bibtex/' -e '$makeindex=q/makeindex/' -norc -gg -pdf")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -pdf")
-	  ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -xelatex")
-	  ;; ;(setq tex-command "/opt/local/bin/platex -synctex=1")
-	  ;; ;(setq tex-command "/usr/local/bin/pdfplatex")
-	  ;; ;(setq tex-command "/opt/local/bin/pdfplatex2")
-	  ;; ;(setq tex-command "/opt/local/bin/uplatex -synctex=1")
-	  ;; ;(setq tex-command "/opt/local/bin/pdfuplatex")
-	  ;; ;(setq tex-command "/opt/local/bin/pdfuplatex2")
-	  ;; ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
-	  ;; ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
-	  ;; ;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
-	  ;; (setq bibtex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/upbibtex")
-	  ;;                            ((string-match "platex" tex-command) "/opt/local/bin/pbibtex")
-	  ;;                            ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/bibtexu")
-	  ;;                            (t "/opt/local/bin/bibtex")))
-	  ;; (setq makeindex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/mendex")
-	  ;;                               ((string-match "platex" tex-command) "/opt/local/bin/mendex")
-	  ;;                               ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/texindy")
-	  ;;                               (t "/opt/local/bin/makeindex")))
-	  ;; ;(setq dvi2-command (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a Preview")
-	  ;; ;                        (t "/usr/bin/open -a PictPrinter")))
-	  ;; (setq dviprint-command-format (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a \"Adobe Reader\" %s")
-	  ;;                                     (t "/usr/bin/open -a \"Adobe Reader\" `echo %s | sed -e \"s/\\.[^.]*$/\\.pdf/\"`")))
-	  
-	  ;; ;(setq tex-command "/usr/local/bin/dotexshop")
-	  ;; ;;(setq dvi2-command "open -a /Applications/TeXShop.app")
-	  ;; (setq dvi2-command "/usr/bin/open -a /Applications/Skim.app")
-	  
-	  ;; (defun skim-forward-search ()
-	  ;;   (interactive)
-	  ;;   (let* ((ctf (buffer-name))
-	  ;;          (mtf)
-	  ;;          (pf)
-	  ;;          (ln (format "%d" (line-number-at-pos)))
-	  ;;          (cmd "/Applications/Skim.app/Contents/SharedSupport/displayline")
-	  ;;          (args))
-	  ;;     (if (YaTeX-main-file-p)
-	  ;;         (setq mtf (buffer-name))
-	  ;;       (progn
-	  ;;         (if (equal YaTeX-parent-file nil)
-	  ;;             (save-excursion
-	  ;;               (YaTeX-visit-main t)))
-	  ;;         (setq mtf YaTeX-parent-file)))
-	  ;;     (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
-	  ;;     (setq args (concat ln " " pf " " ctf))
-	  ;;     (message (concat cmd " " args))
-	  ;;     (process-kill-without-query
-	  ;;      (start-process-shell-command "displayline" nil cmd args))))
-
-	  ;; (add-hook 'yatex-mode-hook
-	  ;;           '(lambda ()
-	  ;;              (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)))
-
-	  ;; (add-hook 'yatex-mode-hook
-	  ;;           '(lambda ()
-	  ;;              (auto-fill-mode -1)))
-
-	  ;; ;;
-	  ;; ;; RefTeX with YaTeX
-	  ;; ;;
-	  ;; ;(add-hook 'yatex-mode-hook 'turn-on-reftex)
-	  ;; (add-hook 'yatex-mode-hook
-	  ;;           '(lambda ()
-	  ;;              (reftex-mode 1)
-	  ;;              (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
-	  ;;              (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
-
-	  ;;
-	  ;; was a reminder of rihobook-emacs.d-init.el
-	  ;;
-
-	  ;; 自動改行を無効
-										;(add-hook 'yatex-mode-hook'(lambda ()(setq auto-fill-function nil)))
-										;(add-hook 'skk-mode-hook
-										;         (lambda ()
-										;           (if (eq major-mode 'yatex-mode)
-										;               (progn
-										;                 (define-key skk-j-mode-map “¥¥“ 'self-insert-command)
-										;                 (define-key skk-j-mode-map “$“ 'YaTeX-insert-dollar)
-										;                 ))
-										;           ))
-	  ;;
-	  ;; End: a reminder of rihobook-emacs.el
-	  ;;
-
-	  ;; ;; 13/01/14
-	  ;; ;; YaTeX end
-	  ;; ;;
-	  )) ;; end of if darwin-p
+      (add-hook 'yatex-mode-hook
+		'(lambda ()
+		   (turn-off-auto-fill) ; 勝手に改行しない
+		   ;; (define-key YaTeX-mode-map [?\s-t] 
+		   ;;   (lambda ()
+		   ;; 	 (interactive)
+		   ;; 	 (YaTeX-typeset-menu nil ?j)))
+		   ;; (define-key YaTeX-mode-map [?\s-b] 
+		   ;;   (lambda ()
+		   ;; 	 (interactive)
+		   ;; 	 (YaTeX-typeset-menu nil ?j)))
+		   ;; (define-key YaTeX-mode-map [?\s-P]
+		   ;;   (lambda (arg)
+		   ;; 	 (interactive "P")
+		   ;; 	 (let ((current-prefix-arg (not arg)))
+		   ;; 	   (YaTeX-typeset-menu 'dummy ?p))))
+		   ;; (define-key YaTeX-mode-map [?\s-B] 
+		   ;;   (lambda ()
+		   ;; 	 (interactive)
+		   ;; 	 (YaTeX-typeset-menu nil ?b)))
+		   ;; (define-key YaTeX-mode-map [?\s-I] 
+		   ;;   (lambda ()
+		   ;; 	 (interactive)
+		   ;; 	 (YaTeX-typeset-menu nil ?i)))
+		   ;;			 (define-key YaTeX-mode-map [?\s-J] 'MyTeX-open-item-BibDesk)
+		   (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)
+		   ;;             (define-key YaTeX-mode-map "\t" 'latex-indent-command)
+		   ;;             (define-key YaTeX-mode-map (kbd "C-c TAB") 'latex-indent-region-command)
+		   ;;             (define-key YaTeX-mode-map [?\s-_] 'MyTeX-insert-subscript_rm)
+		   ;;             (define-key YaTeX-mode-map [?\C-\s-J] 'YaTeX-goto-corresponding-*)
+		   ;;             (define-key YaTeX-mode-map (kbd "C-c d") 'MyTeX-latexmk-cleanup)
+		   ;;             (define-key YaTeX-mode-map [?\s-H] 'YaTeX-display-hierarchy)
+		   ;;             (define-key YaTeX-mode-map [?\s-1] 'YaTeX-visit-main)
+		   ;;             (define-key YaTeX-mode-map [?\s-2] 'MyTeX-switch-to-previousbuffer)
+		   ;;             (define-key YaTeX-mode-map [?\M-\s-B] 'MyTool-open-bibdesk)
+		   ;;             (define-key YaTeX-mode-map [?\s-ı] 'MyTool-open-bibdesk)
+		   ;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
+		   ;;             (define-key YaTeX-mode-map (kbd "s-") 'MyTeX-open-SkimApp)
+		   ;;             (define-key YaTeX-mode-map [?\M-\s-P] 'MyTeX-open-PreviewApp)
+		   (define-key YaTeX-mode-map [?\s-∏] 'MyTeX-open-PreviewApp)
+		   (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-PreviewApp)
+		   ;;            (define-key YaTeX-mode-map [?\M-∏] 'MyTeX-open-SkimApp)
+		   ;;             (define-key YaTeX-mode-map [?\s-\)] 'MyTeX-speech-region)
+		   ;;             (define-key YaTeX-mode-map [?\s-C] 'MyTeX-open-article)
+		   ))
+      
+      ;; taken from http://macwiki.osdn.jp/wiki/index.php/CarbonEmacsAndYatex
+      ;; SKKで「かなモード」のときに「$」を入力すると自動的に「アスキーモード」に切り替える
+      ;;　http://www.math.s.chiba-u.ac.jp/~matsu/emacs/emacs21/yatex.html
+      (add-hook 'skk-mode-hook
+		(lambda ()
+		  (if (eq major-mode 'yatex-mode)
+		      (progn
+			(define-key skk-j-mode-map "¥¥" 'self-insert-command)
+			(define-key skk-j-mode-map "$" 'YaTeX-insert-dollar)
+			))
+		  ))
+      
+      ;; ;; previous setting of yatex
+      ;; ;; 13/01/04
+      ;; ;; YaTeX
+      ;; ;; taken from http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?YaTeX
+      
+      ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/yatex")
+      ;; (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+      ;; (setq auto-mode-alist
+      ;;       (append '(("\\.tex$" . yatex-mode)
+      ;;                 ("\\.ltx$" . yatex-mode)
+      ;;                 ("\\.cls$" . yatex-mode)
+      ;;                 ("\\.sty$" . yatex-mode)
+      ;;                 ("\\.clo$" . yatex-mode)
+      ;;                 ("\\.bbl$" . yatex-mode)) auto-mode-alist))
+      ;; (setq YaTeX-inhibit-prefix-letter t)
+      ;; (setq YaTeX-kanji-code nil)
+      ;; (setq YaTeX-use-LaTeX2e t)
+      ;; (setq YaTeX-use-AMS-LaTeX t)
+      ;; (setq YaTeX-dvipdf-command "/opt/local/bin/dvipdfmx")
+      ;; (setq YaTeX-dvi2-command-ext-alist
+      ;;       '(("[agx]dvi\\|PictPrinter" . ".dvi")
+      ;;         ("gv" . ".ps")
+      ;;         ("Preview\\|TeXShop\\|TeXworks\\|Skim\\|mupdf\\|xpdf\\|Adobe" . ".pdf")))
+      ;; ;(setq tex-command "/opt/local/bin/latexmk")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/platex -synctex=1/' -e '$bibtex=q/pbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -g > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvipdf=q/dvipdfmx %O -o %D %S/' -norc -gg -pdfdvi")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$latex=q/uplatex -synctex=1/' -e '$bibtex=q/upbibtex/' -e '$makeindex=q/mendex/' -e '$dvips=q/dvips %O -z -f %S | convbkmk -u > %D/' -e '$ps2pdf=q/ps2pdf %O %S %D/' -norc -gg -pdfps")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/pdflatex -synctex=1/' -e '$bibtex=q/bibtex/' -e '$makeindex=q/makeindex/' -norc -gg -pdf")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/lualatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -pdf")
+      ;; ;(setq tex-command "/opt/local/bin/latexmk -e '$pdflatex=q/xelatex -synctex=1/' -e '$bibtex=q/bibtexu/' -e '$makeindex=q/texindy/' -norc -gg -xelatex")
+      ;; ;(setq tex-command "/opt/local/bin/platex -synctex=1")
+      ;; ;(setq tex-command "/usr/local/bin/pdfplatex")
+      ;; ;(setq tex-command "/opt/local/bin/pdfplatex2")
+      ;; ;(setq tex-command "/opt/local/bin/uplatex -synctex=1")
+      ;; ;(setq tex-command "/opt/local/bin/pdfuplatex")
+      ;; ;(setq tex-command "/opt/local/bin/pdfuplatex2")
+      ;; ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
+      ;; ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
+      ;; ;(setq tex-command "/opt/local/bin/xelatex -synctex=1")
+      ;; (setq bibtex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/upbibtex")
+      ;;                            ((string-match "platex" tex-command) "/opt/local/bin/pbibtex")
+      ;;                            ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/bibtexu")
+      ;;                            (t "/opt/local/bin/bibtex")))
+      ;; (setq makeindex-command (cond ((string-match "uplatex" tex-command) "/opt/local/bin/mendex")
+      ;;                               ((string-match "platex" tex-command) "/opt/local/bin/mendex")
+      ;;                               ((string-match "lualatex\\|xelatex" tex-command) "/opt/local/bin/texindy")
+      ;;                               (t "/opt/local/bin/makeindex")))
+      ;; ;(setq dvi2-command (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a Preview")
+      ;; ;                        (t "/usr/bin/open -a PictPrinter")))
+      ;; (setq dviprint-command-format (cond ((string-match "pdf\\|lua\\|xe" tex-command) "/usr/bin/open -a \"Adobe Reader\" %s")
+      ;;                                     (t "/usr/bin/open -a \"Adobe Reader\" `echo %s | sed -e \"s/\\.[^.]*$/\\.pdf/\"`")))
+      
+      ;; ;(setq tex-command "/usr/local/bin/dotexshop")
+      ;; ;;(setq dvi2-command "open -a /Applications/TeXShop.app")
+      ;; (setq dvi2-command "/usr/bin/open -a /Applications/Skim.app")
+      
+      ;; (defun skim-forward-search ()
+      ;;   (interactive)
+      ;;   (let* ((ctf (buffer-name))
+      ;;          (mtf)
+      ;;          (pf)
+      ;;          (ln (format "%d" (line-number-at-pos)))
+      ;;          (cmd "/Applications/Skim.app/Contents/SharedSupport/displayline")
+      ;;          (args))
+      ;;     (if (YaTeX-main-file-p)
+      ;;         (setq mtf (buffer-name))
+      ;;       (progn
+      ;;         (if (equal YaTeX-parent-file nil)
+      ;;             (save-excursion
+      ;;               (YaTeX-visit-main t)))
+      ;;         (setq mtf YaTeX-parent-file)))
+      ;;     (setq pf (concat (car (split-string mtf "\\.")) ".pdf"))
+      ;;     (setq args (concat ln " " pf " " ctf))
+      ;;     (message (concat cmd " " args))
+      ;;     (process-kill-without-query
+      ;;      (start-process-shell-command "displayline" nil cmd args))))
+      
+      ;; (add-hook 'yatex-mode-hook
+      ;;           '(lambda ()
+      ;;              (define-key YaTeX-mode-map (kbd "C-c s") 'skim-forward-search)))
+      
+      ;; (add-hook 'yatex-mode-hook
+      ;;           '(lambda ()
+      ;;              (auto-fill-mode -1)))
+      
+      ;; ;;
+      ;; ;; RefTeX with YaTeX
+      ;; ;;
+      ;; ;(add-hook 'yatex-mode-hook 'turn-on-reftex)
+      ;; (add-hook 'yatex-mode-hook
+      ;;           '(lambda ()
+      ;;              (reftex-mode 1)
+      ;;              (define-key reftex-mode-map (concat YaTeX-prefix ">") 'YaTeX-comment-region)
+      ;;              (define-key reftex-mode-map (concat YaTeX-prefix "<") 'YaTeX-uncomment-region)))
+      
+      ;;
+      ;; was a reminder of rihobook-emacs.d-init.el
+      ;;
+      
+      ;; 自動改行を無効
+                                        ;(add-hook 'yatex-mode-hook'(lambda ()(setq auto-fill-function nil)))
+                                        ;(add-hook 'skk-mode-hook
+                                        ;         (lambda ()
+                                        ;           (if (eq major-mode 'yatex-mode)
+                                        ;               (progn
+                                        ;                 (define-key skk-j-mode-map “¥¥“ 'self-insert-command)
+                                        ;                 (define-key skk-j-mode-map “$“ 'YaTeX-insert-dollar)
+                                        ;                 ))
+                                        ;           ))
+      ;;
+      ;; End: a reminder of rihobook-emacs.el
+      ;;
+      
+      ;; ;; 13/01/14
+      ;; ;; YaTeX end
+      ;; ;;
+      )) ;; end of if darwin-p
 
 ;; ;; flymake
 ;; ;; ;; flymake (for C)
@@ -882,21 +1039,22 @@
 (require 'switch-window)
 
 ;; gdb:
-;; for darwin, use ggdb instead of gdb
+;; for darwin, use ggdb/gdb-apple instead of gdb
 (if darwin-p
-	(progn
-	  (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
+    (progn
+      ;; (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
+      (setq gud-gdb-command-name "/opt/local/bin/ggdb -i=mi"))
   (if (window-system)
-	  (progn
+      (progn
 ;;; 有用なバッファを開くモード
-		(setq gdb-many-windows t)
+	(setq gdb-many-windows t)
 ;;; 変数の上にマウスカーソルを置くと値を表示
-		(add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
+	(add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
 ;;; I/O バッファを表示
-		(setq gdb-use-separate-io-buffer t)
+	(setq gdb-use-separate-io-buffer t)
 ;;; t にすると mini buffer に値が表示される
-		(setq gud-tooltip-echo-area nil)
-		)))
+	(setq gud-tooltip-echo-area nil)
+	)))
 
 ;;
 ;; ctl-mode
@@ -915,13 +1073,13 @@
 
 (autoload 'spice-mode "spice-mode" "Spice/Layla Editing Mode" t)
 (setq auto-mode-alist (append (list (cons "\\.sp$" 'spice-mode)
-									(cons "\\.cir$" 'spice-mode)
-									(cons "\\.ckt$" 'spice-mode)
-									(cons "\\.mod$" 'spice-mode)
-									(cons "\\.cdl$" 'spice-mode)
-									(cons "\\.chi$" 'spice-mode) ;eldo outpt
-									(cons "\\.inp$" 'spice-mode))
-							  auto-mode-alist))
+				    (cons "\\.cir$" 'spice-mode)
+				    (cons "\\.ckt$" 'spice-mode)
+				    (cons "\\.mod$" 'spice-mode)
+				    (cons "\\.cdl$" 'spice-mode)
+				    (cons "\\.chi$" 'spice-mode) ;eldo outpt
+				    (cons "\\.inp$" 'spice-mode))
+			      auto-mode-alist))
 ;; (custom-set-variables 
 ;; ; '(spice-initialize-file-function (quote geert-spice-file-header)) ;; use geert-spice-file-header function (not included in this file !)
 ;;  ;; '(spice-initialize-empty-file t)         ;; initialize empty/new spice file
@@ -946,31 +1104,35 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (markdown-mode lua-mode geiser)))
+ '(custom-enabled-themes '(sanityinc-solarized-dark))
+ '(custom-safe-themes
+   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
+     default))
+ '(package-selected-packages
+   '(arduino-mode el-get flycheck-elsa flycheck-package geiser
+                  geiser-guile highlight-doxygen py-autopep8
+                  python-coverage python-docstring python-mode))
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
-   (quote
-    (("Spice3" "spice3 -b" ""
-      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
-       (buffer-file-name))
+   '(("Spice3" "spice3 -b" ""
+      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
+       nil (buffer-file-name))
       ("Circuit: \\(.*\\)$" 1))
      ("Hspice" "hspice" ""
       ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
        (buffer-file-name))
-      ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
+      ("[* ]* [iI]nput [fF]ile: +\\([^ \11]+\\).*$" 1))
      ("Eldo" "eldo -i" ""
       ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
        (buffer-file-name))
       ("Running \\(eldo\\).*$" 1))
      ("Spectre" "spectre" ""
-      ("\\s-*\"\\([^ 	
-]+\\)\" +\\([0-9]+\\):.*" 1 2)
-      ("" 0))
+      ("\\s-*\"\\([^ \11\12]+\\)\" +\\([0-9]+\\):.*" 1 2) ("" 0))
      ("ngspice" "ngspice" ""
-      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
-       (buffer-file-name))
-      ("Circuit: \\(.*\\)$" 1))))))
+      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
+       nil (buffer-file-name))
+      ("Circuit: \\(.*\\)$" 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1111,11 +1273,12 @@
 ;; igor mode 12/04/27
 ;;
 (if darwin-p
-    (if (not emacs26.3-p)
+    ;; (if (not emacs26.3-p)
 	(progn
 	  (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
 	  (require 'igor-mode))
-  ))
+  ;; )
+)
 
 ;; reftex mode 12/07/03;; commented in on 13/01/04 ;; see above yatex mode
 ;(add-hook 'yatex-mode-hook 'turn-on-reftex) ; with YaTeX mode
@@ -1322,6 +1485,7 @@
 			   ("\\.py$" . ["template.py" my-template])
 ;;			   ("\\.ipf$" . ["template.ipf" my-template])
                ) auto-insert-alist))
+(setq byte-compile-warnings '(cl-functions))
 (require 'cl)
 
 ;; ここが腕の見せ所: テンプレート内の置換変数/関数の定義
@@ -1372,9 +1536,23 @@
 
 (setq time-stamp-format "%3a %3b %02d %02H:%02M:%02S %Z %:y")
 
+;; ----------------------------------------------------------------------------
+;; Markdown mode
+;; ----------------------------------------------------------------------------
+(leaf markdown-mode
+ :ensure t
+ :emacs>= 28.1
+ :mode ("\\.md\\'" . gfm-mode)
+ :config
+ (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+ (setopt markdown-fontify-code-blocks-natively t)
+ (setopt markdown-header-scaling t)
+ (setopt markdown-indent-on-enter 'indent-and-new-item)
+;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
 ;; markdown ; multimarkdown
-(if carbon-p
+ (if carbon-p
 	(setq markdown-command "multimarkdown"))
+)
 
 ;; ----------------------------------------------------------------------------
 ;; lua mode
@@ -1437,3 +1615,34 @@
 ;;保存時にバッファ全体を自動整形する
 	  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 	  ))
+
+;; ----------------------------------------------------------------------------
+;; clowi mode
+;; ----------------------------------------------------------------------------
+;; (if darwin-p
+;;     (progn
+;;       (require 'crowi)
+;;       (setq crowi-access-token "eE9o2KaI5tfteh28HgD6QBuS4SQTblZ3IHZzigFheac=") ; User setting -> API settings
+;;       (setq crowi-user "motohisa") ;default (getenv "USER")
+;;       (setq crowi-uri "http://lsilab-vt.ist.hokudai.ac.jp:3000") ;default http://localhost:3000
+;;       ))
+
+;; ----------------------------------------------------------------------------
+;; vivado mode
+;; ----------------------------------------------------------------------------
+(autoload 'vivado-mode "gmsh.el" "Vivado editing mode." t)
+(setq auto-mode-alist
+      (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
+
+
+;; ----------------------------------------------------------------------------
+;; C-mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook
+         (lambda ()
+           (c-set-style "bsd")                            ;;; (a)
+           (setq c-basic-offset 2)                        ;;; (b)
+           ;; 演算式が複数行にまたがるときのオフセット
+           (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
+           ;; 行末のスペースやタブに色づけして警告する。
+           (setq show-trailing-whitespace t)))            ;;; (d)
