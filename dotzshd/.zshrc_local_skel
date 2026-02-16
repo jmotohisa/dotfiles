@@ -16,3 +16,6 @@ export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
 export TERM=xterm-color
 alias lv='TERM=CYGWIN /usr/bin/lv'
 source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized-master/sol.dark
+
+# mainly for linux
+alias pbcopy='xsel --clipboard --input'
