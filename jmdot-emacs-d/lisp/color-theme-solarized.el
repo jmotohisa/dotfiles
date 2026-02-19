@@ -34,10 +34,10 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
         (cyan    "#2aa198")
         (green   "#859900"))
     (when (eq 'light mode)
-      (rotatef base03 base3)
-      (rotatef base02 base2)
-      (rotatef base01 base1)
-      (rotatef base00 base0))
+      (cl-rotatef base03 base3)
+      (cl-rotatef base02 base2)
+      (cl-rotatef base01 base1)
+      (cl-rotatef base00 base0))
     (color-theme-install
      `(color-theme-solarized
        ((foreground-color . ,base0)

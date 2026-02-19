@@ -6,3 +6,19 @@ export CHERE_INVOKING=1
 source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized/sol.dark
 
 alias lv='TERM=cygwin /usr/bin/lv'
+
+export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
+export PATH=/cygdrive/c/Program\ Files/ANSYS\ Inc/ANSYS\ Optics/v251/Launcher/bin:$PATH
+export PATH=/cygdrive/c/Program\ Files/Lumerical/v251/bin:$PATH
+export PATH="/cygdrive/c/Users/motoh/AppData/Local/Programs/Python/Python312:$PATH"
+
+# export PYTHONPATH="c:\Program Files\Lumerical\v251\api\python"
+# alias python=/cygdrive/c/Users/motoh/AppData/Local/Programs/Python/Python312/python
+
+alias pip=/cygdrive/c/Users/motoh/AppData/Local/Programs/Python/Python312/Scripts/pip
+
+export TERM=xterm-color
+# alias lv='TERM=CYGWIN /usr/bin/lv'
+source /cygdrive/c/Users/motoh/working/mintty-colors-solarized/sol.dark
+
+export PATH=$PATH:"/cygdrive/c/Program Files/wkhtmltopdf/bin"

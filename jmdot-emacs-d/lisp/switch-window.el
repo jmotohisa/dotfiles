@@ -85,9 +85,9 @@
 
 (defun switch-window-list-keyboard-keys ()
   "Return a list of current keyboard layout keys"
-   (loop with layout = (split-string quail-keyboard-layout "")
+   (cl-loop with layout = (split-string quail-keyboard-layout "")
 	 for row from 1 to 4
-	 nconc (loop for col from 1 to 10
+	 nconc (cl-loop for col from 1 to 10
 		     collect (nth (+ 1 (* 2 col) (* 30 row)) layout))))
 
 (defun switch-window-list-keys ()
@@ -95,13 +95,13 @@
   (cond ((eq switch-window-shortcut-style 'qwerty)
          switch-window-qwerty-shortcuts)
         ((eq switch-window-shortcut-style 'alphabet)
-         (loop for i from 0 to 25
+         (cl-loop for i from 0 to 25
                collect (byte-to-string (+ (string-to-char "a") i))))
         (t (switch-window-list-keyboard-keys))))
 
 (defun switch-window-enumerate ()
   "Return a list of one-letter strings to label current windows"
-  (loop for w being the windows for x in (switch-window-list-keys) collect x))
+  (cl-loop for w being the windows for x in (switch-window-list-keys) collect x))
 
 (defun switch-window-label (num)
   "Return the label to use for a given window number"

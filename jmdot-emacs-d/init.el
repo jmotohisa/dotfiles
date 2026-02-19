@@ -1330,7 +1330,7 @@
 ;;			   ("\\.ipf$" . ["template.ipf" my-template])
                ) auto-insert-alist))
 (setq byte-compile-warnings '(cl-functions))
-(require 'cl)
+;; (require 'cl)
 
 ;; ここが腕の見せ所: テンプレート内の置換変数/関数の定義
 (defvar template-replacements-alists
