@@ -4,3 +4,4 @@ dotzshd/.zshrc_miniconda3
 *.log
 *.aux
 jmdot-emacs-d/url
+jmdot-emacs-d/lisp
