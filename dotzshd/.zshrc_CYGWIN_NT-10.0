@@ -22,3 +22,15 @@ export TERM=xterm-color
 source /cygdrive/c/Users/motoh/working/mintty-colors-solarized/sol.dark
 
 export PATH=$PATH:"/cygdrive/c/Program Files/wkhtmltopdf/bin"
+
+# .zshrc for cygwin
+
+export TERM=xterm-256color
+export CHERE_INVOKING=1
+
+source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized/sol.dark
+
+alias lv='TERM=cygwin /usr/bin/lv'
+
+alias pbcopy='putclip'
+alias pbpaste='getclip'

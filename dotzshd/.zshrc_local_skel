@@ -8,7 +8,6 @@
 
 
 # mainly for osx
-# mainly for osx
 if [ -x /usr/libexec/path_helper ]; then
     PATH=''
     eval `/usr/libexec/path_helper -s`
@@ -39,3 +38,14 @@ export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
 export TERM=xterm-color
 alias lv='TERM=CYGWIN /usr/bin/lv'
 source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized-master/sol.dark
+
+# mainly for linux
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+
+# for Lumerical
+export PATH=/opt/lumerical/v252/bin:/usr/lib64/mpich/bin:$PATH # NOTE: mpich cannot be used for lumerical
+export PYTHONPATH=/opt/lumerical/v252/api/python:/usr/local/lib/python3.13.1/site-packages/speutils:/home/motohisa/working/lumerical_scripts/python/jmlum/src
+source /opt/intel/oneapi/mpi/latest/env/vars.sh
+export PATH=/opt/intel/oneapi/mpi/latest/bin:/opt/lumerical/v252/bin:$PATH
+
