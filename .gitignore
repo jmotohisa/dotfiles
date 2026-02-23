@@ -5,3 +5,5 @@ dotzshd/.zshrc_miniconda3
 *.aux
 jmdot-emacs-d/url
 jmdot-emacs-d/lisp
+jmdot-emacs-d/el-get
+jmdot-emacs-d/transient
