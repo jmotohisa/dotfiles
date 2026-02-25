@@ -120,7 +120,7 @@
   :ensure t
   :emacs>= 28.1
   :config
-  ;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; doxymacs mode
 ;; ----------------------------------------------------------------------------
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
@@ -1105,35 +1105,47 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-revert-interval 0.1)
  '(custom-enabled-themes '(sanityinc-solarized-dark))
  '(custom-safe-themes
-   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
-     default))
+   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1" default))
+ '(indent-tabs-mode nil)
+ '(menu-bar-mode t)
+ '(package-archives
+   '(("org" . "https://orgmode.org/elpa/")
+     ("melpa" . "https://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(arduino-mode el-get flycheck-elsa flycheck-package geiser
-                  geiser-guile highlight-doxygen py-autopep8
-                  python-coverage python-docstring python-mode))
+   '(arduino-mode el-get flycheck-elsa flycheck-package geiser geiser-guile highlight-doxygen py-autopep8 python-coverage python-docstring python-mode))
+ '(scroll-bar-mode nil)
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
    '(("Spice3" "spice3 -b" ""
-      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
-       nil (buffer-file-name))
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
       ("Circuit: \\(.*\\)$" 1))
      ("Hspice" "hspice" ""
       ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
        (buffer-file-name))
-      ("[* ]* [iI]nput [fF]ile: +\\([^ \11]+\\).*$" 1))
+      ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
      ("Eldo" "eldo -i" ""
       ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
        (buffer-file-name))
       ("Running \\(eldo\\).*$" 1))
      ("Spectre" "spectre" ""
-      ("\\s-*\"\\([^ \11\12]+\\)\" +\\([0-9]+\\):.*" 1 2) ("" 0))
+      ("\\s-*\"\\([^ 	
+]+\\)\" +\\([0-9]+\\):.*" 1 2)
+      ("" 0))
      ("ngspice" "ngspice" ""
-      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
-       nil (buffer-file-name))
-      ("Circuit: \\(.*\\)$" 1)))))
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
+      ("Circuit: \\(.*\\)$" 1))))
+ '(tool-bar-mode nil)
+ '(truncate-lines t)
+ '(user-full-name "Junichi Motohisa")
+ '(user-login-name "jmotohisa" t)
+ '(user-mail-address "motohisa@ist.hokudai.ac.jp"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1181,17 +1193,35 @@
 
 ;;
 ;; 08/02/05 octave mode
+;; modified on 26/02/24
 ;;
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(leaf octave
+  :ensure t
+  :mode ("\\.m$" . octave-mode)
+  :config
+  (setq octave-blink-matching-bloc t) ;;
+  ;; インデント幅の設定（例: 4）
+  (setq octave-block-offset 4)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  (add-hook 'octave-mode-hook
+            (lambda ()
+              (abbrev-mode 1)
+              (auto-fill-mode 1)
+              (font-lock-mode 1)))
+  )
 
-(add-hook 'octave-mode-hook
-          (lambda ()
-            (abbrev-mode 1)
-            (auto-fill-mode 1)
-            (if (eq window-system 'x)
-                (font-lock-mode 1))))
+;; (autoload 'octave-mode "octave-mode" nil t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+;; (add-hook 'octave-mode-hook
+;;           (lambda ()
+;;             (abbrev-mode 1)
+;;             (auto-fill-mode 1)
+;;             (if (eq window-system 'x)
+;;                 (font-lock-mode 1))))
+
 
 ;; ;; 
 ;; ;; 08/07/31 w3m, modified on 13/01/04
@@ -1647,3 +1677,18 @@
            (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
            ;; 行末のスペースやタブに色づけして警告する。
            (setq show-trailing-whitespace t)))            ;;; (d)
+;;
+;; 26/02/24 matlab mode (for lsf)
+;;
+(leaf matlab-mode
+  :doc "MATLAB mode for Emacs"
+  :ensure t
+  :mode ("\\.lsf$'" . matlab-mode)
+  :config
+  (setq matlab-indent-function t)
+  (setq matlab-auto-fill-mode nil)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  )
+
+
