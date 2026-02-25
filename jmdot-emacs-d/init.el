@@ -1303,13 +1303,19 @@
 ;;
 ;; igor mode 12/04/27
 ;;
+;; update: 26/02/25
+;;
 (if darwin-p
-    ;; (if (not emacs26.3-p)
-	(progn
-	  (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
-	  (require 'igor-mode))
-  ;; )
-)
+    (progn
+      ;; (if (not emacs26.3-p)
+      ;; lisp ディレクトリ全体を load-path に追加
+    (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
+    ;; foo-mode を読み込む
+    (require 'igor-mode)  ;; foo-mode.el の provide に合わせる
+    (add-to-list 'auto-mode-alist '("\\.ipf\\'" . igor-mode))
+    )
+  )
+
 
 ;; reftex mode 12/07/03;; commented in on 13/01/04 ;; see above yatex mode
 ;(add-hook 'yatex-mode-hook 'turn-on-reftex) ; with YaTeX mode
