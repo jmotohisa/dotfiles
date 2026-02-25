@@ -120,7 +120,7 @@
   :ensure t
   :emacs>= 28.1
   :config
-  ;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; doxymacs mode
 ;; ----------------------------------------------------------------------------
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
@@ -1192,17 +1192,35 @@
 
 ;;
 ;; 08/02/05 octave mode
+;; modified on 26/02/24
 ;;
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(leaf octave
+  :ensure t
+  :mode ("\\.m$" . octave-mode)
+  :config
+  (setq octave-blink-matching-bloc t) ;;
+  ;; インデント幅の設定（例: 4）
+  (setq octave-block-offset 4)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  (add-hook 'octave-mode-hook
+            (lambda ()
+              (abbrev-mode 1)
+              (auto-fill-mode 1)
+              (font-lock-mode 1)))
+  )
 
-(add-hook 'octave-mode-hook
-          (lambda ()
-            (abbrev-mode 1)
-            (auto-fill-mode 1)
-            (if (eq window-system 'x)
-                (font-lock-mode 1))))
+;; (autoload 'octave-mode "octave-mode" nil t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+;; (add-hook 'octave-mode-hook
+;;           (lambda ()
+;;             (abbrev-mode 1)
+;;             (auto-fill-mode 1)
+;;             (if (eq window-system 'x)
+;;                 (font-lock-mode 1))))
+
 
 ;; ;; 
 ;; ;; 08/07/31 w3m, modified on 13/01/04
@@ -1658,4 +1676,18 @@
            (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
            ;; 行末のスペースやタブに色づけして警告する。
            (setq show-trailing-whitespace t)))            ;;; (d)
->>>>>>> d786dfa8ecfb9dbe3c9cbf781897b356cc45dfac
+;;
+;; 26/02/24 matlab mode (for lsf)
+;;
+(leaf matlab-mode
+  :doc "MATLAB mode for Emacs"
+  :ensure t
+  :mode ("\\.lsf$'" . matlab-mode)
+  :config
+  (setq matlab-indent-function t)
+  (setq matlab-auto-fill-mode nil)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  )
+
+
