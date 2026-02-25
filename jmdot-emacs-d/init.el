@@ -669,7 +669,8 @@
       (setq YaTeX-use-AMS-LaTeX t)
       (setq YaTeX-dvi2-command-ext-alist
 	    '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
-      (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      ;; (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      (setq tex-command "/Library/TeX/texbin/ptex2pdf -u -l -ot '-synctex=1'")
                                         ;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
