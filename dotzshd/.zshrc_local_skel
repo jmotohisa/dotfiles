@@ -61,3 +61,14 @@ export PYTHONPATH=/home/motohisa/working/lumerical_scripts/python/jmlum/src:$PYT
 
 ## for Mathematica
 # export PATH=/usr/local/Wolfram/Wolfram/14.2:$PATH
+
+# mainly for linux
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+
+# for Lumerical
+export PATH=/opt/lumerical/v252/bin:/usr/lib64/mpich/bin:$PATH # NOTE: mpich cannot be used for lumerical
+export PYTHONPATH=/opt/lumerical/v252/api/python:/usr/local/lib/python3.13.1/site-packages/speutils:/home/motohisa/working/lumerical_scripts/python/jmlum/src
+source /opt/intel/oneapi/mpi/latest/env/vars.sh
+export PATH=/opt/intel/oneapi/mpi/latest/bin:/opt/lumerical/v252/bin:$PATH
+
