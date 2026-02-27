@@ -2,6 +2,7 @@
 .DS_Store
 dotzshd/.zshrc.local
 dotzshd/.zshrc_miniconda3
+dotzshd/.zcompdump*
 *.log
 *.aux
 jmdot-emacs-d/url
