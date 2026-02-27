@@ -1309,7 +1309,7 @@
     (progn
       ;; (if (not emacs26.3-p)
       ;; lisp ディレクトリ全体を load-path に追加
-    (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
+    (add-to-list 'load-path "~/.emacs.d/mylisp/igor-mode")
     ;; foo-mode を読み込む
     (require 'igor-mode)  ;; foo-mode.el の provide に合わせる
     (add-to-list 'auto-mode-alist '("\\.ipf\\'" . igor-mode))
