@@ -147,6 +147,8 @@ alias ll='ls -l'
 # alias mv='mv -i'
  
 alias mkdir='mkdir -p'
+
+alias grep='grep --color=auto'
  
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
@@ -168,8 +170,6 @@ elif which putclip >/dev/null 2>&1 ; then
     alias -g C='| putclip'
 fi
  
-export GREP_OPTIONS='--color=auto'
-
 # ########################################
 # # OS 別の設定
 # case ${OSTYPE} in
