@@ -1,0 +1,6 @@
+# クリップボードへのコピー (putclip / pbcopy 相当)
+alias putclip='cat > /dev/clipboard'
+
+# クリップボードからの貼り付け (getclip / pbpaste 相当)
+alias getclip='cat /dev/clipboard'
+

@@ -7,8 +7,8 @@
 [submodule "jmdot-emacs-d/lisp/freefem-mode"]
 	path = jmdot-emacs-d/lisp/freefem-mode
 	url = https://github.com/rrgalvan/freefem-mode.git
-[submodule "jmdot-emacs-d/lisp/igor-mode"]
-	path = jmdot-emacs-d/lisp/igor-mode
+[submodule "jmdot-emacs-d/mylisp/igor-mode"]
+	path = jmdot-emacs-d/mylisp/igor-mode
 	url = https://github.com/jmotohisa/igor-mode.git
 [submodule "jmdot-emacs-d/lisp/yatex"]
 	path = jmdot-emacs-d/lisp/yatex
