@@ -4,7 +4,7 @@
 ;; http://www.geuz.org/pipermail/gmsh/2013/007962.html
 
 
-(require 'cl-lib)
+(require 'cl)
 
 ;; Remove previous associations of file extension .pro with idlwave:
 (setq auto-mode-alist (delete-if '(lambda (x) (equal (car x) "\\.pro\\'")) auto-mode-alist))

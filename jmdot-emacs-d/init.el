@@ -32,6 +32,7 @@
 (leaf leaf-tree :ensure t)
 (leaf leaf-convert :ensure t)
 (leaf transient-dwim
+  :emacs>= 28.1
   :ensure t
   :bind (("M-=" . transient-dwim-dispatch)))
 
@@ -57,7 +58,7 @@
 ;; Nest package configurations
 (leaf flycheck
   :doc "On-the-fly syntax checking"
-  :emacs>= 24.3
+  :emacs>= 28.1
   :ensure t
   :bind (("M-n" . flycheck-next-error)
          ("M-p" . flycheck-previous-error))
@@ -80,30 +81,67 @@
   ;; ...
   )
 
-(leaf copilot
-  :el-get (copilot
-           :type github
-           :pkgname "zerolfx/copilot.el"
-           )
-  :config
-  (leaf editorconfig
-    :ensure t
-    )
-  (leaf s
-    :ensure t
-    )
-  (leaf dash
-    :ensure t
-    )
-  (defun my/copilot-tab ()
-    (interactive)
-    (or (copilot-accept-completion)
-        (indent-for-tab-command)))
+;; (leaf copilot
+;;   :el-get (copilot
+;;            :type github
+;;            :pkgname "zerolfx/copilot.el"
+;;            )
+;;   :config
+;;   (leaf editorconfig
+;;     :emacs>= 28.1
+;;     :ensure t
+;;     )
+;;   (leaf s
+;;     :ensure t
+;;     )
+;;   (leaf dash
+;;     :ensure t
+;;     )
+;;   (defun my/copilot-tab ()
+;;     (interactive)
+;;     (or (copilot-accept-completion)
+;;         (indent-for-tab-command)))
+;; 
+;;   (with-eval-after-load 'copilot
+;;     (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
+;;   )
+;; ;; ...
 
-  (with-eval-after-load 'copilot
-    (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
-  )
-;; ...
+(leaf color-theme-sanityinc-solarized
+  :ensure t)
+
+(leaf multi-term
+  :ensure t)
+
+(leaf switch-window
+  :ensure t)
+
+(leaf doxymacs
+  :ensure t
+  :emacs>= 28.1
+  :config
+;; ----------------------------------------------------------------------------
+;; doxymacs mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;;custom c-mode hook for doxymacs
+(defun doxy-custom-c-mode-hook ()
+ (doxymacs-mode 1)
+ (setq doxymacs-doxygen-style "Qt")
+ (setq doxymacs-command-character "@"))
+(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
+
+;; somehow, (default) keybord mapping does not work
+(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
+(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
+(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
+(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
+(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
+(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
+(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
+(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
+(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
+)
 
 ;; (setq user-full-name "Junichi Motohisa")
 ;; (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
@@ -631,7 +669,8 @@
       (setq YaTeX-use-AMS-LaTeX t)
       (setq YaTeX-dvi2-command-ext-alist
 	    '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
-      (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      ;; (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      (setq tex-command "/Library/TeX/texbin/ptex2pdf -u -l -ot '-synctex=1'")
                                         ;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
@@ -1066,35 +1105,47 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-revert-interval 0.1)
  '(custom-enabled-themes '(sanityinc-solarized-dark))
  '(custom-safe-themes
-   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
-     default))
+   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1" default))
+ '(indent-tabs-mode nil)
+ '(menu-bar-mode t)
+ '(package-archives
+   '(("org" . "https://orgmode.org/elpa/")
+     ("melpa" . "https://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(arduino-mode doxymacs el-get flycheck-elsa flycheck-package geiser
-                  geiser-guile highlight-doxygen py-autopep8
-                  python-coverage python-docstring python-mode))
+   '(arduino-mode el-get flycheck-elsa flycheck-package geiser geiser-guile highlight-doxygen py-autopep8 python-coverage python-docstring python-mode))
+ '(scroll-bar-mode nil)
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
    '(("Spice3" "spice3 -b" ""
-      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
-       nil (buffer-file-name))
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
       ("Circuit: \\(.*\\)$" 1))
      ("Hspice" "hspice" ""
       ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
        (buffer-file-name))
-      ("[* ]* [iI]nput [fF]ile: +\\([^ \11]+\\).*$" 1))
+      ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
      ("Eldo" "eldo -i" ""
       ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
        (buffer-file-name))
       ("Running \\(eldo\\).*$" 1))
      ("Spectre" "spectre" ""
-      ("\\s-*\"\\([^ \11\12]+\\)\" +\\([0-9]+\\):.*" 1 2) ("" 0))
+      ("\\s-*\"\\([^ 	
+]+\\)\" +\\([0-9]+\\):.*" 1 2)
+      ("" 0))
      ("ngspice" "ngspice" ""
-      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
-       nil (buffer-file-name))
-      ("Circuit: \\(.*\\)$" 1)))))
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
+      ("Circuit: \\(.*\\)$" 1))))
+ '(tool-bar-mode nil)
+ '(truncate-lines t)
+ '(user-full-name "Junichi Motohisa")
+ '(user-login-name "jmotohisa" t)
+ '(user-mail-address "motohisa@ist.hokudai.ac.jp"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1142,17 +1193,35 @@
 
 ;;
 ;; 08/02/05 octave mode
+;; modified on 26/02/24
 ;;
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(leaf octave
+  :ensure t
+  :mode ("\\.m$" . octave-mode)
+  :config
+  (setq octave-blink-matching-bloc t) ;;
+  ;; インデント幅の設定（例: 4）
+  (setq octave-block-offset 4)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  (add-hook 'octave-mode-hook
+            (lambda ()
+              (abbrev-mode 1)
+              (auto-fill-mode 1)
+              (font-lock-mode 1)))
+  )
 
-(add-hook 'octave-mode-hook
-          (lambda ()
-            (abbrev-mode 1)
-            (auto-fill-mode 1)
-            (if (eq window-system 'x)
-                (font-lock-mode 1))))
+;; (autoload 'octave-mode "octave-mode" nil t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+;; (add-hook 'octave-mode-hook
+;;           (lambda ()
+;;             (abbrev-mode 1)
+;;             (auto-fill-mode 1)
+;;             (if (eq window-system 'x)
+;;                 (font-lock-mode 1))))
+
 
 ;; ;; 
 ;; ;; 08/07/31 w3m, modified on 13/01/04
@@ -1498,9 +1567,23 @@
 
 (setq time-stamp-format "%3a %3b %02d %02H:%02M:%02S %Z %:y")
 
+;; ----------------------------------------------------------------------------
+;; Markdown mode
+;; ----------------------------------------------------------------------------
+(leaf markdown-mode
+ :ensure t
+ :emacs>= 28.1
+ :mode ("\\.md\\'" . gfm-mode)
+ :config
+ (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+ (setopt markdown-fontify-code-blocks-natively t)
+ (setopt markdown-header-scaling t)
+ (setopt markdown-indent-on-enter 'indent-and-new-item)
+;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
 ;; markdown ; multimarkdown
-(if carbon-p
+ (if carbon-p
 	(setq markdown-command "multimarkdown"))
+)
 
 ;; ----------------------------------------------------------------------------
 ;; lua mode
@@ -1582,42 +1665,6 @@
 (setq auto-mode-alist
       (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
 
-;; ----------------------------------------------------------------------------
-;; doxymacs mode
-;; ----------------------------------------------------------------------------
-(require 'doxymacs)
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
-;;custom c-mode hook for doxymacs
-(defun doxy-custom-c-mode-hook ()
- (doxymacs-mode 1)
- (setq doxymacs-doxygen-style "Qt")
- (setq doxymacs-command-character "@"))
-(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
-
-;; somehow, (default) keybord mapping does not work
-(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
-(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
-(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
-(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
-(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
-(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
-(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
-(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
-(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
-
-
-;; ----------------------------------------------------------------------------
-;; Markdown mode
-;; ----------------------------------------------------------------------------
-(leaf markdown-mode :ensure t
- :mode ("\\.md\\'" . gfm-mode)
- :config
- (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
- (setopt markdown-fontify-code-blocks-natively t)
- (setopt markdown-header-scaling t)
- (setopt markdown-indent-on-enter 'indent-and-new-item)
-;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
-)
 
 ;; ----------------------------------------------------------------------------
 ;; C-mode
@@ -1630,3 +1677,18 @@
            (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
            ;; 行末のスペースやタブに色づけして警告する。
            (setq show-trailing-whitespace t)))            ;;; (d)
+;;
+;; 26/02/24 matlab mode (for lsf)
+;;
+(leaf matlab-mode
+  :doc "MATLAB mode for Emacs"
+  :ensure t
+  :mode ("\\.lsf$'" . matlab-mode)
+  :config
+  (setq matlab-indent-function t)
+  (setq matlab-auto-fill-mode nil)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  )
+
+
