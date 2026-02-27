@@ -8,8 +8,12 @@ alias preview='open -a /Applications/Preview.app/'
 # alias meep-mpi='DYLD_LIBRARY_PATH=/opt/local/lib /usr/local/bin/meep-mpi'
 # alias nohupmeep='DYLD_LIBRARY_PATH=/opt/local/lib nohup /usr/local/bin/meep'
 # alias nohupmeep-mpi='DYLD_LIBRARY_PATH=/opt/local/lib nohup /usr/local/bin/meep-mpi'
-alias xee='open -a /Applications/Xee.app'
+# alias xee='open -a /Applications/Xee.app'
+# alias grep='grep --color=auto'
+export GREP_OPTIONS='--color=auto'
 alias lv='lv -c'
+export PAGER='lv'
+export LV="-Ou8 -c"
 
 # export SVN_EDITOR=/Applications/Emacs.app/Contents/MacOS/Emacs
 
@@ -168,8 +172,8 @@ alias mkdir='mkdir -p'
 alias sudo='sudo '
  
 # グローバルエイリアス
-alias -g L='| less'
-alias -g G='| grep'
+alias -g L='| lv -c'
+alias -g G='| grep '
  
 # C で標準出力をクリップボードにコピーする
 # mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
