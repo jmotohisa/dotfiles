@@ -1,27 +1,21 @@
-<<<<<<< HEAD
+export DYLD_LIBRARY_PATH=/usr/local/lib
+export PYTHONPATH=/usr/local/lib/python3.13/site-packages
 
-=======
->>>>>>> 2c19f2456386c1a9bb8bee09e8c0197e064a3b3a
 # export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 export GUILE_WARN_DEPRECATED=no
 
 alias preview='open -a /Applications/Preview.app/'
-#alias emacs='/Applications/Emacs24.5-5.11/Emacs.app/Contents/MacOS/Emacs'
+# alias emacs='/Applications/Emacs24.5-5.11/Emacs.app/Contents/MacOS/Emacs'
 # alias meep='DYLD_LIBRARY_PATH=/opt/local/lib /usr/local/bin/meep'
 # alias meep-mpi='DYLD_LIBRARY_PATH=/opt/local/lib /usr/local/bin/meep-mpi'
 # alias nohupmeep='DYLD_LIBRARY_PATH=/opt/local/lib nohup /usr/local/bin/meep'
 # alias nohupmeep-mpi='DYLD_LIBRARY_PATH=/opt/local/lib nohup /usr/local/bin/meep-mpi'
-<<<<<<< HEAD
-alias xee='open -a /Applications/Xee.app'
-alias lv='lv -c'
-=======
 # alias xee='open -a /Applications/Xee.app'
-# alias grep='grep --color=auto'
+
 export GREP_OPTIONS='--color=auto'
 alias lv='lv -c'
 export PAGER='lv'
 export LV="-Ou8 -c"
->>>>>>> 2c19f2456386c1a9bb8bee09e8c0197e064a3b3a
 
 # export SVN_EDITOR=/Applications/Emacs.app/Contents/MacOS/Emacs
 
@@ -30,7 +24,7 @@ export LV="-Ou8 -c"
 ########################################
 # 環境変数
 export LANG=ja_JP.UTF-8
- 
+
  
 # 色を使用出来るようにする
 autoload -Uz colors
@@ -180,13 +174,8 @@ alias mkdir='mkdir -p'
 alias sudo='sudo '
  
 # グローバルエイリアス
-<<<<<<< HEAD
-alias -g L='| less'
-alias -g G='| grep'
-=======
 alias -g L='| lv -c'
 alias -g G='| grep '
->>>>>>> 2c19f2456386c1a9bb8bee09e8c0197e064a3b3a
  
 # C で標準出力をクリップボードにコピーする
 # mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
@@ -205,12 +194,9 @@ export CLICOLOR=1
 alias ls='ls -G -F'
  
 # vim:set ft=zsh:
-<<<<<<< HEAD
 
 # PATH="/Users/motohisa/perl5/bin${PATH:+:${PATH}}"; export PATH;
 # PERL5LIB="/Users/motohisa/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 # PERL_LOCAL_LIB_ROOT="/Users/motohisa/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 # PERL_MB_OPT="--install_base \"/Users/motohisa/perl5\""; export PERL_MB_OPT;
 # PERL_MM_OPT="INSTALL_BASE=/Users/motohisa/perl5"; export PERL_MM_OPT;
-=======
->>>>>>> 2c19f2456386c1a9bb8bee09e8c0197e064a3b3a
