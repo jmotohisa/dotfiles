@@ -6,7 +6,6 @@
 #
 # git clone https://github.com/edihbrandon/RictyDiminished.git
 
-
 # mainly for osx
 if [ -x /usr/libexec/path_helper ]; then
     PATH=''
@@ -38,6 +37,30 @@ export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
 export TERM=xterm-color
 alias lv='TERM=CYGWIN /usr/bin/lv'
 source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized-master/sol.dark
+
+# for pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# for python : 
+export PYTHONPATH=/usr/local/lib/python3.12/site-packages
+export LD_LIBRARY_PATH=/usr/local/lib
+
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+
+export LD_LIBRARY_PATH=/usr/local/lib
+export PYTHONPATH=/usr/local/lib/python3.12/site-packages # if python is 3.12.x
+export PYTHONPATH=/home/motohisa/working/lumerical_scripts/python/jmlum/src:$PYTHONPATH
+
+## for Lumerical
+# source /opt/intel/oneapi/mpi/latest/env/vars.sh
+# export PATH=/opt/intel/oneapi/mpi/latest/bin:/opt/lumerical/v252/bin:$PATH
+# export PYTHONPATH=/opt/lumerical/v252/api/python:$PYTHONPATH:
+
+## for Mathematica
+# export PATH=/usr/local/Wolfram/Wolfram/14.2:$PATH
 
 # mainly for linux
 alias pbcopy='xsel --clipboard --input'
