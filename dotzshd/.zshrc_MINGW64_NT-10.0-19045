@@ -1,6 +1,12 @@
-# クリップボードへのコピー (putclip / pbcopy 相当)
-alias putclip='cat > /dev/clipboard'
+# copy & paste in terminal
+alias pbcopy='cat > /dev/clipboard'
+alias pbpaste='cat /dev/clipboard'
 
-# クリップボードからの貼り付け (getclip / pbpaste 相当)
-alias getclip='cat /dev/clipboard'
+## since we don't have lv/vi in msys2
+alias lv=less
+alias vi=vim
 
+## recommendation is to use moor
+# $ wget https://github.com/walles/moor/releases/download/v2.11.0/moor-v2.11.0-windows-amd64.exe
+# $ chmod +x ~/working/moor-v2.11.0-windows-amd64.exe
+# $ mv ~/working/moor-v2.11.0-windows-amd64.exe /usr/bin/moor

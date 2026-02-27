@@ -3,6 +3,7 @@
 dotzshd/.zshrc.local
 dotzshd/.zshrc_miniconda3
 dotzshd/.zcompdump*
+dotzshd/.python_versions
 *.log
 *.aux
 jmdot-emacs-d/url
