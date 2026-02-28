@@ -127,9 +127,10 @@ autoload -Uz compinit && compinit
 #     echo "%F{yellow}[py:$PYTHON_KEY]%f"
 #   fi
 # }
-# setopt PROMPT_SUBST
 # PROMPT='%F{green}%n@%m%f %F{cyan}%~%f %# '
 # RPROMPT='$(_py_prompt_segment)'
+
+setopt PROMPT_SUBST
 
 # _pyseg() {
 #   if [[ -n "$PYTHON_KEY" ]]; then
@@ -138,13 +139,18 @@ autoload -Uz compinit && compinit
 #   fi
 # }
 
+# _pyseg() {
+#   [[ -n "$PYTHON_KEY" ]] && print -r -- "(${PYTHON_KEY}) "
+# }
+
 function _pyseg() {
   if [[ -n "$PYTHON_KEY" ]]; then
     echo "%F{yellow}(${PYTHON_KEY})%f "
   fi
 }
+
 PROMPT="%{${fg[blue]}%}%D %{${fg[red]}%}[%n@%m] %{${fg[green]}%} %~ %{${reset_color}%}
-$(_pyseg)%(!.#.$) "
+\$(_pyseg)%(!.#.$) "
 
 # ===============================
 #  Python スイッチャー本体
