@@ -130,6 +130,14 @@ autoload -Uz compinit && compinit
 # setopt PROMPT_SUBST
 # PROMPT='%F{green}%n@%m%f %F{cyan}%~%f %# '
 # RPROMPT='$(_py_prompt_segment)'
+
+# _pyseg() {
+#   if [[ -n "$PYTHON_KEY" ]]; then
+#     print -r -- "%{\e[33m%}(${PYTHON_KEY})%{\e[0m%} "
+#     # 33: yellow。好みで 31(red), 32(green), 36(cyan) などに変更可
+#   fi
+# }
+
 function _pyseg() {
   if [[ -n "$PYTHON_KEY" ]]; then
     echo "%F{yellow}(${PYTHON_KEY})%f "
@@ -154,23 +162,24 @@ _PYVER_FILE="$HOME/.zsh.d/.python_versions"
 export PYTHON_CMD=""
 export PYTHON_KEY=""
 
-# 指定キーの Python に切り替え
-function pyuse() {
-  local key="$1"
-  if [[ -z "$key" ]]; then
-    echo "Usage: pyuse <key>"; return 1
-  fi
-  if [[ ! -f "$_PYVER_FILE" ]]; then
-    echo "Not found: $_PYVER_FILE"; return 1
-  fi
-  local p
-  p="$(grep -E "^${key}:" "$_PYVER_FILE" | sed 's/^[^:]*://')"
-  if [[ -z "$p" ]]; then
-    echo "No python named '$key' in $_PYVER_FILE"; return 1
-  fi
-  export PYTHON_CMD="$p"
-  export PYTHON_KEY="$key"
-  echo "Using python [$PYTHON_KEY]: $PYTHON_CMD"
+_pyuse_help() {
+  cat <<'EOF'
+Usage:
+  pyuse <key>   : select python iwith specified key
+  pyuse --list  : display list of registered python keys
+  pyuse --which : show current selection
+  pyuse --edit  : open setting files (~/.zsh.d/.python_versions)
+  pyuse --help  : display help message
+EOF
+}
+
+_pyuse_list() {
+  if [[ -f "$_PYVER_FILE" ]]; then
+    cut -d: -f1 -- "$_PYVER_FILE"
+  else
+    echo "Not found: $_PYVER_FILE"
+    return 1
+  fi   
 }
 
 # 現在の選択を表示
@@ -183,6 +192,61 @@ function pywhich() {
   fi
 }
 
+# 便利: エディタで一覧を開く（$EDITOR が未設定なら vim）
+function pyedit() {
+  local ed="${EDITOR:-vim}"
+  "$ed" -- "$_PYVER_FILE"
+}
+
+# 指定キーの Python に切り替え
+function pyuse() {
+  local arg="$1"
+  case "$arg" in
+    ""|--help|-h)
+      _pyuse_help
+      return 0;
+      ;;
+      --list|-l)
+        _pyuse_list
+        return $?
+        ;;
+      --which|-w)
+        pywhich
+        return $?
+        ;;
+      --edit)
+        pyedit
+        return $?
+        ;;
+  esac
+  
+  # specify key
+  if [[ ! -f "$_PYVER_FILE" ]];then
+    echo "Not found: $_PYVER_FILE"
+    return 1
+  fi
+
+  local p
+  p="$(grep -E "^${arg}:" -- "$_PYVER_FILE" | sed 's/^[^:]*://')"
+
+  if [[ -z "$p" ]]; then
+    echo "No python named $arg' in $_PYVER_FILE"
+    echo "Try: pyuse --list"
+    return 1
+  fi
+  
+  export PYTHON_KEY="$arg"
+  export PYTHON_CMD="$p"
+  echo "Using python [$PYTHON_KEY]: $PYTHON_CMD"
+}
+
+#completion
+_pyuse_complete() {
+  reply=(${${(f)"$(cut -d: -f1 -- $_PYVER_FILE 2>/dev/null)"} --list --which --edit --help})
+}
+compctl -K pyuse_complete pyuse
+``
+
 # 登録一覧
 function pylist() {
   if [[ -f "$_PYVER_FILE" ]]; then
@@ -192,16 +256,10 @@ function pylist() {
   fi
 }
 
-# 便利: エディタで一覧を開く（$EDITOR が未設定なら vim）
-function pyedit() {
-[<0;3;25M  local ed="${EDITOR:-vim}"
-  "$ed" "$_PYVER_FILE"
-}
-
 # python / pip のラッパー（必ず選択中の Python を使用）
 function python() {
   if [[ -n "$PYTHON_CMD" ]]; then
-[<0;3;25m    "$PYTHON_CMD" "$@"
+    "$PYTHON_CMD" "$@"
   else
     echo "No python selected. Use: pyuse <key>"
   fi
@@ -272,4 +330,4 @@ function workon() {
 # ===============================
 #  初期デフォルト（必要なら）
 # ===============================
-pyuse ucrt # 起動時にデフォルトを固定したい場合はコメント解除
+pyuse ucrt  # 起動時にデフォルトを固定したい場合はコメント解除

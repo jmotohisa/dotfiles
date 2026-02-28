@@ -186,7 +186,6 @@ fi
  
 # vim:set ft=zsh:
 
-[ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
 [ -f $ZDOTDIR/.zshrc_`uname` ] && . $ZDOTDIR/.zshrc_`uname`
+[ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
 [ -f $ZDOTDIR/.zshrc_miniconda3 ] && . $ZDOTDIR/.zshrc_miniconda3
-
