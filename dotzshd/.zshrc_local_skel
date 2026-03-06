@@ -18,13 +18,7 @@ fi
 export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 
-#####################################################
-# for python : 
-#####################################################
 export LD_LIBRARY_PATH=/usr/local/lib
-export PYTHONPATH=/usr/local/lib/python3.13.1/site-packages:$PYTHONPATH
-export PYTHONPATH=/home/motohisa/working/lumerical_scripts/python/jmlum/src:$PYTHONPATH
-
 
 #####################################################
 # miniconda (macos)
@@ -43,13 +37,36 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+#####################################################
+# for python : 
+#####################################################
+export PYTHONPATH=/usr/local/lib/python3.13.1/site-packages:$PYTHONPATH
+export PYTHONPATH=/home/motohisa/working/lumerical_scripts/python/jmlum/src:$PYTHONPATH
 
 #####################################################
 # for pyenv
 #####################################################
+
+function update_pythonpath() {
+    # 現在のPythonのメジャー.マイナーバージョンを取得 (例: 3.11)
+    local py_ver=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null)
+    
+    if [ -n "$py_ver" ]; then
+        # 指定されたパスを組み立てて設定
+        export PYTHONPATH="/usr/local/lib/python${py_ver}/site-packages:$HOME/local/python${py_ver}/site-packages"
+    fi
+}
+
+# 初回起動時と、コマンド実行ごとにパスを更新
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd update_pythonpath
+
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# export PYTHONPATH=/usr/local/lib/python3.13/site-packages
+# export PYTHONPATH=$HOME/local/lib/python3.13/site-packages:$PYTHONPATH
 
 #####################################################
 # Cygwin
