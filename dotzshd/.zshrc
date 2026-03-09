@@ -138,7 +138,7 @@ bindkey '^R' history-incremental-pattern-search-backward
  
 ########################################
 # エイリアス
- 
+
 alias la='ls -a'
 alias ll='ls -l'
  
@@ -147,6 +147,8 @@ alias ll='ls -l'
 # alias mv='mv -i'
  
 alias mkdir='mkdir -p'
+
+alias grep='grep --color=auto'
  
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
@@ -184,9 +186,6 @@ fi
  
 # vim:set ft=zsh:
 
-[ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
 [ -f $ZDOTDIR/.zshrc_`uname` ] && . $ZDOTDIR/.zshrc_`uname`
+[ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
 [ -f $ZDOTDIR/.zshrc_miniconda3 ] && . $ZDOTDIR/.zshrc_miniconda3
-
-test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"
-

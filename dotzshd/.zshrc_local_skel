@@ -1,3 +1,5 @@
+## various skeltons for .zshrc_local / .zshrc_$(uname -s)
+
 # solarize
 #
 # git clone https://github.com/mavnn/mintty-colors-solarized.git
@@ -6,18 +8,21 @@
 #
 # git clone https://github.com/edihbrandon/RictyDiminished.git
 
-
+############################################################
 # mainly for osx
+############################################################
 if [ -x /usr/libexec/path_helper ]; then
     PATH=''
     eval `/usr/libexec/path_helper -s`
 fi
 export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
-# export PATH=~/bin:/opt/local/apache2/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
-# alias emacs='/Applications/Emacs24.5-5.19/Emacs.app/Contents/MacOS/Emacs'
 
+export LD_LIBRARY_PATH=/usr/local/lib
 
+#####################################################
+# miniconda (macos)
+#####################################################
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/motohisa/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -32,20 +37,320 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+#####################################################
+# for python : 
+#####################################################
+export PYTHONPATH=/usr/local/lib/python3.13.1/site-packages:$PYTHONPATH
+export PYTHONPATH=/home/motohisa/working/lumerical_scripts/python/jmlum/src:$PYTHONPATH
 
+#####################################################
+# for pyenv
+#####################################################
+
+function update_pythonpath() {
+    # 現在のPythonのメジャー.マイナーバージョンを取得 (例: 3.11)
+    local py_ver=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null)
+    
+    if [ -n "$py_ver" ]; then
+        # 指定されたパスを組み立てて設定
+        export PYTHONPATH="/usr/local/lib/python${py_ver}/site-packages:$HOME/local/python${py_ver}/site-packages"
+    fi
+}
+
+# 初回起動時と、コマンド実行ごとにパスを更新
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd update_pythonpath
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# export PYTHONPATH=/usr/local/lib/python3.13/site-packages
+# export PYTHONPATH=$HOME/local/lib/python3.13/site-packages:$PYTHONPATH
+
+#####################################################
+# Cygwin
 # mainly for cygwin
+#####################################################
+alias pbcopy='cat > /dev/clipboard'
+alias pbpaste='cat /dev/clipboard'
 export PATH=~/bin:/usr/local/bin:/cygdrive/c/iverilog/bin:$PATH
 export TERM=xterm-color
 alias lv='TERM=CYGWIN /usr/bin/lv'
 source /cygdrive/c/Users/motohisa/work/mintty-colors-solarized-master/sol.dark
 
-# mainly for linux
+#####################################################
+# MSYS2
+#####################################################
+alias pbcopy='cat > /dev/clipboard'
+alias pbpaste='cat /dev/clipboard'
+
+######
+# Copy and Paste
+######
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 
-# for Lumerical
-export PATH=/opt/lumerical/v252/bin:/usr/lib64/mpich/bin:$PATH # NOTE: mpich cannot be used for lumerical
-export PYTHONPATH=/opt/lumerical/v252/api/python:/usr/local/lib/python3.13.1/site-packages/speutils:/home/motohisa/working/lumerical_scripts/python/jmlum/src
-source /opt/intel/oneapi/mpi/latest/env/vars.sh
-export PATH=/opt/intel/oneapi/mpi/latest/bin:/opt/lumerical/v252/bin:$PATH
+# cygwin/msys2
+## クリップボードへのコピー (putclip / pbcopy 相当)
+# alias putclip='cat > /dev/clipboard'
+## クリップボードからの貼り付け (getclip / pbpaste 相当)
+# alias getclip='cat /dev/clipboard'
 
+##########################################################
+# for Mathematica
+##########################################################
+# export PATH=/usr/local/Wolfram/Wolfram/14.2:$PATH
+
+
+##########################################################
+# for Lumerical (and python/Intel MPI)
+##########################################################
+export PATH=/opt/lumerical/v252/bin:$PATH
+export PYTHONPATH=/opt/lumerical/v252/api/python:$PYTHONPATH
+export PYTHONPATH=/home/motohisa/working/lumerical_scripts/python/jmlum/src:$PYTHONPATH
+
+# Intel MPI
+source /opt/intel/oneapi/mpi/latest/env/vars.sh
+export PATH=/opt/intel/oneapi/mpi/latest/bin:$PATH
+# export PATH=/usr/lib64/mpich/bin:$PATH    ### NOTE: mpich cannot be used for lumerical
+
+
+##########################################################
+# for python switcher: MSYS2 UCRT + zxh
+# ===============================
+#  MSYS2 UCRT + zsh 基本設定
+# ===============================
+
+# # ロケール（必要に応じて）
+# export LANG=ja_JP.UTF-8
+# export LC_ALL=ja_JP.UTF-8
+
+# VS Code 端末からでも HOME を正しく解決
+export HOME="$HOME"
+
+# MSYS2 で Windows PATH をまるごと継承しない（DLL 衝突回避）
+# （Windows 側のツールを多用するなら 'inherit' に変更してください）
+export MSYS2_PATH_TYPE=minimal
+
+# 色と補完
+autoload -U colors && colors
+autoload -Uz compinit && compinit
+
+# # 見やすいプロンプト（右側に選択中の Python キーを表示）
+# # 例: [py:3.12] を RPROMPT に表示
+# function _py_prompt_segment() {
+#   if [[ -n "$PYTHON_KEY" ]]; then
+#     echo "%F{yellow}[py:$PYTHON_KEY]%f"
+#   fi
+# }
+# PROMPT='%F{green}%n@%m%f %F{cyan}%~%f %# '
+# RPROMPT='$(_py_prompt_segment)'
+
+setopt PROMPT_SUBST
+
+# _pyseg() {
+#   if [[ -n "$PYTHON_KEY" ]]; then
+#     print -r -- "%{\e[33m%}(${PYTHON_KEY})%{\e[0m%} "
+#     # 33: yellow。好みで 31(red), 32(green), 36(cyan) などに変更可
+#   fi
+# }
+
+# _pyseg() {
+#   [[ -n "$PYTHON_KEY" ]] && print -r -- "(${PYTHON_KEY}) "
+# }
+
+function _pyseg() {
+  if [[ -n "$PYTHON_KEY" ]]; then
+    echo "%F{yellow}(${PYTHON_KEY})%f "
+  fi
+}
+
+PROMPT="%{${fg[blue]}%}%D %{${fg[red]}%}[%n@%m] %{${fg[green]}%} %~ %{${reset_color}%}
+\$(_pyseg)%(!.#.$) "
+
+# ===============================
+#  Python スイッチャー本体
+# ===============================
+# ~/.python_versions ファイル形式:
+#   3.11:/c/Users/motoh/AppData/Local/Programs/Python/Python311/python
+#   3.12:/c/Users/motoh/AppData/Local/Programs/Python/Python312/python
+#   ucrt:/ucrt64/bin/python
+#   lum251:/c/Program Files/Lumerical/v251/python/python
+#   lum252:/c/Program Files/Lumerical/v252/python/python
+
+_PYVER_FILE="$HOME/.zsh.d/.python_versions"
+
+# 現在選択中の Python
+export PYTHON_CMD=""
+export PYTHON_KEY=""
+
+_pyuse_help() {
+  cat <<'EOF'
+Usage:
+  pyuse <key>   : select python iwith specified key
+  pyuse --list  : display list of registered python keys
+  pyuse --which : show current selection
+  pyuse --edit  : open setting files (~/.zsh.d/.python_versions)
+  pyuse --help  : display help message
+EOF
+}
+
+_pyuse_list() {
+  if [[ -f "$_PYVER_FILE" ]]; then
+    cut -d: -f1 -- "$_PYVER_FILE"
+  else
+    echo "Not found: $_PYVER_FILE"
+    return 1
+  fi   
+}
+
+# 現在の選択を表示
+function pywhich() {
+  if [[ -n "$PYTHON_CMD" ]]; then
+    echo "$PYTHON_KEY => $PYTHON_CMD"
+    "$PYTHON_CMD" -V 2>/dev/null
+  else
+    echo "No python selected. Use: pyuse <key>"
+  fi
+}
+
+# 便利: エディタで一覧を開く（$EDITOR が未設定なら vim）
+function pyedit() {
+  local ed="${EDITOR:-vim}"
+  "$ed" -- "$_PYVER_FILE"
+}
+
+# 指定キーの Python に切り替え
+function pyuse() {
+  local arg="$1"
+  case "$arg" in
+    ""|--help|-h)
+      _pyuse_help
+      return 0;
+      ;;
+      --list|-l)
+        _pyuse_list
+        return $?
+        ;;
+      --which|-w)
+        pywhich
+        return $?
+        ;;
+      --edit)
+        pyedit
+        return $?
+        ;;
+  esac
+  
+  # specify key
+  if [[ ! -f "$_PYVER_FILE" ]];then
+    echo "Not found: $_PYVER_FILE"
+    return 1
+  fi
+
+  local p
+  p="$(grep -E "^${arg}:" -- "$_PYVER_FILE" | sed 's/^[^:]*://')"
+
+  if [[ -z "$p" ]]; then
+    echo "No python named $arg' in $_PYVER_FILE"
+    echo "Try: pyuse --list"
+    return 1
+  fi
+  
+  export PYTHON_KEY="$arg"
+  export PYTHON_CMD="$p"
+  echo "Using python [$PYTHON_KEY]: $PYTHON_CMD"
+}
+
+#completion
+_pyuse_complete() {
+  reply=(${${(f)"$(cut -d: -f1 -- $_PYVER_FILE 2>/dev/null)"} --list --which --edit --help})
+}
+compctl -K pyuse_complete pyuse
+``
+
+# 登録一覧
+function pylist() {
+  if [[ -f "$_PYVER_FILE" ]]; then
+    cut -d: -f1 "$_PYVER_FILE"
+  else
+    echo "Not found: $_PYVER_FILE"
+  fi
+}
+
+# python / pip のラッパー（必ず選択中の Python を使用）
+function python() {
+  if [[ -n "$PYTHON_CMD" ]]; then
+    "$PYTHON_CMD" "$@"
+  else
+    echo "No python selected. Use: pyuse <key>"
+  fi
+}
+function pip() {
+  if [[ -n "$PYTHON_CMD" ]]; then
+    "$PYTHON_CMD" -m pip "$@"
+  else
+    echo "No python selected. Use: pyuse <key>"
+  fi
+}
+
+# pyuse の補完
+_pyuse_complete() {
+  reply=(${${(f)"$(cut -d: -f1 $_PYVER_FILE 2>/dev/null)"}})
+}
+compctl -K _pyuse_complete pyuse
+
+# ===============================
+#  ディレクトリ自動切替（pyenv-like）
+# ===============================
+autoload -U add-zsh-hook
+function _auto_python_version() {
+  local dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/.python-version" ]]; then
+      local key
+      key="$(tr -d '[:space:]' < "$dir/.python-version")"
+      if [[ -n "$key" ]]; then
+        pyuse "$key" >/dev/null 2>&1
+      fi
+      return
+    fi
+    dir="$(dirname "$dir")"
+  done
+}
+add-zsh-hook chpwd _auto_python_version
+
+# ===============================
+#  venv ヘルパー
+# ===============================
+# 現在選択中の Python で venv を作成（デフォルト .venv）
+function mkvenv() {
+  local vdir="${1:-.venv}"
+  if [[ -z "$PYTHON_CMD" ]]; then
+    echo "Select a python first: pyuse <key>"; return 1
+  fi
+  "$PYTHON_CMD -m venv $vdir" || { echo "venv作成に失敗"; return 1; }
+  echo "Created venv: $vdir"
+  echo "Activate: source $vdir/bin/activate"
+}
+
+# その場 or 上位にある .venv を自動で activate
+function workon() {
+  local dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -d "$dir/.venv" && -f "$dir/.venv/bin/activate" ]]; then
+      # shellcheck disable=SC1091
+      source "$dir/.venv/bin/activate"
+      echo "Activated venv: $dir/.venv"
+      return
+    fi
+    dir="$(dirname "$dir")"
+  done
+  echo "No .venv found"
+}
+
+# ===============================
+#  初期デフォルト（必要なら）
+# ===============================
+pyuse ucrt  # 起動時にデフォルトを固定したい場合はコメント解除

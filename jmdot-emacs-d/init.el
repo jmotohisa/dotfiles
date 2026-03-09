@@ -81,31 +81,31 @@
   ;; ...
   )
 
-(leaf copilot
-  :el-get (copilot
-           :type github
-           :pkgname "zerolfx/copilot.el"
-           )
-  :config
-  (leaf editorconfig
-    :emacs>= 28.1
-    :ensure t
-    )
-  (leaf s
-    :ensure t
-    )
-  (leaf dash
-    :ensure t
-    )
-  (defun my/copilot-tab ()
-    (interactive)
-    (or (copilot-accept-completion)
-        (indent-for-tab-command)))
-
-  (with-eval-after-load 'copilot
-    (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
-  )
-;; ...
+;; (leaf copilot
+;;   :el-get (copilot
+;;            :type github
+;;            :pkgname "zerolfx/copilot.el"
+;;            )
+;;   :config
+;;   (leaf editorconfig
+;;     :emacs>= 28.1
+;;     :ensure t
+;;     )
+;;   (leaf s
+;;     :ensure t
+;;     )
+;;   (leaf dash
+;;     :ensure t
+;;     )
+;;   (defun my/copilot-tab ()
+;;     (interactive)
+;;     (or (copilot-accept-completion)
+;;         (indent-for-tab-command)))
+;; 
+;;   (with-eval-after-load 'copilot
+;;     (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
+;;   )
+;; ;; ...
 
 (leaf color-theme-sanityinc-solarized
   :ensure t)
@@ -120,7 +120,7 @@
   :ensure t
   :emacs>= 28.1
   :config
-  ;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; doxymacs mode
 ;; ----------------------------------------------------------------------------
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
@@ -669,7 +669,8 @@
       (setq YaTeX-use-AMS-LaTeX t)
       (setq YaTeX-dvi2-command-ext-alist
 	    '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
-      (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      ;; (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      (setq tex-command "/Library/TeX/texbin/ptex2pdf -u -l -ot '-synctex=1'")
                                         ;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
@@ -1192,17 +1193,35 @@
 
 ;;
 ;; 08/02/05 octave mode
+;; modified on 26/02/24
 ;;
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(leaf octave
+  :ensure t
+  :mode ("\\.m$" . octave-mode)
+  :config
+  (setq octave-blink-matching-bloc t) ;;
+  ;; インデント幅の設定（例: 4）
+  (setq octave-block-offset 4)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  (add-hook 'octave-mode-hook
+            (lambda ()
+              (abbrev-mode 1)
+              (auto-fill-mode 1)
+              (font-lock-mode 1)))
+  )
 
-(add-hook 'octave-mode-hook
-          (lambda ()
-            (abbrev-mode 1)
-            (auto-fill-mode 1)
-            (if (eq window-system 'x)
-                (font-lock-mode 1))))
+;; (autoload 'octave-mode "octave-mode" nil t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+;; (add-hook 'octave-mode-hook
+;;           (lambda ()
+;;             (abbrev-mode 1)
+;;             (auto-fill-mode 1)
+;;             (if (eq window-system 'x)
+;;                 (font-lock-mode 1))))
+
 
 ;; ;; 
 ;; ;; 08/07/31 w3m, modified on 13/01/04
@@ -1284,13 +1303,19 @@
 ;;
 ;; igor mode 12/04/27
 ;;
+;; update: 26/02/25
+;;
 (if darwin-p
-    ;; (if (not emacs26.3-p)
-	(progn
-	  (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
-	  (require 'igor-mode))
-  ;; )
-)
+    (progn
+      ;; (if (not emacs26.3-p)
+      ;; lisp ディレクトリ全体を load-path に追加
+    (add-to-list 'load-path "~/.emacs.d/mylisp/igor-mode")
+    ;; foo-mode を読み込む
+    (require 'igor-mode)  ;; foo-mode.el の provide に合わせる
+    (add-to-list 'auto-mode-alist '("\\.ipf\\'" . igor-mode))
+    )
+  )
+
 
 ;; reftex mode 12/07/03;; commented in on 13/01/04 ;; see above yatex mode
 ;(add-hook 'yatex-mode-hook 'turn-on-reftex) ; with YaTeX mode
@@ -1658,4 +1683,18 @@
            (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
            ;; 行末のスペースやタブに色づけして警告する。
            (setq show-trailing-whitespace t)))            ;;; (d)
->>>>>>> d786dfa8ecfb9dbe3c9cbf781897b356cc45dfac
+;;
+;; 26/02/24 matlab mode (for lsf)
+;;
+(leaf matlab-mode
+  :doc "MATLAB mode for Emacs"
+  :ensure t
+  :mode ("\\.lsf$'" . matlab-mode)
+  :config
+  (setq matlab-indent-function t)
+  (setq matlab-auto-fill-mode nil)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  )
+
+
