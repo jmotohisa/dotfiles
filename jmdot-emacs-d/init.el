@@ -252,9 +252,9 @@
             (normal-top-level-add-subdirs-to-load-path))))))
             
 (add-to-load-path "lisp" ;; 
-                  "local-lisp";; 変更したり、自作の Emacs Lisp
+;;                  "local-lisp";; 変更したり、自作の Emacs Lisp
                   "private"
-	          "site-start.d" ;; 初期設定ファイル
+;;	          "site-start.d" ;; 初期設定ファイル
 		  )
 
 (setenv "MANPATH" (concat "/usr/local/man:/usr/share/man:/Developer/usr/share/man:/opt/local/share/man" (getenv "MANPATH")))
@@ -1696,5 +1696,32 @@
   ;; コメントの挙動設定
   (setq comment-start "# ")
   )
-
+;;
+;; exec-path-from-shell
+;; https://uwabami.github.io/cc-env/Emacs.html
+;;
+(leaf-safe-push 'exec-path-from-shell package-selected-packages)
+(leaf exec-path-from-shell
+  :if window-system
+  :ensure t
+  :config
+  (setq exec-path-from-shell-variables
+        '("DEBEMAIL"
+          "DEBFULLNAME"
+          "GPG_AGENT_INFO"
+          "GPG_KEY_ID"
+          "PASSWORD_STORE_DIR"
+          "PATH"
+          "SHELL"
+          "SKKSERVER"
+          "TEXMFHOME"
+          "WSL_DISTRO_NAME")
+        exec-path-from-shell-arguments nil)
+  (exec-path-from-shell-initialize)
+  )
+(defconst my:d:password-store
+  (if (getenv "PASSWORD_STORE_DIR")
+      (expand-file-name (concat "Emacs/" (system-name))
+                        (getenv "PASSWORD_STORE_DIR"))
+    nil))
 
