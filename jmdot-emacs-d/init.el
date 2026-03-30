@@ -1636,6 +1636,14 @@
 ;; ----------------------------------------------------------------------------
 ;; Python-mode
 ;; ----------------------------------------------------------------------------
+(leaf py-autopep8
+  :ensure t
+  :after python
+  :hook (python-mode-hook . py-autopep8-enable-on-save)
+  :config
+  ;; 必要に応じてautopep8のオプションを追加
+  ;; (setq py-autopep8-options '("--max-line-length=79"))
+  )
 (if darwin-p
     (progn
 	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8/py-autopep8.el")
