@@ -1,0 +1,4 @@
+alias pbcopy='putclip'
+alias pbpaste='getclip'
+
+export PATH=$HOME/bin:$HOME/bin2:$PATH

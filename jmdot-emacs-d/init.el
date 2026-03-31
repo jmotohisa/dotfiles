@@ -32,6 +32,7 @@
 (leaf leaf-tree :ensure t)
 (leaf leaf-convert :ensure t)
 (leaf transient-dwim
+  :emacs>= 28.1
   :ensure t
   :bind (("M-=" . transient-dwim-dispatch)))
 
@@ -57,7 +58,7 @@
 ;; Nest package configurations
 (leaf flycheck
   :doc "On-the-fly syntax checking"
-  :emacs>= 24.3
+  :emacs>= 28.1
   :ensure t
   :bind (("M-n" . flycheck-next-error)
          ("M-p" . flycheck-previous-error))
@@ -80,34 +81,71 @@
   ;; ...
   )
 
-(leaf copilot
-  :el-get (copilot
-           :type github
-           :pkgname "zerolfx/copilot.el"
-           )
-  :config
-  (leaf editorconfig
-    :ensure t
-    )
-  (leaf s
-    :ensure t
-    )
-  (leaf dash
-    :ensure t
-    )
-  (defun my/copilot-tab ()
-    (interactive)
-    (or (copilot-accept-completion)
-        (indent-for-tab-command)))
+;; (leaf copilot
+;;   :el-get (copilot
+;;            :type github
+;;            :pkgname "zerolfx/copilot.el"
+;;            )
+;;   :config
+;;   (leaf editorconfig
+;;     :emacs>= 28.1
+;;     :ensure t
+;;     )
+;;   (leaf s
+;;     :ensure t
+;;     )
+;;   (leaf dash
+;;     :ensure t
+;;     )
+;;   (defun my/copilot-tab ()
+;;     (interactive)
+;;     (or (copilot-accept-completion)
+;;         (indent-for-tab-command)))
+;; 
+;;   (with-eval-after-load 'copilot
+;;     (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
+;;   )
+;; ;; ...
 
-  (with-eval-after-load 'copilot
-    (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
-  )
-;; ...
+(leaf color-theme-sanityinc-solarized
+  :ensure t)
+
+(leaf multi-term
+  :ensure t)
+
+(leaf switch-window
+  :ensure t)
+
+(leaf doxymacs
+  :ensure t
+  :emacs>= 28.1
+  :config
+;; ----------------------------------------------------------------------------
+;; doxymacs mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;;custom c-mode hook for doxymacs
+(defun doxy-custom-c-mode-hook ()
+ (doxymacs-mode 1)
+ (setq doxymacs-doxygen-style "Qt")
+ (setq doxymacs-command-character "@"))
+(add-hook 'c-mode-common-hook 'doxy-custom-c-mode-hook)
+
+;; somehow, (default) keybord mapping does not work
+(define-key global-map (kbd "C-c d ?") 'doxymacs-lookup)
+(define-key global-map (kbd "C-c d r") 'doxymacs-rescan-tags)
+(define-key global-map (kbd "C-c d RET") 'doxymacs-insert-command)
+(define-key global-map (kbd "C-c d f") ' doxymacs-insert-function-comment)
+(define-key global-map (kbd "C-c d i") 'doxymacs-insert-file-comment)
+(define-key global-map (kbd "C-c d ;") 'doxymacs-insert-member-comment)
+(define-key global-map (kbd "C-c d m") 'doxymacs-insert-blank-multiline-comment)
+(define-key global-map (kbd "C-c d s") 'doxymacs-insert-blank-singleline-comment)
+(define-key global-map (kbd "C-c d @") 'doxymacs-insert-grouping-comments)
+)
 
 ;; (setq user-full-name "Junichi Motohisa")
 ;; (setq user-mail-address "motohisa@ist.hokudai.ac.jp")
-;; (setq user-id-string "jmotohisa")
+(setq user-id-string "jmotohisa")
 
 ;; taken from http://d.hatena.ne.jp/tomoya/20090807/1249601308
 (defun x->bool (elt) (not (not elt)))
@@ -152,6 +190,11 @@
 (when (string= system-type "darwin")       
   (setq dired-use-ls-dired nil))
 
+(setq auto-mode-alist (append '(("\\.c" . c-mode)
+				("\\.h" . c-mode)
+				("\\.py" .  python-mode))
+			      auto-mode-alist))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; path
 ;;;; based on http://sakito.jp/emacs/emacsshell.html#path
@@ -188,13 +231,13 @@
 			  (concat "/usr/local/bin:/opt/local/bin:/Users/motohisa/bin:" (getenv "PATH"))))
   (progn
 	  (add-to-list 'exec-path "/home/motohisa/bin")
-	  (setenv "PATH"
-			  (concat "/usr/local/bin:/home/motohisa/bin:" (getenv "PATH"))))
-  )
-(setenv "PATH"
+	    (setenv "PATH"
+	    		  (concat "/usr/local/bin:/home/motohisa/bin:" (getenv "PATH"))))
+  )                       
+(setenv "PATH"            
 	(concat "/usr/local/bin:/opt/local/bin:/Users/motohisa/bin:" (getenv "PATH")))
-
-;; 引数を load-path へ追加
+        
+;; 引数 を load-path へ追加
 ;; normal-top-level-add-subdirs-to-load-path はディレクトリ中で
 ;; [A-Za-z] で開始する物だけ追加する。
 ;; 追加したくない物は . や _ を先頭に付与しておけばロードしない
@@ -204,15 +247,15 @@
     (dolist (path paths paths)
       (let ((default-directory
               (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
+               (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
             (normal-top-level-add-subdirs-to-load-path))))))
-
+            
 (add-to-load-path "lisp" ;; 
-                  "local-lisp";; 変更したり、自作の Emacs Lisp
+;;                  "local-lisp";; 変更したり、自作の Emacs Lisp
                   "private"
-				  "site-start.d" ;; 初期設定ファイル
-				  )
+;;	          "site-start.d" ;; 初期設定ファイル
+		  )
 
 (setenv "MANPATH" (concat "/usr/local/man:/usr/share/man:/Developer/usr/share/man:/opt/local/share/man" (getenv "MANPATH")))
 
@@ -220,9 +263,9 @@
 ;; start emacsclient server
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (if window-system
-	(progn 
-	  (require 'server)
-	  (unless (server-running-p) (server-start))))
+  (progn
+    (require 'server)
+    (unless (server-running-p) (server-start))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Japanese setting
@@ -486,12 +529,12 @@
 (add-to-list 'term-unbind-key-list '"M-x")
 
 (add-hook 'term-mode-hook
-		  '(lambda ()
-			 ;; C-h を term 内文字削除にする
-			 (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
-			 ;; C-y を term 内ペーストにする
-			 (define-key term-raw-map (kbd "C-y") 'term-paste)
-			 ))
+	  '(lambda ()
+		 ;; C-h を term 内文字削除にする
+		 (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
+		 ;; C-y を term 内ペーストにする
+		 (define-key term-raw-map (kbd "C-y") 'term-paste)
+		 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; various modes
@@ -542,7 +585,7 @@
   )	
 
 ;; 変換の学習
-;;(require 'skk-study)
+;; (require 'skk-study)
 
 ;; ;;; skk-list-chars 非表示: taken from http://garin.jp/doc/unix/skk_skk_list_chars
 ;; (defun skk-list-chars (&optional arg)
@@ -626,7 +669,8 @@
       (setq YaTeX-use-AMS-LaTeX t)
       (setq YaTeX-dvi2-command-ext-alist
 	    '(("TeXworks\\|texworks\\|texstudio\\|mupdf\\|SumatraPDF\\|Preview\\|Skim\\|TeXShop\\|evince\\|okular\\|zathura\\|qpdfview\\|Firefox\\|firefox\\|chrome\\|chromium\\|Adobe\\|Acrobat\\|AcroRd32\\|acroread\\|pdfopen\\|xdg-open\\|open\\|start" . ".pdf")))
-      (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      ;; (setq tex-command "/opt/local/bin/ptex2pdf -u -l -ot '-synctex=1'")
+      (setq tex-command "/Library/TeX/texbin/ptex2pdf -u -l -ot '-synctex=1'")
                                         ;(setq tex-command "/opt/local/bin/platex-ng -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/pdflatex -synctex=1")
                                         ;(setq tex-command "/opt/local/bin/lualatex -synctex=1")
@@ -1061,32 +1105,47 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-revert-interval 0.1)
  '(custom-enabled-themes '(sanityinc-solarized-dark))
  '(custom-safe-themes
-   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1"
-     default))
- '(package-selected-packages '(el-get flycheck-elsa flycheck-package))
+   '("48d34b6afe72407ca494387c8bea495bb2deee96bd88516f302db1f11e1810a1" default))
+ '(indent-tabs-mode nil)
+ '(menu-bar-mode t)
+ '(package-archives
+   '(("org" . "https://orgmode.org/elpa/")
+     ("melpa" . "https://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
+ '(package-selected-packages
+   '(arduino-mode el-get flycheck-elsa flycheck-package geiser geiser-guile highlight-doxygen py-autopep8 python-coverage python-docstring python-mode))
+ '(scroll-bar-mode nil)
  '(spice-show-describe-mode nil)
  '(spice-simulator "ngspice")
  '(spice-simulator-alist
    '(("Spice3" "spice3 -b" ""
-      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
-       nil (buffer-file-name))
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
       ("Circuit: \\(.*\\)$" 1))
      ("Hspice" "hspice" ""
       ("\\s-*\\(..?error..?[: ]\\).+" 0 spice-linenum 1
        (buffer-file-name))
-      ("[* ]* [iI]nput [fF]ile: +\\([^ \11]+\\).*$" 1))
+      ("[* ]* [iI]nput [fF]ile: +\\([^ 	]+\\).*$" 1))
      ("Eldo" "eldo -i" ""
       ("\\s-*\\(E[rR][rR][oO][rR] +[0-9]+:\\).*" 0 spice-linenum 1
        (buffer-file-name))
       ("Running \\(eldo\\).*$" 1))
      ("Spectre" "spectre" ""
-      ("\\s-*\"\\([^ \11\12]+\\)\" +\\([0-9]+\\):.*" 1 2) ("" 0))
+      ("\\s-*\"\\([^ 	
+]+\\)\" +\\([0-9]+\\):.*" 1 2)
+      ("" 0))
      ("ngspice" "ngspice" ""
-      ("\\s-*Error[\11 ]+on[ \11]+line[\11 ]+\\([0-9]+\\) +:.+" 0 1
-       nil (buffer-file-name))
-      ("Circuit: \\(.*\\)$" 1)))))
+      ("\\s-*Error[	 ]+on[ 	]+line[	 ]+\\([0-9]+\\) +:.+" 0 1 nil
+       (buffer-file-name))
+      ("Circuit: \\(.*\\)$" 1))))
+ '(tool-bar-mode nil)
+ '(truncate-lines t)
+ '(user-full-name "Junichi Motohisa")
+ '(user-login-name "jmotohisa" t)
+ '(user-mail-address "motohisa@ist.hokudai.ac.jp"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1134,17 +1193,35 @@
 
 ;;
 ;; 08/02/05 octave mode
+;; modified on 26/02/24
 ;;
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(leaf octave
+  :ensure t
+  :mode ("\\.m$" . octave-mode)
+  :config
+  (setq octave-blink-matching-bloc t) ;;
+  ;; インデント幅の設定（例: 4）
+  (setq octave-block-offset 4)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  (add-hook 'octave-mode-hook
+            (lambda ()
+              (abbrev-mode 1)
+              (auto-fill-mode 1)
+              (font-lock-mode 1)))
+  )
 
-(add-hook 'octave-mode-hook
-          (lambda ()
-            (abbrev-mode 1)
-            (auto-fill-mode 1)
-            (if (eq window-system 'x)
-                (font-lock-mode 1))))
+;; (autoload 'octave-mode "octave-mode" nil t)
+;; (setq auto-mode-alist
+;;       (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+;; (add-hook 'octave-mode-hook
+;;           (lambda ()
+;;             (abbrev-mode 1)
+;;             (auto-fill-mode 1)
+;;             (if (eq window-system 'x)
+;;                 (font-lock-mode 1))))
+
 
 ;; ;; 
 ;; ;; 08/07/31 w3m, modified on 13/01/04
@@ -1226,13 +1303,19 @@
 ;;
 ;; igor mode 12/04/27
 ;;
+;; update: 26/02/25
+;;
 (if darwin-p
-    ;; (if (not emacs26.3-p)
-	(progn
-	  (add-to-list 'load-path "~/.emacs.d/lisp/igor-mode")
-	  (require 'igor-mode))
-  ;; )
-)
+    (progn
+      ;; (if (not emacs26.3-p)
+      ;; lisp ディレクトリ全体を load-path に追加
+    (add-to-list 'load-path "~/.emacs.d/mylisp/igor-mode")
+    ;; foo-mode を読み込む
+    (require 'igor-mode)  ;; foo-mode.el の provide に合わせる
+    (add-to-list 'auto-mode-alist '("\\.ipf\\'" . igor-mode))
+    )
+  )
+
 
 ;; reftex mode 12/07/03;; commented in on 13/01/04 ;; see above yatex mode
 ;(add-hook 'yatex-mode-hook 'turn-on-reftex) ; with YaTeX mode
@@ -1490,9 +1573,23 @@
 
 (setq time-stamp-format "%3a %3b %02d %02H:%02M:%02S %Z %:y")
 
+;; ----------------------------------------------------------------------------
+;; Markdown mode
+;; ----------------------------------------------------------------------------
+(leaf markdown-mode
+ :ensure t
+ :emacs>= 28.1
+ :mode ("\\.md\\'" . gfm-mode)
+ :config
+ (setopt markdown-command '("pandoc" "--from=markdown" "--to=html5"))
+ (setopt markdown-fontify-code-blocks-natively t)
+ (setopt markdown-header-scaling t)
+ (setopt markdown-indent-on-enter 'indent-and-new-item)
+;; (leaf-key "<S-tab>" #'markdown-shifttab markdown-mode-map)
 ;; markdown ; multimarkdown
-(if carbon-p
+ (if carbon-p
 	(setq markdown-command "multimarkdown"))
+)
 
 ;; ----------------------------------------------------------------------------
 ;; lua mode
@@ -1539,6 +1636,14 @@
 ;; ----------------------------------------------------------------------------
 ;; Python-mode
 ;; ----------------------------------------------------------------------------
+(leaf py-autopep8
+  :ensure t
+  :after python
+  :hook (python-mode-hook . py-autopep8-enable-on-save)
+  :config
+  ;; 必要に応じてautopep8のオプションを追加
+  ;; (setq py-autopep8-options '("--max-line-length=79"))
+  )
 (if darwin-p
     (progn
 	  (add-to-list 'load-path "~/.emacs.d/lisp/py-autopep8/py-autopep8.el")
@@ -1573,4 +1678,58 @@
 (autoload 'vivado-mode "gmsh.el" "Vivado editing mode." t)
 (setq auto-mode-alist
       (cons '("\\.xdp$" . vivado-mode) auto-mode-alist))
+
+
+;; ----------------------------------------------------------------------------
+;; C-mode
+;; ----------------------------------------------------------------------------
+(add-hook 'c-mode-common-hook
+         (lambda ()
+           (c-set-style "bsd")                            ;;; (a)
+           (setq c-basic-offset 2)                        ;;; (b)
+           ;; 演算式が複数行にまたがるときのオフセット
+           (c-set-offset 'statement-cont 'c-lineup-math)  ;;; (c)
+           ;; 行末のスペースやタブに色づけして警告する。
+           (setq show-trailing-whitespace t)))            ;;; (d)
+;;
+;; 26/02/24 matlab mode (for lsf)
+;;
+(leaf matlab-mode
+  :doc "MATLAB mode for Emacs"
+  :ensure t
+  :mode ("\\.lsf$'" . matlab-mode)
+  :config
+  (setq matlab-indent-function t)
+  (setq matlab-auto-fill-mode nil)
+  ;; コメントの挙動設定
+  (setq comment-start "# ")
+  )
+;;
+;; exec-path-from-shell
+;; https://uwabami.github.io/cc-env/Emacs.html
+;;
+(leaf-safe-push 'exec-path-from-shell package-selected-packages)
+(leaf exec-path-from-shell
+  :if window-system
+  :ensure t
+  :config
+  (setq exec-path-from-shell-variables
+        '("DEBEMAIL"
+          "DEBFULLNAME"
+          "GPG_AGENT_INFO"
+          "GPG_KEY_ID"
+          "PASSWORD_STORE_DIR"
+          "PATH"
+          "SHELL"
+          "SKKSERVER"
+          "TEXMFHOME"
+          "WSL_DISTRO_NAME")
+        exec-path-from-shell-arguments nil)
+  (exec-path-from-shell-initialize)
+  )
+(defconst my:d:password-store
+  (if (getenv "PASSWORD_STORE_DIR")
+      (expand-file-name (concat "Emacs/" (system-name))
+                        (getenv "PASSWORD_STORE_DIR"))
+    nil))
 

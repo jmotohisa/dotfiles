@@ -18,3 +18,10 @@ jmdot-emacs-d/skk-get-jisyo/
 jmdot-emacs-d/eln-cache/
 
 dotvim/.netrwhist
+dotzshd/.zcompdump
+dotzshd/.python_versions
+
+jmdot-emacs-d/lisp
+jmdot-emacs-d/transient
+dotzshd/.iterm2
+dotzshd/.zsh_sessions

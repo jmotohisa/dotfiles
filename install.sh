@@ -11,6 +11,16 @@ echo 'export ZDOTDIR=$HOME/.zsh.d' > ~/.zshenv
 # cp dotzshd/.zshrc_local_skel dotzshd/.zshrc_local
 ## edit dotzshd/.zshrc_local
 
+if uname | grep -q "CYGWIN"; then
+    echo "alias pbcopy='putclip'" >> "`pwd`"/dotzshd/.zshrc_`uname`
+    echo "alias pbpaste='getclip'" >> "`pwd`"/dotzshd/.zshrc_`uname`
+fi
+
+if uname | grep -q "Linux"; then
+    echo "alias pbcopy='xsel --input --clipboard'" >> "`pwd`"/dotzshd/.zshrc_`uname`
+    echo "alias pbpaste='xsel --output --clipboard'" >> "`pwd`"/dotzshd/.zshrc_`uname`
+fi
+
 ## for emacs
 # cd ~/.emacs.d; mkdir lisp; mkdir site-start.d; mkdir local-lisp
 # install following from package
