@@ -542,7 +542,7 @@
   )	
 
 ;; 変換の学習
-(require 'skk-study)
+;;(require 'skk-study)
 
 ;; ;;; skk-list-chars 非表示: taken from http://garin.jp/doc/unix/skk_skk_list_chars
 ;; (defun skk-list-chars (&optional arg)
